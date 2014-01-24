@@ -1,0 +1,29 @@
+{% form_theme form _self %}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form style="margin: 0;" action="{{ path('entry_create') }}" method="post" {{ form_enctype(form) }}>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">create a new entry</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {{ form_widget(form, {attr: {role: 'form'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" namme="submit" class="btn btn-primary"><i class="icon-plus"></i> save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% block form_row %}
+<div class="form-group {{ form_errors(form) ? 'has-error' : '' }}">
+    {{ form_errors(form) }}
+    {{ form_widget(form, {attr: {placeholder: form.vars.label, class: "form-control"}}) }}
+</div>
+{% endblock %}

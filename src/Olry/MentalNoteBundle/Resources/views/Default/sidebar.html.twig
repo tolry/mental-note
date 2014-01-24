@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Tags</div>
+    <div class="panel-body">
+        <ul class="nav">
+            {% if criteria.tag != "" %}
+            <li class = "active">
+                <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': null})}) }}" title="remove filter">
+                    <div class="pull-right">
+                        <i class="icon-remove-sign"></i>
+                    </div>
+                    {{ criteria.tag }}
+                </a>
+            </li>
+            {% else %}
+            {% for tag in tags %}
+            <li>
+                <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': tag.name})}) }}">
+                    <div class="pull-right">
+                        <span class="label {% if tag.pending > 10 %}label-danger{% elseif tag.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ tag.pending }}/{{ tag.total }}</span>
+                    </div>
+                    {{ tag.name }}
+                </a>
+            </li>
+            {% endfor%}
+            {% endif  %}
+        </ul>
+    </div>
+</div>

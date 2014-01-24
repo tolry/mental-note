@@ -1,0 +1,21 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     mental_note
+    database_user:     mental_note
+    database_password: 9hej5QsJSnKPVZq9
+
+    mailer_transport:  smtp
+    mailer_host:       localhost
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    session_memcache_host: localhost
+    session_memcache_port: 11211
+    session_memcache_prefix: mn_sess
+    session_memcache_expire: 604800 # 1 week
+

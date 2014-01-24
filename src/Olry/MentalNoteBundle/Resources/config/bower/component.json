@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+        "jquery": "latest",
+        "bootstrap": "latest",
+        "font-awesome": "latest",
+        "select2": "latest"
+    }
+}

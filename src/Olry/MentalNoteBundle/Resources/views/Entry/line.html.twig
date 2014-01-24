@@ -1,0 +1,60 @@
+<div class="panel panel-default entry{{ entry.pending ? '' : ' entry-finished' }}">
+    <div class="panel-body">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-4">
+                <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
+                    <img class="deferred-image image-responsive img-rounded" src="http://placehold.it/300x150&text=loading" data-src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
+                </a>
+            </div>
+
+            <div class="col-sm-12 col-md-8">
+                <h4>
+                    <i class="{{ entry.category.icon}} " title="{{ entry.category.label}}"></i> 
+                    <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
+                        {{ entry.title }}
+                    </a>
+                    <small>
+                        <img src="http://g.etfv.co/{{entry.url}}" width="16" height="16" title="" alt="" />
+                        {{ entry.domain }}
+                    </small>
+                </h4>
+
+                <p>
+                    {% for tag in entry.tags %}
+                    <a class="label{{ entry.pending ? ' label-info' : '' }}" href="{{ path('homepage', {filter: {tag: tag.name}}) }}">{{ tag.name }}</a>
+                    {% endfor %}
+                </p>
+
+                {% if entry.visits|length > 0 %}
+                <p>
+                    {{ entry.visits|length }} visit(s)
+                </p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    {% if show_actions|default(false) %}
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="btn-toolbar small pull-right">
+                    <div class="btn-group">
+                        <a href="{{ path('entry_edit', {id: entry.id}) }}" class="btn btn-default btn-md modal-ajax-form"><i class="icon-pencil "></i> edit</a>
+                        <a href="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" class="btn btn-md btn-default"><i class="{{ entry.pending ? 'icon-check-empty' : 'icon-check'}} "></i> done</a>
+                    </div>
+                    <div class="btn-group">
+                        <a href="{{ path('entry_delete', {id: entry.id, filter: app.request.query.get('filter')}) }}" class="btn btn-md btn-danger"><i class="icon-trash "></i> delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+
+

@@ -1,0 +1,36 @@
+{% extends "OlryMentalNoteBundle::layout.html.twig" %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li><a href="{{ path('homepage') }}">all entries</a> <span class="divider">/</span></li>
+</ul>
+{% endblock breadcrumb %}
+
+{% block tabs %}{% endblock tabs %}
+
+{% block sidebar %}
+<dl class="well">
+    <dt>Login</dt>
+    <dd>{{ user.username }}</dd>
+
+    <dt>E-Mail</dt>
+    <dd>{{ user.email }}</dd>
+
+</dl>
+{% endblock sidebar %}
+
+{% block content %}
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.current_password) }}
+    {{ form_row(form.plainPassword) }}
+
+    <div class="btn-group">
+        <a class="btn btn-danger" href="{{ path('homepage') }}">cancel</a>
+        <input type="submit" class="btn btn-primary" value="save" />
+    </div>
+{{ form_end(form) }}
+
+{% endblock content %}
+
