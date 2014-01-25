@@ -22,13 +22,14 @@ class EntryController extends AbstractBaseController
 
         if ($form->isValid()) {
             $entry->setUser($this->getUser());
-            $this->getEntryRepository()->updateTagsByString($entry, $this->getTagRepository());
-            $em = $this->getEm();
-            $em->persist($entry);
-            $em->flush();
+
+            $this->getEm()->persist($entry);
+            $this->getEm()->flush();
             // TODO flash
+
             return true;
         }
+
         return false;
     }
 
@@ -90,7 +91,7 @@ class EntryController extends AbstractBaseController
     {
         $request    = $this->getRequest();
         $entry      = new Entry();
-        $form       = $this->createForm(new EntryType(), $entry);
+        $form       = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {
             if ($this->processForm($form, $entry, $request)){
@@ -110,7 +111,7 @@ class EntryController extends AbstractBaseController
     public function editAction(Entry $entry)
     {
         $request    = $this->getRequest();
-        $form       = $this->createForm(new EntryType(), $entry);
+        $form       = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {
             if ($this->processForm($form, $entry, $request)){

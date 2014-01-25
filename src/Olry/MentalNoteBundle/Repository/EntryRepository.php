@@ -116,25 +116,4 @@ class EntryRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function updateTagsByString(Entry $entry, TagRepository $tagRepository)
-    {
-        $tagNames = explode(',', $entry->getTagsString());
-
-        if (!is_array($tagNames) || empty($tagNames)) {
-            return false;
-        }
-
-        $tags = array();
-        foreach ($tagNames as $tagName) {
-            $tagName = trim($tagName);
-            $tag = $tagRepository->findOneByName($tagName);
-            if (!$tag) {
-                $tag = new Tag();
-                $tag->setName($tagName);
-            }
-            $tags[] = $tag;
-        }
-        $entry->setTags($tags);
-    }
-
 }

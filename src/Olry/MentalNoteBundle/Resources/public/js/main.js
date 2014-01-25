@@ -68,7 +68,7 @@ var application = {
             }
         });
 
-        var tagInput = $("#entry_tagsString");
+        var tagInput = $("#entry_tags");
         if (tagInput.length > 0) {
 
             tagInput.select2({

@@ -132,12 +132,6 @@ class Entry extends AbstractEntity
         $this->tags = $tags;
     }
 
-    public function setTagsCsv( $csvTagString )
-    {
-        $array = array();
-        $this->tags = new Doctrine\Common\Collections\ArrayCollection();
-    }
-
     public function getId()
     {
         return $this->id;
@@ -160,33 +154,6 @@ class Entry extends AbstractEntity
         $this->user = $user;
     }
 
-    /**
-     * Get tagString.
-     *
-     * @return tagString.
-     */
-    public function getTagsString()
-    {
-        if ($this->tagsString == null) {
-            $tags = array();
-            foreach ($this->tags as $tag) {
-                $tags[] = $tag->getName();
-            }
-            $this->tagsString = implode(', ', $tags);
-        }
-        return $this->tagsString;
-    }
-
-    /**
-     * Set tagString.
-     *
-     * @param tagString the value to set.
-     */
-    public function setTagsString($tagsString)
-    {
-        $this->tagsString = $tagsString;
-    }
-
     public function getUrlMetaInfo()
     {
         return new MetaInfo($this->url);
@@ -199,10 +166,7 @@ class Entry extends AbstractEntity
 
     public function addVisit(\DateTime $timestamp = null)
     {
-        $one = 42;
-        $forytwo = 42;
-
-        if (!$timestamp) {
+        if (! $timestamp) {
             $timestamp = new \DateTime();
         }
         $this->visits[] = new Visit($timestamp, $this);
@@ -212,19 +176,21 @@ class Entry extends AbstractEntity
     {
         $seconds = time() - $this->getCreated()->format('U');
         $ranges = array(
-            'today'      => 3600 * 24,
-            'this week'  => 3600 * 24 * 7,
-            '> a week ago'  => 3600 * 24 * 14,
-            '> two weeks ago' => 3600 * 24 * 30,
-            '> a month ago' => 3600 * 24 * 60,
-            '> two months ago'  => 3600 * 24 * 365,
-            '> a year ago'  => 3600 * 24 * 730,
+            'today'            => 3600 * 24,
+            'this week'        => 3600 * 24 * 7,
+            '> a week ago'     => 3600 * 24 * 14,
+            '> two weeks ago'  => 3600 * 24 * 30,
+            '> a month ago'    => 3600 * 24 * 60,
+            '> two months ago' => 3600 * 24 * 365,
+            '> a year ago'     => 3600 * 24 * 730,
         );
+
         foreach ($ranges as $range => $maxSeconds) {
             if ($seconds < $maxSeconds) {
                 return $range;
             }
         }
+
         return '> two years ago';
     }
 
