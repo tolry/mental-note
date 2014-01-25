@@ -1,5 +1,3 @@
-{% form_theme form _self %}
-
 <div class="modal-dialog">
     <div class="modal-content">
         <form style="margin: 0;" action="{{ path('entry_create') }}" method="post" {{ form_enctype(form) }}>
@@ -10,7 +8,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
-                        {{ form_widget(form, {attr: {role: 'form'}}) }}
+                        {% include 'OlryMentalNoteBundle:Entry:_form.html.twig' %}
                     </div>
                 </div>
             </div>
@@ -20,10 +18,3 @@
         </form>
     </div>
 </div>
-
-{% block form_row %}
-<div class="form-group {{ form_errors(form) ? 'has-error' : '' }}">
-    {{ form_errors(form) }}
-    {{ form_widget(form, {attr: {placeholder: form.vars.label, class: "form-control"}}) }}
-</div>
-{% endblock %}
