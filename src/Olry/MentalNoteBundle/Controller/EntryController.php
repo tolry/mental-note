@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 use Olry\MentalNoteBundle\Entity\Entry;
-use Olry\MentalNoteBundle\Thumbnail\ThumbnailService;
 use Olry\MentalNoteBundle\Form\Type\EntryType;
+use Olry\MentalNoteBundle\Thumbnail\ThumbnailService;
 
 class EntryController extends AbstractBaseController
 {
@@ -25,7 +25,6 @@ class EntryController extends AbstractBaseController
 
             $this->getEm()->persist($entry);
             $this->getEm()->flush();
-            // TODO flash
 
             return true;
         }
@@ -43,6 +42,7 @@ class EntryController extends AbstractBaseController
         $this->getEm()->flush();
 
         $filter = (array) $this->getRequest()->get('filter', array());
+
         return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
     }
 
@@ -51,7 +51,6 @@ class EntryController extends AbstractBaseController
      */
     public function thumbnailAction(Entry $entry, $width, $height)
     {
-
         $documentRoot = $this->container->getParameter('kernel.root_dir') . '/../web';
         $cacheDir     = $this->container->getParameter('kernel.cache_dir') . '/thumbnails';
         $route        = $this->generateUrl('entry_thumbnail', array('id' => $entry->getId(), 'width' => $width, 'height' => $height));
@@ -62,6 +61,7 @@ class EntryController extends AbstractBaseController
         if (file_exists($pathNew)) {
             $response = new BinaryFileResponse($pathNew);
             $this->get('logger')->error($entry->getId() . ':: file already exists, controller should not be executed');
+
             return $response;
         }
 
@@ -70,15 +70,18 @@ class EntryController extends AbstractBaseController
         if (file_exists($pathOld)) {
             $this->get('logger')->error($entry->getId() . ':: old file found, renaming');
             rename($pathOld, $pathNew);
+
             return $this->redirect($route);
         }
 
         try {
             $thumbnailService = new ThumbnailService($documentRoot, $cacheDir, 'thumbnails/{name}_{width}x{height}.png');
             $thumbnail        = $thumbnailService->generate($entry->getUrl(), $width, $height, $entry->getId());
+
             return $this->redirect($route);
         } catch (\Exception $e) {
             $this->get('logger')->error('Exception: ' . $e->getMessage());
+
             return $this->redirect("http://placehold.it/${width}x${height}", 301);
         }
     }
@@ -89,9 +92,9 @@ class EntryController extends AbstractBaseController
      */
     public function createAction()
     {
-        $request    = $this->getRequest();
-        $entry      = new Entry();
-        $form       = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
+        $request = $this->getRequest();
+        $entry   = new Entry();
+        $form    = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {
             if ($this->processForm($form, $entry, $request)){
@@ -99,9 +102,7 @@ class EntryController extends AbstractBaseController
             }
         }
 
-        return array(
-            'form' => $form->createView(),
-        );
+        return array('form' => $form->createView());
     }
 
     /**
@@ -110,8 +111,8 @@ class EntryController extends AbstractBaseController
      */
     public function editAction(Entry $entry)
     {
-        $request    = $this->getRequest();
-        $form       = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
+        $request = $this->getRequest();
+        $form    = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {
             if ($this->processForm($form, $entry, $request)){
@@ -120,10 +121,9 @@ class EntryController extends AbstractBaseController
         }
 
         return array(
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
             'entry' => $entry,
         );
-
     }
 
     /**
@@ -134,25 +134,21 @@ class EntryController extends AbstractBaseController
     {
         $request = $this->getRequest();
         $filter  = (array) $request->get('filter', array());
-        $form    = $this->createFormBuilder($entry)
-            ->getForm();
-
+        $form    = $this->createFormBuilder($entry)->getForm();
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) {
-                foreach ($entry->getVisits() as $visit) {
-                    $this->getEm()->remove($visit);
-                }
                 $this->getEm()->remove($entry);
                 $this->getEm()->flush();
+
                 return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
             }
         }
 
         return array(
-            'form' => $form->createView(),
-            'entry' => $entry,
+            'form'   => $form->createView(),
+            'entry'  => $entry,
             'filter' => $filter,
         );
 

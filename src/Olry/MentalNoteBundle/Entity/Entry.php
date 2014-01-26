@@ -60,7 +60,7 @@ class Entry extends AbstractEntity
     private $tags;
 
     /**
-     * @ORM\OneToMany(targetEntity="Visit", mappedBy="entry", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Visit", mappedBy="entry", cascade={"all"})
      */
     private $visits;
 
