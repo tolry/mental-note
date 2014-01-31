@@ -65,6 +65,7 @@ var application = {
         $domElement.find('.modal-ajax-form').modalAjaxForm({
             onComplete: function($element){
                 application.registerEvents($element);
+                $element.find(':text').first().focus();
             }
         });
 
