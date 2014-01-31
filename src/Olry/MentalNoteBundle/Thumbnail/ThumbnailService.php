@@ -2,9 +2,9 @@
 
 namespace Olry\MentalNoteBundle\Thumbnail;
 
+use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Process\Process;
 
 use Olry\MentalNoteBundle\Url\MetaInfo;
 
@@ -15,7 +15,7 @@ class ThumbnailService
     private $cacheDir;
     private $fs;
 
-    public function __construct($documentRoot, $cacheDir, $filepattern = 'thumbnails/{name}_{width}x{height}.png')
+    public function __construct($documentRoot, $cacheDir, $filepatter)
     {
         $this->documentRoot = $documentRoot;
         $this->cacheDir     = $cacheDir;
@@ -27,6 +27,7 @@ class ThumbnailService
     {
         $search  = array('{width}', '{height}', '{name}');
         $replace = array($width, $height, $name);
+
         return str_replace($search, $replace, $this->filepattern);
     }
 
@@ -36,7 +37,9 @@ class ThumbnailService
 
         $imageUrl = $metainfo->getImageUrl();
         if ($imageUrl) {
+            // todo use something more sophisticated, e.g. guzzle
             file_put_contents($file, file_get_contents($imageUrl));
+
             return;
         }
 
@@ -45,13 +48,18 @@ class ThumbnailService
             \escapeshellarg($url),
             \escapeshellarg($file . '.png'))
         );
-        $process->setTimeout(60);
-        $process->run();
-        if (!$process->isSuccessful()) {
+
+        $process
+            ->setTimeout(60)
+            ->run()
+        ;
+
+        if ( ! $process->isSuccessful()) {
             throw new \Exception($process->getErrorOutput());
         }
 
         rename($file . '.png', $file);
+
         return;
     }
 
@@ -72,7 +80,7 @@ class ThumbnailService
 
         $tmpFile = $this->cacheDir . '/' . $hash;
 
-        if (!$this->fs->exists($this->cacheDir)) {
+        if ( ! $this->fs->exists($this->cacheDir)) {
             $this->fs->mkdir($this->cacheDir);
         }
 
@@ -80,12 +88,12 @@ class ThumbnailService
             $this->getImageForUrl($url, $tmpFile);
         }
 
-        if (!$this->fs->exists(dirname($thumbnail->absolutePath))) {
+        if ( ! $this->fs->exists(dirname($thumbnail->absolutePath))) {
             $this->fs->mkdir(dirname($thumbnail->absolutePath));
         }
 
-        $cmd     = "convert %s[0] -resize '%dx%d^' -gravity center -crop %dx%d+0+0 +repage %s";
-        //$cmd     = "convert %s[0] -resize '%dx%d^' -gravity center -extend %dx%d %s";
+        $cmd = "convert %s[0] -resize '%dx%d^' -gravity center -crop %dx%d+0+0 +repage %s";
+
         $process = new Process(
             sprintf($cmd,
                 $tmpFile,
@@ -95,7 +103,7 @@ class ThumbnailService
         );
         $process->run();
 
-        if (!$process->isSuccessful()) {
+        if ( ! $process->isSuccessful()) {
             throw new \Exception($process->getErrorOutput());
         }
 

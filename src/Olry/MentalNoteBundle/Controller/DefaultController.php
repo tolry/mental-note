@@ -30,8 +30,8 @@ class DefaultController extends AbstractBaseController
         $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
 
         return array(
-            'pager' => $pager,
-            'criteria' => $criteria,
+            'pager'       => $pager,
+            'criteria'    => $criteria,
             'active_menu' => 'entries',
         );
     }

@@ -4,24 +4,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
-    <services>
-        <service id="session.handler.memcached" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandle">
-            <argument type="service" id="session.memcached" />
-    </services>
--->
-
-    <!--
     <parameters>
-        <parameter key="olry_mental_note.example.class">Olry\MentalNoteBundle\Example</parameter>
+        <parameter key="olry_mental_note.thumbnail_filepattern">thumbnails/{name}_{width}x{height}.png</parameter>
+        <parameter key="olry_mental_note.thumbnail_service.class">Olry\MentalNoteBundle\Thumbnail\ThumbnailService</parameter>
     </parameters>
 
     <services>
-        <service id="olry_mental_note.example" class="%olry_mental_note.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="olry_mental_note.thumbnail_service" class="%olry_mental_note.thumbnail_service.class%">
+            <argument>%kernel.root_dir%/../web</argument>
+            <argument>%kernel.cache_dir%/thumbnails</argument>
+            <argument>%olry_mental_note.thumbnail_filepattern%</argument>
         </service>
     </services>
-    -->
 </container>

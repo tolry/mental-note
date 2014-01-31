@@ -6,17 +6,12 @@ namespace Olry\MentalNoteBundle\Criteria;
 class EntryCriteria
 {
 
-    public $category;
-
     public $tag;
-
-    public $limit = 5;
-
-    public $page = 1;
-
-    public $pendingOnly = true;
-
     public $query;
+    public $category;
+    public $limit       = 500;
+    public $page        = 1;
+    public $pendingOnly = true;
 
     public function __construct (array $data)
     {
@@ -26,7 +21,6 @@ class EntryCriteria
             }
         }
     }
-
 
     /**
      * returns the array required as url query string
@@ -38,11 +32,11 @@ class EntryCriteria
     public function getQuery(array $changes = array())
     {
         $query = array(
-            'category' => $this->category,
-            'tag' => $this->tag,
-            'page' => $this->page,
-            'limit' => $this->limit,
-            'query' => $this->query,
+            'category'    => $this->category,
+            'tag'         => $this->tag,
+            'page'        => $this->page,
+            'limit'       => $this->limit,
+            'query'       => $this->query,
             'pendingOnly' => $this->pendingOnly ? 1 : 0
         );
 

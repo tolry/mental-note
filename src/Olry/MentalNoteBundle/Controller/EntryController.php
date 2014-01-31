@@ -52,7 +52,6 @@ class EntryController extends AbstractBaseController
     public function thumbnailAction(Entry $entry, $width, $height)
     {
         $documentRoot = $this->container->getParameter('kernel.root_dir') . '/../web';
-        $cacheDir     = $this->container->getParameter('kernel.cache_dir') . '/thumbnails';
         $route        = $this->generateUrl('entry_thumbnail', array('id' => $entry->getId(), 'width' => $width, 'height' => $height));
 
         $pathNew = sprintf('%s/thumbnails/%d_%dx%d.png', $documentRoot, $entry->getId(), $width, $height);
@@ -75,7 +74,7 @@ class EntryController extends AbstractBaseController
         }
 
         try {
-            $thumbnailService = new ThumbnailService($documentRoot, $cacheDir, 'thumbnails/{name}_{width}x{height}.png');
+            $thumbnailService = $this->get('olry_mental_note.thumbnail_service');
             $thumbnail        = $thumbnailService->generate($entry->getUrl(), $width, $height, $entry->getId());
 
             return $this->redirect($route);
