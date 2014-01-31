@@ -64,15 +64,6 @@ class EntryController extends AbstractBaseController
             return $response;
         }
 
-        // legacy code for old thumbnails
-        $pathOld = sprintf('%s/thumbnails/%dx%d/%s.png', $documentRoot, $width, $height, md5($entry->getUrl()));
-        if (file_exists($pathOld)) {
-            $this->get('logger')->error($entry->getId() . ':: old file found, renaming');
-            rename($pathOld, $pathNew);
-
-            return $this->redirect($route);
-        }
-
         try {
             $thumbnailService = $this->get('olry_mental_note.thumbnail_service');
             $thumbnail        = $thumbnailService->generate($entry->getUrl(), $width, $height, $entry->getId());

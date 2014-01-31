@@ -9,7 +9,7 @@ class EntryCriteria
     public $tag;
     public $query;
     public $category;
-    public $limit       = 500;
+    public $limit       = 5;
     public $page        = 1;
     public $pendingOnly = true;
 
