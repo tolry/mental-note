@@ -1,39 +1,5 @@
 {% extends "OlryMentalNoteBundle::layout.html.twig" %}
 
-{% block breadcrumb %}
-<ul class="breadcrumb">
-    <li><a href="{{ path('homepage') }}">all entries</a> <span class="divider">/</span></li>
-    {% if criteria.tag %}
-    <li class="active">
-        tag: {{ criteria.tag }}
-        <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': null})}) }}" title="remove filter"><i class="icon-remove-sign"></i></a>
-        <span class="divider">/</span>
-    </li>
-    {% endif%}
-    {% if criteria.category %}
-    <li class="active">
-        category: {{ criteria.category }}
-        <a href="{{ path('homepage', { filter: criteria.getQuery({'category': null})}) }}" title="remove filter"><i class="icon-remove-sign"></i></a>
-        <span class="divider">/</span>
-    </li>
-    {% endif%}
-    {% if criteria.query %}
-    <li class="active">
-        search:: {{ criteria.query }}
-        <a href="{{ path('homepage', { filter: criteria.getQuery({'query': null})}) }}" title="remove filter"><i class="icon-remove-sign"></i></a>
-        <span class="divider">/</span>
-    </li>
-    {% endif%}
-    <li class="pull-right">
-        {% if criteria.pendingOnly %}
-            <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': false}) }) }}"><i class="icon-check"></i> only show pending</a>
-        {% else %}
-            <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': true}) }) }}"><i class="icon-check-empty"></i> only show pending</a>
-        {% endif %}
-    </li>
-</ul>
-{% endblock breadcrumb %}
-
 {% block sidebar %}
 {% render(controller('OlryMentalNoteBundle:Default:sidebar', { "filter": app.request.get('filter') })) %}
 {% endblock sidebar %}

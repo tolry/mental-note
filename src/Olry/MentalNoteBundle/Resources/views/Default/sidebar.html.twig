@@ -1,4 +1,24 @@
 <div class="panel panel-default">
+    <ul class="nav">
+        <li>
+    {% if criteria.pendingOnly %}
+            <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': false}) }) }}">
+                only show pending
+                <div class="pull-right">
+                    <i class="icon-check"></i>
+                </div>
+            </a>
+    {% else %}
+            <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': true}) }) }}">
+                only show pending
+                <div class="pull-right">
+                    <i class="icon-check-empty"></i>
+                </div>
+            </a>
+    {% endif %}
+        </li>
+    </ul>
+
     <div class="panel-heading">Categories</div>
     <ul class="nav">
         {% if criteria.category %}
