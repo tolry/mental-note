@@ -34,11 +34,6 @@
 </ul>
 {% endblock breadcrumb %}
 
-{% block tabs %}
-{% render(controller('OlryMentalNoteBundle:Default:menuCategories', {filter: app.request.query.get('filter')})) %}
-<br />
-{% endblock tabs %}
-
 {% block sidebar %}
 {% render(controller('OlryMentalNoteBundle:Default:sidebar', { "filter": app.request.get('filter') })) %}
 {% endblock sidebar %}

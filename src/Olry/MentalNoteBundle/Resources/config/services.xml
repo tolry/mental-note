@@ -15,5 +15,8 @@
             <argument>%kernel.cache_dir%/thumbnails</argument>
             <argument>%olry_mental_note.thumbnail_filepattern%</argument>
         </service>
+        <service id="olry_mental_note.twig_extension" class="Olry\MentalNoteBundle\Twig\MentalNoteTwigExtension">
+            <tag name="twig.extension" />
+        </service>
     </services>
 </container>

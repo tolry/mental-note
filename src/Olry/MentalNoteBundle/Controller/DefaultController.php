@@ -97,22 +97,9 @@ class DefaultController extends AbstractBaseController
         $criteria = $this->getFilterCriteria($this->getRequest());
 
         return array(
-            'tags' => $this->getEntryRepository()->getTagStats($this->getUser(), $criteria),
-            'criteria' => $criteria,
-        );
-    }
-
-    /**
-     * @Route("/menu/categories",name="menu_categories")
-     * @Template()
-     */
-    public function menuCategoriesAction()
-    {
-        $criteria = $this->getFilterCriteria($this->getRequest());
-
-        return array(
+            'tags'       => $this->getEntryRepository()->getTagStats($this->getUser(), $criteria),
             'categories' => $this->getEntryRepository()->getCategoryStats($this->getUser(), $criteria),
-            'criteria' => $criteria,
+            'criteria'   => $criteria,
         );
     }
 

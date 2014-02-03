@@ -9,11 +9,11 @@ namespace Olry\MentalNoteBundle\Entity;
 class Category
 {
 
-    const READ = 'read';
-    const LOOK_AT = 'look_at';
-    const WATCH = 'watch';
-    const LISTEN = 'listen';
-    const EVALUATE = 'evaluate';
+    const READ            = 'read';
+    const LOOK_AT         = 'look_at';
+    const WATCH           = 'watch';
+    const LISTEN          = 'listen';
+    const EVALUATE        = 'evaluate';
     const VISIT_REGULARLY = 'visit_regularly';
 
     private static $data = array(
@@ -39,10 +39,11 @@ class Category
 
         $row = self::$data[$key];
 
-        $this->key = $key;
-        $this->label = $row['label'];
-        $this->icon = $row['icon'];
+        $this->key         = $key;
+        $this->label       = $row['label'];
+        $this->icon        = $row['icon'];
         $this->description = $row['description'];
+
         if (!empty($row['default_view'])) {
             $this->defaultView = $row['default_view'];
         }
