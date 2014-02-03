@@ -1,6 +1,8 @@
 mental-note
 ===========
 
+**work in progress**
+
 Little web application to collect your web findings. Minimal interface.
 
 - **categorize** what is the link intended for: read, watch, visit regularly, ...
@@ -10,5 +12,7 @@ Little web application to collect your web findings. Minimal interface.
 - **multi-user**
 - **automatic thumbnail generation** if no thumbnail can be calculated, uses cutycapt to take a snapshot of the page
 
+obligatory screenshot
 
+![](docs/main-interface.png)
 
