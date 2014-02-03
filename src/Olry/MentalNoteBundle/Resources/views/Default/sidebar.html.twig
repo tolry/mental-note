@@ -1,59 +1,55 @@
 <div class="panel panel-default">
     <div class="panel-heading">Categories</div>
-        <ul class="nav">
-            {% if criteria.category %}
-            <li class = "active">
-                <a href="{{ path('homepage', { filter: criteria.getQuery({'category': null})}) }}" title="remove filter">
+    <ul class="nav">
+        {% if criteria.category %}
+        <li class = "active">
+            <a href="{{ path('homepage', { filter: criteria.getQuery({'category': null})}) }}" title="remove filter">
+                <div class="pull-right">
+                    <i class="icon-remove-sign"></i>
+                </div>
+                <i class="{{ mn_category(criteria.category).icon }}"></i>
+                {{ mn_category(criteria.category).label }}
+            </a>
+        </li>
+        {% else %}
+        {% for category in categories %}
+            <li {{ (criteria.category == category.category.key) ? ' class="active"' : '' }}>
+                <a href="{{ path('homepage', {'filter': criteria.getQuery({'category': category.category.key})}) }}">
+                    <i class="{{ category.category.icon}} "></i>
+                    {{ category.category.label }}
+                    {% if category.pending > 0 %}
                     <div class="pull-right">
-                        <i class="icon-remove-sign"></i>
+                        <span class="label {% if category.pending > 10 %}label-danger{% elseif category.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ category.pending }}/{{ category.total }}</span>
                     </div>
-                    <i class="{{ mn_category(criteria.category).icon }}"></i>
-                    {{ mn_category(criteria.category).label }}
+                    {% endif %}
                 </a>
             </li>
-            {% else %}
-            {% for category in categories %}
-                <li {{ (criteria.category == category.category.key) ? ' class="active"' : '' }}>
-                    <a href="{{ path('homepage', {'filter': criteria.getQuery({'category': category.category.key})}) }}">
-                        <i class="{{ category.category.icon}} "></i>
-                        {{ category.category.label }}
-                        {% if category.pending > 0 %}
-                        <div class="pull-right">
-                            <span class="label {% if category.pending > 10 %}label-danger{% elseif category.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ category.pending }}/{{ category.total }}</span>
-                        </div>
-                        {% endif %}
-                    </a>
-                </li>
-            {% endfor%}
-            {% endif %}
-        </ul>
-    <div class="panel-body">
-    </div>
+        {% endfor%}
+        {% endif %}
+    </ul>
 
     <div class="panel-heading">Tags</div>
-    <div class="panel-body">
-        <ul class="nav">
-            {% if criteria.tag != "" %}
-            <li class = "active">
-                <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': null})}) }}" title="remove filter">
-                    <div class="pull-right">
-                        <i class="icon-remove-sign"></i>
-                    </div>
-                    {{ criteria.tag }}
-                </a>
-            </li>
-            {% else %}
-            {% for tag in tags %}
-            <li>
-                <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': tag.name})}) }}">
-                    <div class="pull-right">
-                        <span class="label {% if tag.pending > 10 %}label-danger{% elseif tag.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ tag.pending }}/{{ tag.total }}</span>
-                    </div>
-                    {{ tag.name }}
-                </a>
-            </li>
-            {% endfor%}
-            {% endif  %}
-        </ul>
-    </div>
+    <ul class="nav">
+        {% if criteria.tag != "" %}
+        <li class = "active">
+            <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': null})}) }}" title="remove filter">
+                <div class="pull-right">
+                    <i class="icon-remove-sign"></i>
+                </div>
+                {{ criteria.tag }}
+            </a>
+        </li>
+        {% else %}
+        {% for tag in tags %}
+        <li>
+            <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': tag.name})}) }}">
+                {{ tag.name }}
+                <div class="pull-right">
+                    <span class="label {% if tag.pending > 10 %}label-danger{% elseif tag.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ tag.pending }}/{{ tag.total }}</span>
+                </div>
+            </a>
+        </li>
+        {% endfor%}
+        {% endif  %}
+    </ul>
 </div>
