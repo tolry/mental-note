@@ -15,7 +15,7 @@ class ThumbnailService
     private $cacheDir;
     private $fs;
 
-    public function __construct($documentRoot, $cacheDir, $filepatter)
+    public function __construct($documentRoot, $cacheDir, $filepattern)
     {
         $this->documentRoot = $documentRoot;
         $this->cacheDir     = $cacheDir;
