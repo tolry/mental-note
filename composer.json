@@ -23,8 +23,7 @@
         "friendsofsymfony/user-bundle": "dev-master",
         "guzzle/guzzle": "*",
         "white-october/pagerfanta-bundle": "*",
-        "leafo/lessphp": "dev-master",
-        "twitter/bootstrap": "2.*"
+        "leafo/lessphp": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
