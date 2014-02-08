@@ -27,7 +27,6 @@ class EntryType extends AbstractType
             ->add('category', 'choice',
                 array(
                     'expanded'       => true,
-                    'label'          => ' ',
                     'choices'        => Category::getChoiceArray(),
                     'error_bubbling' => true
                 ))

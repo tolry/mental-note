@@ -1,0 +1,31 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_row %}
+<div class="form-group {{ form_errors(form) ? 'has-error' : '' }}">
+    {{ form_errors(form) }}
+    {{ form_widget(form, {attr: {placeholder: form.vars.label, class: "form-control"}}) }}
+</div>
+{% endblock %}
+
+{% block choice_row %}
+{% if form.vars.name == 'category' %}
+<div class="form-group {{ form_errors(form) ? 'has-error' : '' }}">
+    <div class="btn-group" data-toggle="buttons">
+    {% for child in form %}
+        <label class="btn btn-primary{% if child.vars.checked %} active{% endif %}">
+            {{ form_widget(child) }}
+            {{ child.vars.label }}
+        </label>
+    {% endfor %}
+    </div>
+</div>
+{% else %}
+    {{ form_row(form) }}
+{% endif %}
+{% endblock %}
+
+{% block tags_row %}
+    {{ form_errors(form) }}
+    {{ form_widget(form, {attr: {placeholder: form.vars.label, class: "form-control"}}) }}
+{% endblock %}
+

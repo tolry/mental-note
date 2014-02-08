@@ -30,37 +30,9 @@ var application = {
         clearTimeout(timeouts.keydown);
         timeouts.keydown = setTimeout(function(){application.getMetaInfo($element)}, 500);
     },
-    convertRadioButtons: function() {
-        $('#entry_category').find('input[type="radio"]').hide();
-        var btnGroup = $('<div />').addClass('btn-group').attr('data-toggle', 'buttons-radio');
-        $('#entry_category').find('label').each(function(){
-            var input = $('#' + $(this).attr('for'));
-
-            var btn = $('<button />')
-                        .addClass('btn')
-                        .addClass('btn-info')
-                        .attr('type', 'button')
-                        .attr('for', $(this).attr('for'))
-                        .html($(this).html())
-                        .appendTo(btnGroup)
-                        .click(function(){
-                            $('#entry_category').find('input[type="radio"]').removeAttr('checked');
-                            input.attr('checked', 'checked');
-                        });
-
-            if (input.is(':checked')) {
-                btn.addClass('active');
-            }
-
-            $(this).remove();
-        });
-
-        btnGroup.appendTo($('#entry_category'));
-    },
     registerEvents: function($domElement) {
 
         entryFormFields.url().keydown(application.getMetaInfoDelayed);
-        application.convertRadioButtons();
 
         $domElement.find('.modal-ajax-form').modalAjaxForm({
             onComplete: function($element){
