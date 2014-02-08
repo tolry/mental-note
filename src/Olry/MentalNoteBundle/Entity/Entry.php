@@ -102,9 +102,7 @@ class Entry extends AbstractEntity
 
     public function getCategory()
     {
-        if (!empty($this->category)) {
-            return new Category($this->category);
-        }
+        return $this->category;
     }
 
     public function setCategory( $category )
