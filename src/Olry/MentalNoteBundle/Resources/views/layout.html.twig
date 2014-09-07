@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title> {%block title%}Smarter Bookmarks{%endblock%}:: MentalNote</title>
+        <title>{%block title%}Smarter Bookmarks{%endblock%}:: MentalNote</title>
 
         <meta charset="utf-8">
         <meta name="description" content="">
@@ -13,7 +13,7 @@
             var mentalNote = {
                 route: {
                     url_metainfo: '{{ path('url_metainfo') }}',
-                    tag_search: '{{ path('tag_search') }}' 
+                    tag_search: '{{ path('tag_search') }}'
                 }
             }
         </script>
@@ -98,11 +98,11 @@
             </div>
 
             <div class="row">
-                <div class="col-md-3 hidden-xs hidden-sm">
+                <div class="col-sm-3 hidden-xs">
                     {% block sidebar %}{% endblock %}
                 </div>
 
-                <div class="col-md-9 col-sm-12">
+                <div class="col-sm-9 col-xs-12">
                     {% block content %}{% endblock %}
                 </div>
             </div>
