@@ -56,8 +56,6 @@ var application = {
             });
         });
 
-        $('.deferred-image').imageloader();
-
     },
     searchTags: function(query) {
         var tags = null;
@@ -78,6 +76,9 @@ $(document).ready(function(){
     application.registerEvents($(document));
 });
 
+$(window).load(function() {
+    $('.deferred-image').imageloader();
+});
 
 (function($, jQuery) {
     jQuery.fn.modalAjaxForm = function(options) {
