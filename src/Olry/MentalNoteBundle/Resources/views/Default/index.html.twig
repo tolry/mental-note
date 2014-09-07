@@ -10,7 +10,7 @@
     <a href="{{ path('entry_create') }}" class="modal-ajax-form btn btn-primary"><i class="icon-plus"></i> add link</a>
 </div>
 
-{{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]" }) : '' }}
+{{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]", proximity: 2 }) : '' }}
 
 <div class="entry-list">
 {% set lastAge = '' %}
