@@ -12,7 +12,8 @@
 <div class="form-group {{ form_errors(form) ? 'has-error' : '' }}">
     <div class="btn-group" data-toggle="buttons">
     {% for child in form %}
-        <label class="btn btn-primary{% if child.vars.checked %} active{% endif %}">
+
+        <label for="{{ child.vars.id }}" class="btn btn-primary{% if child.vars.checked %} active{% endif %}">
             {{ form_widget(child) }}
             {{ child.vars.label }}
         </label>
