@@ -111,17 +111,38 @@
 
         {% include 'OlryMentalNoteBundle::_footer.html.twig' %}
 
-        <!-- Le javascript -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        {% javascripts
-        'bundles/olrymentalnote/components/jquery/jquery.min.js'
-        'bundles/olrymentalnote/components/bootstrap3/js/bootstrap.min.js'
-        'bundles/olrymentalnote/components/select2/select2.js'
-        'bundles/olrymentalnote/components/jquery-imageloader/jquery.imageloader.js'
-        'bundles/olrymentalnote/js/*.js'
-        %}
-        <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+        <script type="text/javascript">
+            var scriptsToLoad = [];
+            <!-- Le javascript -->
+            <!-- Placed at the end of the document so the pages load faster -->
+            {% javascripts
+            'bundles/olrymentalnote/components/jquery/jquery.min.js'
+            'bundles/olrymentalnote/components/bootstrap3/js/bootstrap.min.js'
+            'bundles/olrymentalnote/components/select2/select2.js'
+            'bundles/olrymentalnote/components/jquery-imageloader/jquery.imageloader.js'
+            'bundles/olrymentalnote/js/jQuery.modalAjaxForm.js'
+            'bundles/olrymentalnote/js/main.js'
+            %}
+            scriptsToLoad.push("{{ asset_url }}");
+            {% endjavascripts %}
+
+            function loadJsDeferred() {
+                scriptsToLoad.forEach(function(jsFile) {
+                    var element = document.createElement("script");
+                    element.src = jsFile;
+                    document.body.appendChild(element);
+                    console.log('js file ' + jsFile);
+                });
+            }
+
+            if (window.addEventListener) {
+                window.addEventListener("load", loadJsDeferred, false);
+            } else if (window.attachEvent) {
+                window.attachEvent("onload", loadJsDeferred);
+            } else {
+                window.onload = loadJsDeferred;
+            }
+        </script>
 
     </body>
 </html>
