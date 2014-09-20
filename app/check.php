@@ -1,111 +1,142 @@
 <?php
 
-if (!$iniPath = get_cfg_var('cfg_file_path')) {
-    $iniPath = 'WARNING: not using a php.ini file';
+require_once dirname(__FILE__).'/SymfonyRequirements.php';
+
+$lineSize = 70;
+$symfonyRequirements = new SymfonyRequirements();
+$iniPath = $symfonyRequirements->getPhpIniConfigPath();
+
+echo_title('Symfony2 Requirements Checker');
+
+echo '> PHP is using the following php.ini file:'.PHP_EOL;
+if ($iniPath) {
+    echo_style('green', '  '.$iniPath);
+} else {
+    echo_style('warning', '  WARNING: No configuration file (php.ini) used by PHP!');
 }
 
-echo "********************************\n";
-echo "*                              *\n";
-echo "*  Symfony requirements check  *\n";
-echo "*                              *\n";
-echo "********************************\n\n";
-echo sprintf("php.ini used by PHP: %s\n\n", $iniPath);
+echo PHP_EOL.PHP_EOL;
 
-echo "** WARNING **\n";
-echo "*  The PHP CLI can use a different php.ini file\n";
-echo "*  than the one used with your web server.\n";
-if ('\\' == DIRECTORY_SEPARATOR) {
-    echo "*  (especially on the Windows platform)\n";
-}
-echo "*  If this is the case, please ALSO launch this\n";
-echo "*  utility from your web server.\n";
-echo "** WARNING **\n";
+echo '> Checking Symfony requirements:'.PHP_EOL.'  ';
 
-// mandatory
-echo_title("Mandatory requirements");
-check(version_compare(phpversion(), '5.3.2', '>='), sprintf('Checking that PHP version is at least 5.3.2 (%s installed)', phpversion()), 'Install PHP 5.3.2 or newer (current version is '.phpversion(), true);
-check(is_dir(__DIR__.'/../vendor/symfony'), 'Checking that vendor libraries are installed', 'Vendor libraries are missing; Install composer following instructions from http://getcomposer.org/ and then run "php composer.phar install" to install them', true);
-check(ini_get('date.timezone'), 'Checking that the "date.timezone" setting is set', 'Set the "date.timezone" setting in php.ini (like Europe/Paris)', true);
-check(is_writable(__DIR__.'/../app/cache'), sprintf('Checking that app/cache/ directory is writable'), 'Change the permissions of the app/cache/ directory so that the web server can write in it', true);
-check(is_writable(__DIR__.'/../app/logs'), sprintf('Checking that the app/logs/ directory is writable'), 'Change the permissions of the app/logs/ directory so that the web server can write in it', true);
-check(function_exists('json_encode'), 'Checking that the json_encode() is available', 'Install and enable the json extension', true);
-check(function_exists('session_start'), 'Checking that the session_start() is available', 'Install and enable the session extension', true);
-check(function_exists('ctype_alpha'), 'Checking that the ctype_alpha() is available', 'Install and enable the ctype extension', true);
-check(function_exists('token_get_all'), 'Checking that the token_get_all() is available', 'Install and enable the tokenizer extension', true);
-check(function_exists('simplexml_import_dom'), 'Checking that the simplexml_import_dom() is available', 'Install and enable the simplexml extension', true);
-check(!(function_exists('apc_store') && ini_get('apc.enabled')) || version_compare(phpversion('apc'), '3.0.17', '>='), 'Checking that the APC version is at least 3.0.17', 'Upgrade your APC extension (3.0.17+)', true);
-check(!ini_get('detect_unicode'), 'Checking that php.ini has detect_unicode set to off', 'Set detect_unicode to off in php.ini', true);
-$suhosin = ini_get('suhosin.executor.include.whitelist');
-check(false === $suhosin || false !== stripos($suhosin, 'phar'), 'Checking that php.ini has suhosin.executor.include.whitelist correctly configured', 'Set suhosin.executor.include.whitelist to "phar'.($suhosin? ' '.$suhosin:'').'"  in php.ini', true);
-
-// warnings
-echo_title("Optional checks");
-check(class_exists('DomDocument'), 'Checking that the PHP-XML module is installed', 'Install and enable the php-xml module', false);
-check(function_exists('mb_strlen'), 'Checking that the mb_strlen() function is available', 'Install and enable the mbstring extension', false);
-check(function_exists('iconv'), 'Checking that the iconv() function is available', 'Install and enable the iconv extension', false);
-check(function_exists('utf8_decode'), 'Checking that the utf8_decode() is available', 'Install and enable the XML extension', false);
-if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
-    check(function_exists('posix_isatty'), 'Checking that the posix_isatty() is available', 'Install and enable the php_posix extension (used to colorized the CLI output)', false);
-}
-check(class_exists('Locale'), 'Checking that the intl extension is available', 'Install and enable the intl extension (used for validators)', false);
-if (class_exists('Locale')) {
-    $version = '';
-
-    if (defined('INTL_ICU_VERSION')) {
-        $version =  INTL_ICU_VERSION;
+$messages = array();
+foreach ($symfonyRequirements->getRequirements() as $req) {
+    /** @var $req Requirement */
+    if ($helpText = get_error_message($req, $lineSize)) {
+        echo_style('red', 'E');
+        $messages['error'][] = $helpText;
     } else {
-        $reflector = new \ReflectionExtension('intl');
+        echo_style('green', '.');
+    }
+}
 
-        ob_start();
-        $reflector->info();
-        $output = strip_tags(ob_get_clean());
+$checkPassed = empty($messages['error']);
 
-        preg_match('/^ICU version +(?:=> )?(.*)$/m', $output, $matches);
-        $version = $matches[1];
+foreach ($symfonyRequirements->getRecommendations() as $req) {
+    if ($helpText = get_error_message($req, $lineSize)) {
+        echo_style('yellow', 'W');
+        $messages['warning'][] = $helpText;
+    } else {
+        echo_style('green', '.');
+    }
+}
+
+if ($checkPassed) {
+    echo_block('success', 'OK', 'Your system is ready to run Symfony2 projects', true);
+} else {
+    echo_block('error', 'ERROR', 'Your system is not ready to run Symfony2 projects', true);
+
+    echo_title('Fix the following mandatory requirements', 'red');
+
+    foreach ($messages['error'] as $helpText) {
+        echo ' * '.$helpText.PHP_EOL;
+    }
+}
+
+if (!empty($messages['warning'])) {
+    echo_title('Optional recommendations to improve your setup', 'yellow');
+
+    foreach ($messages['warning'] as $helpText) {
+        echo ' * '.$helpText.PHP_EOL;
+    }
+}
+
+echo PHP_EOL;
+echo_style('title', 'Note');
+echo '  The command console could use a different php.ini file'.PHP_EOL;
+echo_style('title', '~~~~');
+echo '  than the one used with your web server. To be on the'.PHP_EOL;
+echo '      safe side, please check the requirements from your web'.PHP_EOL;
+echo '      server using the ';
+echo_style('yellow', 'web/config.php');
+echo ' script.'.PHP_EOL;
+echo PHP_EOL;
+
+exit($checkPassed ? 0 : 1);
+
+function get_error_message(Requirement $requirement, $lineSize)
+{
+    if ($requirement->isFulfilled()) {
+        return;
     }
 
-    check(version_compare($version, '4.0', '>='), 'Checking that the intl ICU version is at least 4+', 'Upgrade your intl extension with a newer ICU version (4+)', false);
+    $errorMessage  = wordwrap($requirement->getTestMessage(), $lineSize - 3, PHP_EOL.'   ').PHP_EOL;
+    $errorMessage .= '   > '.wordwrap($requirement->getHelpText(), $lineSize - 5, PHP_EOL.'   > ').PHP_EOL;
+
+    return $errorMessage;
 }
 
-$accelerator =
-    (function_exists('apc_store') && ini_get('apc.enabled'))
-    ||
-    function_exists('eaccelerator_put') && ini_get('eaccelerator.enable')
-    ||
-    function_exists('xcache_set')
-;
-check($accelerator, 'Checking that a PHP accelerator is installed', 'Install a PHP accelerator like APC (highly recommended)', false);
-
-check(!ini_get('short_open_tag'), 'Checking that php.ini has short_open_tag set to off', 'Set short_open_tag to off in php.ini', false);
-check(!ini_get('magic_quotes_gpc'), 'Checking that php.ini has magic_quotes_gpc set to off', 'Set magic_quotes_gpc to off in php.ini', false);
-check(!ini_get('register_globals'), 'Checking that php.ini has register_globals set to off', 'Set register_globals to off in php.ini', false);
-check(!ini_get('session.auto_start'), 'Checking that php.ini has session.auto_start set to off', 'Set session.auto_start to off in php.ini', false);
-
-echo_title("Optional checks (Doctrine)");
-
-check(class_exists('PDO'), 'Checking that PDO is installed', 'Install PDO (mandatory for Doctrine)', false);
-if (class_exists('PDO')) {
-    $drivers = PDO::getAvailableDrivers();
-    check(count($drivers), 'Checking that PDO has some drivers installed: '.implode(', ', $drivers), 'Install PDO drivers (mandatory for Doctrine)');
-}
-
-/**
- * Checks a configuration.
- */
-function check($boolean, $message, $help = '', $fatal = false)
+function echo_title($title, $style = null)
 {
-    echo $boolean ? "  OK        " : sprintf("\n\n[[%s]] ", $fatal ? ' ERROR ' : 'WARNING');
-    echo sprintf("$message%s\n", $boolean ? '' : ': FAILED');
+    $style = $style ?: 'title';
 
-    if (!$boolean) {
-        echo "            *** $help ***\n";
-        if ($fatal) {
-            exit("You must fix this problem before resuming the check.\n");
+    echo PHP_EOL;
+    echo_style($style, $title.PHP_EOL);
+    echo_style($style, str_repeat('~', strlen($title)).PHP_EOL);
+    echo PHP_EOL;
+}
+
+function echo_style($style, $message)
+{
+    // ANSI color codes
+    $styles = array(
+        'reset' => "\033[0m",
+        'red' => "\033[31m",
+        'green' => "\033[32m",
+        'yellow' => "\033[33m",
+        'error' => "\033[37;41m",
+        'success' => "\033[37;42m",
+        'title' => "\033[34m",
+    );
+    $supports = has_color_support();
+
+    echo ($supports ? $styles[$style] : '').$message.($supports ? $styles['reset'] : '');
+}
+
+function echo_block($style, $title, $message)
+{
+    $message = ' '.trim($message).' ';
+    $width = strlen($message);
+
+    echo PHP_EOL.PHP_EOL;
+
+    echo_style($style, str_repeat(' ', $width).PHP_EOL);
+    echo_style($style, str_pad(' ['.$title.']',  $width, ' ', STR_PAD_RIGHT).PHP_EOL);
+    echo_style($style, str_pad($message,  $width, ' ', STR_PAD_RIGHT).PHP_EOL);
+    echo_style($style, str_repeat(' ', $width).PHP_EOL);
+}
+
+function has_color_support()
+{
+    static $support;
+
+    if (null === $support) {
+        if (DIRECTORY_SEPARATOR == '\\') {
+            $support = false !== getenv('ANSICON') || 'ON' === getenv('ConEmuANSI');
+        } else {
+            $support = function_exists('posix_isatty') && @posix_isatty(STDOUT);
         }
     }
-}
 
-function echo_title($title)
-{
-    echo "\n** $title **\n\n";
+    return $support;
 }
