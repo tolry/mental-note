@@ -87,7 +87,7 @@ class EntryController extends AbstractBaseController
         $form    = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {
-            if ($this->processForm($form, $entry, $request)){
+            if ($this->processForm($form, $entry, $request)) {
                 return new Response('created', 201);
             }
         }
@@ -105,7 +105,7 @@ class EntryController extends AbstractBaseController
         $form    = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {
-            if ($this->processForm($form, $entry, $request)){
+            if ($this->processForm($form, $entry, $request)) {
                 return new Response('changed', 201);
             }
         }
@@ -155,7 +155,4 @@ class EntryController extends AbstractBaseController
 
         return new Response('', 200);
     }
-
 }
-
-
