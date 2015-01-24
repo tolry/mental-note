@@ -10,12 +10,11 @@
 
             <div class="col-sm-12 col-md-8">
                 <h4>
-                    <i class="{{ mn_category(entry.category).icon}} " title="{{ mn_category(entry.category).label}}"></i> 
+                    <i class="{{ mn_category(entry.category).icon}} " title="{{ mn_category(entry.category).label}}"></i>
                     <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
                         {{ entry.title }}
                     </a>
                     <small>
-                        <img src="http://g.etfv.co/{{entry.url}}" width="16" height="16" title="" alt="" />
                         {{ entry.domain }}
                     </small>
                 </h4>

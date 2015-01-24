@@ -24,7 +24,7 @@ class EntryRepository extends EntityRepository
     public function getQueryBuilder(User $user, EntryCriteria $criteria, $includeVisits = true)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('e, t')
+        $qb->select('e')
             ->from('Olry\MentalNoteBundle\Entity\Entry', 'e')
             ->leftJoin('e.tags', 't')
             ->andWhere('e.user = :user_id')
@@ -32,7 +32,7 @@ class EntryRepository extends EntityRepository
             ->add('orderBy', 'e.created DESC');
 
         if ($includeVisits) {
-            $qb->select('e, t, v')
+            $qb->select('e, v')
                 ->leftJoin('e.visits', 'v');
         }
 
