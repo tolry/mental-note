@@ -21,8 +21,7 @@
 {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    {{ form_row(form.current_password) }}
-    {{ form_row(form.plainPassword) }}
+    {{ form_rest(form) }}
 
     <div class="btn-group">
         <a class="btn btn-danger" href="{{ path('homepage') }}">cancel</a>
