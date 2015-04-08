@@ -12,6 +12,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Olry\MentalNoteBundle\Criteria\EntryCriteria;
 
 use FOS\UserBundle\Form\Type\ChangePasswordFormType;
+use FOS\UserBundle\Form\Model\ChangePassword;
 
 class UserController extends AbstractBaseController
 {
@@ -23,23 +24,13 @@ class UserController extends AbstractBaseController
     public function indexAction()
     {
         $user    = $this->getUser();
-        $request = $this->getREquest();
 
-        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->container->get('fos_user.change_password.form.factory');
+        $form        = $this->container->get('fos_user.change_password.form');
+        $formHandler = $this->container->get('fos_user.change_password.form.handler');
 
-        $form = $formFactory->createForm();
-        $form->setData($user);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-            $userManager = $this->container->get('fos_user.user_manager');
-
-            $userManager->updateUser($user);
-
+        if ($formHandler->process($user)) {
             $url = $this->container->get('router')->generate('homepage');
+
             return new RedirectResponse($url);
         }
 
@@ -48,5 +39,4 @@ class UserController extends AbstractBaseController
             'form' => $form->createView(),
         );
     }
-
 }

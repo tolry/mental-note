@@ -1,10 +1,6 @@
 {% extends "OlryMentalNoteBundle::layout.html.twig" %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
-{% block breadcrumb %}
-<ul class="breadcrumb">
-    <li><a href="{{ path('homepage') }}">all entries</a> <span class="divider">/</span></li>
-</ul>
-{% endblock breadcrumb %}
 
 {% block sidebar %}
 <dl class="well">
@@ -18,11 +14,12 @@
 {% endblock sidebar %}
 
 {% block content %}
+<h2>change password</h2>
 {{ form_start(form) }}
     {{ form_errors(form) }}
 
     {{ form_row(form.current_password) }}
-    {{ form_row(form.plainPassword) }}
+    {{ form_row(form.new) }}
 
     <div class="btn-group">
         <a class="btn btn-danger" href="{{ path('homepage') }}">cancel</a>
