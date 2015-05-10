@@ -15,7 +15,8 @@ class DefaultController extends AbstractBaseController
 
     private function getFilterCriteria($request)
     {
-        $filter = (array) $this->getRequest()->get('filter', array());
+        $filter = (array) $request->get('filter', array());
+
         return new EntryCriteria($filter);
     }
 
@@ -27,7 +28,14 @@ class DefaultController extends AbstractBaseController
     {
         $criteria = $this->getFilterCriteria($this->getRequest());
 
-        $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
+        try {
+            $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
+        } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $e) {
+            $filter = (array) $this->getRequest()->get('filter', array());
+            $filter['page']--;
+
+            return $this->redirectToRoute('homepage', ['filter' => $filter]);
+        }
 
         return array(
             'pager'       => $pager,
