@@ -105,12 +105,17 @@ class EntryRepository extends EntityRepository
         $criteria->tag         = null;
         $criteria->pendingOnly = false;
 
-        $qb = $this->getQueryBuilder($user, $criteria, $includeVisits = false);
-        $qb->select('t.name, t.id, SUM(e.pending) AS pending, COUNT(e.id) AS total')
-            ->andWhere('t.name IS NOT NULL')
-            ->add('groupBy', 't.id')
-            ->add('orderBy', 'total DESC');
+        $innerQb = $this->getQueryBuilder($user, $criteria, $includeVisits = false);
 
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('tag.name, tag.id, SUM(en.pending) AS pending, COUNT(en.id) AS total')
+            ->from('Olry\MentalNoteBundle\Entity\Tag', 'tag')
+            ->innerJoin('tag.entries', 'en')
+            ->andWhere('en.id IN (' . $innerQb->getDql() . ')')
+            ->add('groupBy', 'tag.id')
+            ->add('orderBy', 'pending DESC');
+
+        $qb->setParameters($innerQb->getParameters());
         $qb->setMaxResults($limit);
 
         return $qb->getQuery()->getResult();

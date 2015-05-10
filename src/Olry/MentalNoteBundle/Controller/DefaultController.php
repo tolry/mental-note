@@ -68,7 +68,7 @@ class DefaultController extends AbstractBaseController
     public function urlMetainfoAction()
     {
         $url = $this->getRequest()->get('url');
-        if(empty($url)){
+        if (empty($url)) {
             throw $this->createNotFoundException('no url given');
         }
 
@@ -79,6 +79,7 @@ class DefaultController extends AbstractBaseController
             'image_url' => $info->getImageUrl(),
             'category' => $info->getDefaultCategory(),
         );
+
         return new Response(\json_encode($metaInfo));
     }
 
@@ -87,11 +88,13 @@ class DefaultController extends AbstractBaseController
         if (preg_match('%https?://i\.imgur.com/([0-9a-z]+)\.(jpe?g|gif|png)%i', $url, $matches)) {
             $url = "http://imgur.com/" . $matches[1];
         }
-        try{
+
+        try {
             $crawler = new Crawler(file_get_contents($url));
             $title = $crawler->filterXPath('//head/title')->first()->text();
+
             return trim($title);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
     }
@@ -110,5 +113,4 @@ class DefaultController extends AbstractBaseController
             'criteria'   => $criteria,
         );
     }
-
 }
