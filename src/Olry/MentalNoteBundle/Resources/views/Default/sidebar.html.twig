@@ -1,22 +1,32 @@
 <div class="panel panel-default">
     <div class="panel-heading">Filters</div>
     <ul class="nav">
+        {% if criteria.query|length > 0 %}
+        <li class = "active">
+            <a href="{{ path('homepage', { filter: criteria.getQuery({'query': null})}) }}" title="remove filter">
+                <div class="pull-right">
+                    <i class="icon-remove-sign"></i>
+                </div>
+                fulltext "{{ criteria.query }}"
+            </a>
+        </li>
+        {% endif %}
         <li>
-    {% if criteria.pendingOnly %}
+            {% if criteria.pendingOnly %}
             <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': false}) }) }}">
                 only show pending
                 <div class="pull-right">
                     <i class="icon-check"></i>
                 </div>
             </a>
-    {% else %}
+            {% else %}
             <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': true}) }) }}">
                 only show pending
                 <div class="pull-right">
                     <i class="icon-check-empty"></i>
                 </div>
             </a>
-    {% endif %}
+            {% endif %}
         </li>
     </ul>
 
