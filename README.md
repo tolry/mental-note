@@ -16,3 +16,12 @@ obligatory screenshot
 
 ![](docs/main-interface.png)
 
+switch to doctrine migrations
+-----------------------------
+
+if your dev installation is older than 2015-05-15 you will need to add the initial migration manually
+
+```
+php app/console do:mi:version --add 20150515104913
+```
+
