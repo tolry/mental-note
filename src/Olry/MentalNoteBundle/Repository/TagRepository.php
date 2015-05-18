@@ -15,29 +15,18 @@ use Olry\MentalNoteBundle\Entity\Category;
 class TagRepository extends EntityRepository
 {
 
-    public function getStats(User $user, $limit = 20)
-    {
-        $sql = "SELECT t.name, t.id, SUM(e.pending) AS pending, COUNT(e.id) AS total
-            FROM \Olry\MentalNoteBundle\Entity\Entry e 
-            INNER JOIN e.tags t
-            WHERE e.user = :user 
-            GROUP BY t.id
-            ORDER BY total DESC";
-        $query = $this->getEntityManager()->createQuery($sql);
-        $query->setMaxResults($limit);
-        $query->setParameter('user',$user->getId());
-
-        return $query->getResult();
-    }
-
-    public function search($query)
+    public function search($query, User $user)
     {
 
         $qb = $this->createQueryBuilder('t');
 
         if (strlen($query) > 0) {
-            $qb->add("where", "t.name LIKE :query");
-            $qb->setParameter('query', "%$query%");
+            $qb
+                ->andWhere("t.name LIKE :query")
+                ->andWhere("t IN (SELECT DISTINCT t2 FROM \Olry\MentalNoteBundle\Entity\Tag t2 INNER JOIN t2.entries e WHERE e.user = :user)")
+                ->setParameter('query', "%$query%")
+                ->setParameter('user', $user)
+            ;
         }
 
         $qb->add('orderBy', 't.name ASC');
@@ -45,4 +34,3 @@ class TagRepository extends EntityRepository
         return $qb;
     }
 }
-
