@@ -86,10 +86,16 @@ class EntryRepository extends EntityRepository
         $criteria->category    = null;
         $criteria->pendingOnly = false;
 
-        $qb = $this->getQueryBuilder($user, $criteria, $includeVisits = false);
-        $qb->select('e.category, SUM(e.pending) AS pending, COUNT(e.id) AS total')
-            ->add('groupBy', 'e.category')
-            ->add('orderBy', 'e.category ASC');
+        $innerQb = $this->getQueryBuilder($user, $criteria, $includeVisits = false);
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('en.category, SUM(en.pending) AS pending, COUNT(en.id) AS total')
+            ->from('Olry\MentalNoteBundle\Entity\Entry', 'en')
+            ->andWhere('en.id IN (' . $innerQb->getDql() . ')')
+            ->add('groupBy', 'en.category')
+            ->add('orderBy', 'en.category ASC');
+
+        $qb->setParameters($innerQb->getParameters());
 
         $data = array();
         foreach ($qb->getQuery()->getResult() as $row) {
