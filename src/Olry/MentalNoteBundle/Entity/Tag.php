@@ -21,7 +21,7 @@ class Tag extends AbstractEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true, options={"collation"="utf8_bin"})
      */
     private $name;
 
