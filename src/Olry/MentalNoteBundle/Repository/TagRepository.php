@@ -20,12 +20,15 @@ class TagRepository extends EntityRepository
 
         $qb = $this->createQueryBuilder('t');
 
+        $qb
+            ->andWhere("t IN (SELECT DISTINCT t2 FROM \Olry\MentalNoteBundle\Entity\Tag t2 INNER JOIN t2.entries e WHERE e.user = :user)")
+            ->setParameter('user', $user)
+        ;
+
         if (strlen($query) > 0) {
             $qb
                 ->andWhere("t.name LIKE :query")
-                ->andWhere("t IN (SELECT DISTINCT t2 FROM \Olry\MentalNoteBundle\Entity\Tag t2 INNER JOIN t2.entries e WHERE e.user = :user)")
                 ->setParameter('query', "%$query%")
-                ->setParameter('user', $user)
             ;
         }
 
