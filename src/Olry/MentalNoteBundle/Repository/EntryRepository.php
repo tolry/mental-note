@@ -58,9 +58,9 @@ class EntryRepository extends EntityRepository
                     continue;
                 }
 
-                $query = '%' . $query . '%';
+                $query = '%' . strtolower($query) . '%';
                 $queryVariable = ':query' . $partNumber++;
-                $qb->andWhere("(t.name LIKE $queryVariable OR e.title LIKE $queryVariable or e.url LIKE $queryVariable)")
+                $qb->andWhere("(LOWER(t.name) LIKE $queryVariable OR e.title LIKE $queryVariable or e.url LIKE $queryVariable)")
                     ->setParameter($queryVariable, $query);
             }
         }
