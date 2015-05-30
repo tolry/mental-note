@@ -24,19 +24,22 @@ class EntryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('category', 'choice',
+            ->add(
+                'category',
+                'choice',
                 array(
                     'expanded'       => true,
                     'choices'        => Category::getChoiceArray(),
                     'error_bubbling' => true
-                ))
+                )
+            )
             ->add('url', 'text', array('label' => 'url', 'attr' => array('class' => 'input-large', 'focus' => 'focus')))
             ->add('title', 'text', array('label' => 'title', 'attr' => array('class' => 'input-large')))
             ->add(
                 $builder
-                    ->create('tags', 'text', array('label' => 'Tags', 'attr' => array('class' => 'input-large')))
+                    ->create('tags', 'text', array('required' => false, 'label' => 'Tags', 'attr' => array('class' => 'input-large')))
                     ->addModelTransformer(new EntryTagTransformer($this->em->getRepository('Olry\MentalNoteBundle\Entity\Tag')))
-                )
+            )
         ;
     }
 
