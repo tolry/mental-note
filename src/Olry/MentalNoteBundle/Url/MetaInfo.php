@@ -59,8 +59,9 @@ class MetaInfo
 
         try {
             $crawler = new Crawler($this->html);
+
             return trim($crawler->filterXPath($xpath)->first()->text());
-        } catch (\InvalidArgumentException $e) {
+        } catch (\Exception $e) {
             return null;
         }
     }
@@ -78,10 +79,11 @@ class MetaInfo
         $xpaths = array(
             '//meta[@property="og:image"]/@content',
             '//link[@rel="image_src"]/@href',
-            'id("comic")//img/@src',
+            '//*[@id="comic"]//img/@src',
         );
-        foreach ($xpaths as $xpath){
-            $result = $this->getXpath(array_shift($xpaths));
+
+        foreach ($xpaths as $xpath) {
+            $result = $this->getXpath($xpath);
             if (!empty($result)) {
                 return $result;
             }

@@ -6,10 +6,15 @@
                 <h4 class="modal-title">editing entry [{{ entry.id }}]</h4>
             </div>
             <div class="modal-body">
-                {% include 'OlryMentalNoteBundle:Entry:_form.html.twig' %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% include 'OlryMentalNoteBundle:Entry:_form.html.twig' %}
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" namme="submit" class="btn btn-primary"><i class="icon-plus"></i> save</button>
+                <span id="metainfo-notification"></span>
+                <button type="submit" name="submit" class="btn btn-primary"><i class="icon-plus"></i> save</button>
             </div>
         </form>
     </div>

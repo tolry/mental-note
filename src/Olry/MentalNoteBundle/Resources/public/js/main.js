@@ -5,11 +5,13 @@ var timeouts = {
 var entryFormFields = {
     url: function(){return $('input#entry_url');},
     title: function(){return $('input#entry_title');},
-    categories: function(){return $('input[name="entry[category]"]');}
+    categories: function(){return $('input[name="entry[category]"]');},
+    notificationSpan: function(){return $('span#metainfo-notification');}
 }
 
 var application = {
     getMetaInfo: function($urlElement){
+        entryFormFields.notificationSpan().html('trying to retrieve URL meta data ...');
         $.ajax({
             url: mentalNote.route.url_metainfo,
             dataType: 'json',
@@ -17,11 +19,19 @@ var application = {
                 url: $urlElement.val()
             },
             success: function(data){
-                entryFormFields.title().val(data.title);
+                entryFormFields.notificationSpan().html('');
+
+                if (entryFormFields.title().val() == '') {
+                    entryFormFields.title().val(data.title);
+                }
+
                 var id = entryFormFields.categories().filter('[value=' + data.category + ']').attr('id');
                 if (id) {
                     $('[for=' + id + ']').trigger('click');
                 }
+            },
+            error: function() {
+                entryFormFields.notificationSpan().html('error retrieving URL meta data');
             }
         });
     },
