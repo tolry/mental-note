@@ -66,6 +66,9 @@ class MetaInfo
         }
     }
 
+    /**
+     * @return string
+     */
     public function getImageUrl()
     {
         if ($this->imageUrl !== null) {
@@ -117,7 +120,7 @@ class MetaInfo
     /**
      * Get info.
      *
-     * @return Olry\MentalNoteBundle\Ur\Info
+     * @return Info
      */
     public function getInfo()
     {

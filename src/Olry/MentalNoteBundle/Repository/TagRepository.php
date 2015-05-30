@@ -3,11 +3,8 @@
 namespace Olry\MentalNoteBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Olry\MentalNoteBundle\Entity\User;
-use Olry\MentalNoteBundle\Entity\Entry;
 use Olry\MentalNoteBundle\Entity\Tag;
-use Olry\MentalNoteBundle\Entity\Category;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)

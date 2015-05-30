@@ -2,7 +2,6 @@
 
 namespace Olry\MentalNoteBundle\Entity;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

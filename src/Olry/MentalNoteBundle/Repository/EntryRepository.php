@@ -75,7 +75,7 @@ class EntryRepository extends EntityRepository
         $pager   = new Pagerfanta($adapter);
 
         $pager->setMaxPerPage($criteria->limit)
-              ->setCurrentPage($criteria->page);
+                ->setCurrentPage($criteria->page);
 
         return $pager;
     }

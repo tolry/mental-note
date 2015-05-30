@@ -4,7 +4,6 @@ namespace Olry\MentalNoteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class TagController extends AbstractBaseController
@@ -16,7 +15,7 @@ class TagController extends AbstractBaseController
      */
     public function indexAction()
     {
-        $request    = $this->getRequest();
+        $request = $this->getRequest();
 
         $tags = $this
             ->getTagRepository()

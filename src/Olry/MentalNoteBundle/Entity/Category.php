@@ -33,7 +33,7 @@ class Category
 
     public function __construct($key)
     {
-        if (!isset(self::$data[$key])){
+        if (!isset(self::$data[$key])) {
             throw new \Exception('no category known by identifier ' . $key);
         }
 
@@ -68,7 +68,7 @@ class Category
         return $this->key;
     }
 
-    public function setKey( $key )
+    public function setKey($key)
     {
         $this->key = $key;
     }
@@ -78,7 +78,7 @@ class Category
         return $this->label;
     }
 
-    public function setLabel( $label )
+    public function setLabel($label)
     {
         $this->label = $label;
     }
@@ -88,7 +88,7 @@ class Category
         return $this->icon;
     }
 
-    public function setIcon( $icon )
+    public function setIcon($icon)
     {
         $this->icon = $icon;
     }
@@ -98,7 +98,7 @@ class Category
         return $this->defaultView;
     }
 
-    public function setDefaultView( $defaultView )
+    public function setDefaultView($defaultView)
     {
         $this->defaultView = $defaultView;
     }
@@ -108,7 +108,7 @@ class Category
         return $this->description;
     }
 
-    public function setDescription( $description )
+    public function setDescription($description)
     {
         $this->description = $description;
     }

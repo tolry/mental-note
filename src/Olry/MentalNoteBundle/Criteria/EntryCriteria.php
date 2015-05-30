@@ -13,7 +13,7 @@ class EntryCriteria
     public $page        = 1;
     public $pendingOnly = true;
 
-    public function __construct (array $data)
+    public function __construct(array $data)
     {
         foreach ($data as $member=>$value) {
             if (property_exists($this, $member)) {

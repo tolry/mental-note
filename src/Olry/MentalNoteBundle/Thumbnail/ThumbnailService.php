@@ -4,8 +4,6 @@ namespace Olry\MentalNoteBundle\Thumbnail;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
-
 use Olry\MentalNoteBundle\Url\MetaInfo;
 
 class ThumbnailService
@@ -31,6 +29,9 @@ class ThumbnailService
         return str_replace($search, $replace, $this->filepattern);
     }
 
+    /**
+     * @param string $file
+     */
     public function getImageForUrl($url, $file)
     {
         $metainfo = new MetaInfo($url);
