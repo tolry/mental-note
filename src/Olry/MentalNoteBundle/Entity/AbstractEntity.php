@@ -51,7 +51,7 @@ abstract class AbstractEntity
     /**
      * @param DateTime $created 
      */
-    public function setCreated( \DateTime $created )
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
     }
@@ -67,7 +67,7 @@ abstract class AbstractEntity
     /**
      * @param DateTime $updated 
      */
-    public function setUpdated( \DateTime $updated )
+    public function setUpdated(\DateTime $updated)
     {
         $this->updated = $updated;
     }

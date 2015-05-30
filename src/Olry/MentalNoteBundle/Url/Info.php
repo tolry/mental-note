@@ -113,12 +113,12 @@ class Info
 
             syslog(LOG_INFO, 'guzzle start for url ' . $this->url);
             $guzzle = new GuzzleClient($this->url);
-            $guzzle->getEventDispatcher()->addListener('request.error', function(Event $event){
+            $guzzle->getEventDispatcher()->addListener('request.error', function(Event $event) {
                 $event->stopPropagation();
             });
 
             $response = $guzzle->head()->send();
-            if ( ! $response->isSuccessful()) {
+            if (!$response->isSuccessful()) {
                 $response = $guzzle->get()->send();
             }
 

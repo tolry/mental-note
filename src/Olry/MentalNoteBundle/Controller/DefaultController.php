@@ -4,15 +4,16 @@ namespace Olry\MentalNoteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DomCrawler\Crawler;
-
 use Olry\MentalNoteBundle\Criteria\EntryCriteria;
 
 class DefaultController extends AbstractBaseController
 {
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
     private function getFilterCriteria($request)
     {
         $filter = (array) $request->get('filter', array());

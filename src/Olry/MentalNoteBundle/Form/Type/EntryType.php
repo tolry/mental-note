@@ -8,10 +8,7 @@ namespace Olry\MentalNoteBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManager;
-
-use Olry\MentalNoteBundle\Entity\Entry;
 use Olry\MentalNoteBundle\Entity\Category;
-
 use Olry\MentalNoteBundle\Form\Transformer\EntryTagTransformer;
 
 class EntryType extends AbstractType

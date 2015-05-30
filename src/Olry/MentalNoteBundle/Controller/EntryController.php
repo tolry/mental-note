@@ -5,17 +5,18 @@ namespace Olry\MentalNoteBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-
 use Olry\MentalNoteBundle\Entity\Entry;
 use Olry\MentalNoteBundle\Form\Type\EntryType;
-use Olry\MentalNoteBundle\Thumbnail\ThumbnailService;
 
 class EntryController extends AbstractBaseController
 {
 
+    /**
+     * @param \Symfony\Component\Form\Form $form
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
     private function processForm($form, Entry $entry, $request)
     {
         $form->handleRequest($request);

@@ -23,7 +23,7 @@ class UserController extends AbstractBaseController
      */
     public function indexAction()
     {
-        $user    = $this->getUser();
+        $user = $this->getUser();
 
         $form        = $this->container->get('fos_user.change_password.form');
         $formHandler = $this->container->get('fos_user.change_password.form.handler');
