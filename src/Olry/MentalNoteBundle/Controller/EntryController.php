@@ -21,8 +21,6 @@ class EntryController extends AbstractBaseController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $entry->setUser($this->getUser());
-
             $this->getEm()->persist($entry);
             $this->getEm()->flush();
 
@@ -83,7 +81,7 @@ class EntryController extends AbstractBaseController
     public function createAction()
     {
         $request = $this->getRequest();
-        $entry   = new Entry();
+        $entry   = new Entry($this->getUser());
         $form    = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {

@@ -1,27 +1,25 @@
 <?php
+/*
+ * @author Tobias Olry <tobias.olry@gmail.com>
+ */
 
 namespace Olry\MentalNoteBundle\Entity;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Olry\MentalNoteBundle\Entity\User;
-use Olry\MentalNoteBundle\Entity\Visit;
 use Olry\MentalNoteBundle\Url\MetaInfo;
 use Olry\MentalNoteBundle\Url\Info;
 
 /**
- * @author Tobias Olry (tobias.olry@web.de)
  * @ORM\Entity(repositoryClass="Olry\MentalNoteBundle\Repository\EntryRepository")
  * @ORM\Table(name="entry")
  * @UniqueEntity(fields={"url", "user"}, message="url already in database")
  */
 class Entry extends AbstractEntity
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -65,19 +63,15 @@ class Entry extends AbstractEntity
     private $visits;
 
     /**
-     * @var string
-     */
-    private $tagsString = null;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @var Olry\MentalNoteBundle\Entity\User
+     * @var User
      */
     private $user = null;
 
-    public function __construct()
+    public function __construct(User $user)
     {
         $this->tags = array();
+        $this->user = $user;
     }
 
     public function getUrl()
@@ -85,7 +79,7 @@ class Entry extends AbstractEntity
         return $this->url;
     }
 
-    public function setUrl( $url )
+    public function setUrl($url)
     {
         $this->url = $url;
     }
@@ -95,7 +89,7 @@ class Entry extends AbstractEntity
         return $this->title;
     }
 
-    public function setTitle( $title )
+    public function setTitle($title)
     {
         $this->title = $title;
     }
@@ -105,7 +99,7 @@ class Entry extends AbstractEntity
         return $this->category;
     }
 
-    public function setCategory( $category )
+    public function setCategory($category)
     {
         $this->category = $category;
     }
@@ -115,7 +109,7 @@ class Entry extends AbstractEntity
         return $this->pending;
     }
 
-    public function setPending( $pending )
+    public function setPending($pending)
     {
         $this->pending = $pending;
     }
@@ -125,7 +119,7 @@ class Entry extends AbstractEntity
         return $this->tags;
     }
 
-    public function setTags( $tags )
+    public function setTags($tags)
     {
         $this->tags = $tags;
     }
@@ -135,21 +129,12 @@ class Entry extends AbstractEntity
         return $this->id;
     }
 
-
     /**
-     * @return Olry\MentalNoteBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * @param Olry\MentalNoteBundle\Entity\User $user 
-     */
-    public function setUser(\Olry\MentalNoteBundle\Entity\User $user)
-    {
-        $this->user = $user;
     }
 
     public function getUrlMetaInfo()
@@ -201,6 +186,4 @@ class Entry extends AbstractEntity
     {
         return $this->getUrlInfo()->getDomain();
     }
-
 }
-
