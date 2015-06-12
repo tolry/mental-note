@@ -5,6 +5,7 @@ namespace Olry\MentalNoteBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DomCrawler\Crawler;
 use Olry\MentalNoteBundle\Criteria\EntryCriteria;
 
@@ -14,7 +15,7 @@ class DefaultController extends AbstractBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    private function getFilterCriteria($request)
+    private function getFilterCriteria(Request $request)
     {
         $filter = (array) $request->get('filter', array());
 
@@ -25,14 +26,14 @@ class DefaultController extends AbstractBaseController
      * @Route("/",name="homepage")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $criteria = $this->getFilterCriteria($this->getRequest());
+        $criteria = $this->getFilterCriteria($request);
 
         try {
             $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
         } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $e) {
-            $filter = (array) $this->getRequest()->get('filter', array());
+            $filter = (array) $request->get('filter', array());
             $filter['page']--;
 
             return $this->redirectToRoute('homepage', ['filter' => $filter]);
@@ -49,9 +50,9 @@ class DefaultController extends AbstractBaseController
      * @Route("/visit_regularly", name="visit_regularly")
      * @Template()
      */
-    public function visitRegularlyAction()
+    public function visitRegularlyAction(Request $request)
     {
-        $criteria = $this->getFilterCriteria($this->getRequest());
+        $criteria = $this->getFilterCriteria($request);
 
         $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
 
@@ -66,9 +67,9 @@ class DefaultController extends AbstractBaseController
      * @Route("/url/metainfo",name="url_metainfo")
      * @Template()
      */
-    public function urlMetainfoAction()
+    public function urlMetainfoAction(Request $request)
     {
-        $url = $this->getRequest()->get('url');
+        $url = $request->get('url');
         if (empty($url)) {
             throw $this->createNotFoundException('no url given');
         }
@@ -104,9 +105,9 @@ class DefaultController extends AbstractBaseController
      * @Route("/sidebar",name="sidebar")
      * @Template()
      */
-    public function sidebarAction()
+    public function sidebarAction(Request $request)
     {
-        $criteria = $this->getFilterCriteria($this->getRequest());
+        $criteria = $this->getFilterCriteria($request);
 
         return array(
             'tags'       => $this->getEntryRepository()->getTagStats($this->getUser(), $criteria),

@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Olry\MentalNoteBundle\Entity\Entry;
 use Olry\MentalNoteBundle\Form\Type\EntryType;
@@ -17,7 +19,7 @@ class EntryController extends AbstractBaseController
      * @param \Symfony\Component\Form\Form $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    private function processForm($form, Entry $entry, $request)
+    private function processForm(Form $form, Entry $entry, Request $request)
     {
         $form->handleRequest($request);
 
@@ -35,12 +37,12 @@ class EntryController extends AbstractBaseController
     /**
      * @Route("/entry/{id}/toggle_pending.json",name="entry_toggle_pending")
      */
-    public function togglePending(Entry $entry)
+    public function togglePendingAction(Entry $entry, Request $request)
     {
         $entry->setPending(!$entry->getPending());
         $this->getEm()->flush();
 
-        $filter = (array) $this->getRequest()->get('filter', array());
+        $filter = (array) $request->get('filter', array());
 
         return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
     }
@@ -65,7 +67,7 @@ class EntryController extends AbstractBaseController
 
         try {
             $thumbnailService = $this->get('olry_mental_note.thumbnail_service');
-            $thumbnail        = $thumbnailService->generate($entry->getUrl(), $width, $height, $entry->getId());
+            $thumbnailService->generate($entry->getUrl(), $width, $height, $entry->getId());
 
             return $this->redirect($route);
         } catch (\Exception $e) {
@@ -79,11 +81,10 @@ class EntryController extends AbstractBaseController
      * @Route("/entry/create.html",name="entry_create")
      * @Template()
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
-        $request = $this->getRequest();
-        $entry   = new Entry($this->getUser());
-        $form    = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
+        $entry = new Entry($this->getUser());
+        $form  = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {
             if ($this->processForm($form, $entry, $request)) {
@@ -98,10 +99,9 @@ class EntryController extends AbstractBaseController
      * @Route("/entry/{id}/edit.html",name="entry_edit")
      * @Template()
      */
-    public function editAction(Entry $entry)
+    public function editAction(Entry $entry, Request $request)
     {
-        $request = $this->getRequest();
-        $form    = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
+        $form = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
         if ($request->getMethod() == 'POST') {
             if ($this->processForm($form, $entry, $request)) {
@@ -121,7 +121,7 @@ class EntryController extends AbstractBaseController
      */
     public function deleteAction(Entry $entry)
     {
-        $request = $this->getRequest();
+        $request = $request;
         $filter  = (array) $request->get('filter', array());
         $form    = $this->createFormBuilder($entry)->getForm();
 
