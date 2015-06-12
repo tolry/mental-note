@@ -1,7 +1,7 @@
 {% extends "OlryMentalNoteBundle::layout.html.twig" %}
 
 {% block sidebar %}
-{% render(controller('OlryMentalNoteBundle:Default:sidebar', { "filter": app.request.get('filter') })) %}
+{{ render(controller('OlryMentalNoteBundle:Default:sidebar', { "filter": app.request.get('filter') })) }}
 {% endblock sidebar %}
 
 {% block content %}
