@@ -43,6 +43,7 @@ class DefaultController extends AbstractBaseController
             'pager'       => $pager,
             'criteria'    => $criteria,
             'active_menu' => 'entries',
+            'add_url'     => $request->get('add_url'),
         );
     }
 

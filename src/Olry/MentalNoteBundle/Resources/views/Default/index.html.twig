@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="nav pull-right">
-    <a href="{{ path('entry_create') }}" class="modal-ajax-form btn btn-primary"><i class="icon-plus"></i> add link</a>
+    <a href="{{ path('entry_create') }}" id="add-url" class="modal-ajax-form btn btn-primary"><i class="icon-plus"></i> add link</a>
 </div>
 
 {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]", proximity: 2 }) : '' }}
@@ -26,3 +26,5 @@
 {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]" }) : '' }}
 
 {% endblock content %}
+
+{% block additional_javascript %} mentalNote.addUrl = {{ add_url|json_encode()|raw }};{% endblock %}

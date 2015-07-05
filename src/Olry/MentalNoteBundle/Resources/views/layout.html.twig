@@ -112,9 +112,9 @@
         {% include 'OlryMentalNoteBundle::_footer.html.twig' %}
 
         <script type="text/javascript">
+            {% block additional_javascript %}{% endblock %}
+
             var scriptsToLoad = [];
-            <!-- Le javascript -->
-            <!-- Placed at the end of the document so the pages load faster -->
             {% javascripts
             'bundles/olrymentalnote/components/jquery/jquery.min.js'
             'bundles/olrymentalnote/components/bootstrap3/js/bootstrap.min.js'
@@ -142,6 +142,7 @@
             } else {
                 window.onload = loadJsDeferred;
             }
+
         </script>
 
     </body>

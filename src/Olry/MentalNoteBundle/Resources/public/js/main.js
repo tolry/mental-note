@@ -56,6 +56,12 @@ var application = {
             onComplete: function($element){
                 application.registerEvents($element);
                 $element.find(':text').first().focus();
+                if (mentalNote.addUrl.length > 0) {
+                    entryForm.fields.url()
+                        .val(mentalNote.addUrl)
+                        .trigger('keydown')
+                    ;
+                }
             }
         });
 
@@ -87,6 +93,12 @@ var application = {
         });
 
         return tags;
+    },
+    checkForAddURL: function() {
+        var $button = $("#add-url");
+        if (mentalNote.addUrl.length > 0) {
+            $button.trigger('click');
+        }
     }
 }
 
@@ -96,4 +108,6 @@ var application = {
 
 application.registerEvents($(document));
 $('.deferred-image').imageloader();
+
+application.checkForAddURL();
 
