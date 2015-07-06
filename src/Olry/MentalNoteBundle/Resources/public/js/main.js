@@ -61,6 +61,7 @@ var application = {
                         .val(mentalNote.addUrl)
                         .trigger('keydown')
                     ;
+                    mentalNote.addUrl = undefined;
                 }
             }
         });

@@ -28,6 +28,13 @@ class DefaultController extends AbstractBaseController
      */
     public function indexAction(Request $request)
     {
+        if ($request->get('add_url')) {
+            $this->addFlash('add_url', $request->get('add_url'));
+            $filter = (array) $request->get('filter', array());
+
+            return $this->redirectToRoute('homepage', ['filter' => $filter]);
+        }
+
         $criteria = $this->getFilterCriteria($request);
 
         try {
@@ -43,7 +50,7 @@ class DefaultController extends AbstractBaseController
             'pager'       => $pager,
             'criteria'    => $criteria,
             'active_menu' => 'entries',
-            'add_url'     => $request->get('add_url'),
+            'add_url'     => $this->get('session')->getFlashBag()->get('add_url'),
         );
     }
 
