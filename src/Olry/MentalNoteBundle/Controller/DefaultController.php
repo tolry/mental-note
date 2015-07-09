@@ -23,18 +23,26 @@ class DefaultController extends AbstractBaseController
     }
 
     /**
+     * @Route("/quick-add",name="quick_add")
+     * @Template()
+     */
+    public function quickAddAction(Request $request)
+    {
+        if ($request->get('url')) {
+            $this->addFlash('add_url', $request->get('url'));
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        throw $this->createNotFoundException('missing url parameter');
+    }
+
+    /**
      * @Route("/",name="homepage")
      * @Template()
      */
     public function indexAction(Request $request)
     {
-        if ($request->get('add_url')) {
-            $this->addFlash('add_url', $request->get('add_url'));
-            $filter = (array) $request->get('filter', array());
-
-            return $this->redirectToRoute('homepage', ['filter' => $filter]);
-        }
-
         $criteria = $this->getFilterCriteria($request);
 
         try {
