@@ -119,9 +119,8 @@ class EntryController extends AbstractBaseController
      * @Route("/entry/{id}/delete.html",name="entry_delete")
      * @Template()
      */
-    public function deleteAction(Entry $entry)
+    public function deleteAction(Request $request, Entry $entry)
     {
-        $request = $request;
         $filter  = (array) $request->get('filter', array());
         $form    = $this->createFormBuilder($entry)->getForm();
 
