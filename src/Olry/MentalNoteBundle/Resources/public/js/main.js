@@ -81,6 +81,13 @@ var application = {
             });
         });
 
+        $('div.entry-list').jscroll({
+            loadingHtml: '<p>loading ...</p>',
+            padding: 20,
+            nextSelector: 'ul.pagination li.next a',
+            contentSelector: 'div.entry-list'
+        });
+
     },
     searchTags: function(query) {
         var tags = null;
