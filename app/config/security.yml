@@ -8,6 +8,12 @@ security:
 
     firewalls:
         main:
+            remember_me:
+                key: '%secret'
+                name: 'mental-note'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
             pattern: ^/
             form_login:
                 provider: fos_userbundle
@@ -28,4 +34,4 @@ security:
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
-        
+

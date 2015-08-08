@@ -11,23 +11,15 @@
                 <span class="help-inline">{{ error|trans({}, 'FOSUserBundle') }}</span>
             </fieldset>
         {% endif %}
-        
+
         <div class="form-group">
             <label class="control-label" for="username">username</label>
                 <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
         </div>
-        
+
         <div class="form-group">
             <label for="password" class="control-label">password</label>
                 <input type="password" class="form-control" id="password" name="_password" />
-        </div>
-
-        <div class="form-group">
-            <label for="remember_me" class="control-label">&nbsp;</label>
-                <label class="checkbox" for="remember_me">
-                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                    remember login
-                </label>
         </div>
 
         <div class="pull-right">
@@ -38,4 +30,4 @@
     </fieldset>
 </form>
 {% endblock content %}
-    
+
