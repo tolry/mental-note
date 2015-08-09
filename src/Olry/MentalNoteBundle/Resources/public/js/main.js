@@ -85,7 +85,8 @@ var application = {
             loadingHtml: '<p>loading ...</p>',
             padding: 20,
             nextSelector: 'ul.pagination li.next a',
-            contentSelector: 'div.entry-list'
+            contentSelector: 'div.entry-list',
+            callback: function() { $('.deferred-image').imageloader(); }
         });
 
     },
