@@ -82,7 +82,7 @@ var application = {
         });
 
         $('div.entry-list').jscroll({
-            loadingHtml: '<p>loading ...</p>',
+            loadingHtml: '<div class="text-center"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>',
             padding: 20,
             nextSelector: 'ul.pagination li.next a',
             contentSelector: 'div.entry-list',
