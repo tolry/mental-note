@@ -6,7 +6,10 @@
             $(this).click(function(e) {
                 e.preventDefault();
 
-                var url = $(this).attr('href');
+                var d = new Date();
+                var seconds = d.getTime() / 1000;
+
+                var url = $(this).attr('href') + '?t=' + seconds;
                 jQuery.fn.modalAjaxForm.showModal(url, {}, options.onComplete, "GET");
             });
         });
