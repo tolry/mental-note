@@ -86,9 +86,12 @@ var application = {
             padding: 20,
             nextSelector: 'ul.pagination li.next a',
             contentSelector: 'div.entry-list',
-            callback: function() { $('.deferred-image').imageloader(); }
+            callback: function() {
+                application.registerEvents($(this));
+            }
         });
 
+        $domElement.find('.deferred-image').imageloader();
     },
     searchTags: function(query) {
         var tags = null;
@@ -116,7 +119,6 @@ var application = {
 // and won't be triggered again
 
 application.registerEvents($(document));
-$('.deferred-image').imageloader();
 
 application.checkForAddURL();
 
