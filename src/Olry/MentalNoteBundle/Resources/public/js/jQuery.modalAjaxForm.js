@@ -31,7 +31,7 @@
                     return;
                 }
 
-                $('#ajax-form-modal').remove();
+                $('#ajax-form-modal,.modal-backdrop').remove();
                 var $modal = $('<div class="modal" id="ajax-form-modal" />');
 
                 $modal.appendTo('body');
