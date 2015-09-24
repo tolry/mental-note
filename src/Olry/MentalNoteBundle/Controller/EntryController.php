@@ -86,10 +86,8 @@ class EntryController extends AbstractBaseController
         $entry = new Entry($this->getUser());
         $form  = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
-        if ($request->getMethod() == 'POST') {
-            if ($this->processForm($form, $entry, $request)) {
-                return new Response('created', 201);
-            }
+        if ($this->processForm($form, $entry, $request)) {
+            return new Response('created', 201);
         }
 
         return array('form' => $form->createView());
@@ -103,10 +101,8 @@ class EntryController extends AbstractBaseController
     {
         $form = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
 
-        if ($request->getMethod() == 'POST') {
-            if ($this->processForm($form, $entry, $request)) {
-                return new Response('changed', 201);
-            }
+        if ($this->processForm($form, $entry, $request)) {
+            return new Response('changed', 201);
         }
 
         return array(
