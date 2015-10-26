@@ -23,8 +23,7 @@
             "white-october/pagerfanta-bundle": "*",
             "leafo/lessphp": "dev-master",
             "ext-memcached": ">=1.0",
-            "doctrine/doctrine-migrations-bundle": "1.0.*",
-            "doctrine/migrations": "1.0.*@dev"
+            "doctrine/doctrine-migrations-bundle": "1.0.*"
         },
         "require-dev": {
             "sensio/generator-bundle": "~2.3"
