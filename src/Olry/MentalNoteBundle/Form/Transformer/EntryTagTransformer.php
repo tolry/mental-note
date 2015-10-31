@@ -49,6 +49,12 @@ class EntryTagTransformer implements DataTransformerInterface
         }
 
         $tagNames = array_map('trim', $tagNames);
+        $tagNames = array_filter(
+            $tagNames,
+            function ($tag) {
+                return ! empty($tag);
+            }
+        );
 
         foreach ($tagNames as $tagName) {
             $tag = $this->tagRepository->findOneByName($tagName);
