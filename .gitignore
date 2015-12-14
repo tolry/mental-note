@@ -2,6 +2,7 @@
 /app/config/parameters.yml
 /build/
 /vendor/
+/node_modules/
 /bin/
 /composer.phar
 /app/logs/*
@@ -10,6 +11,7 @@
 /web/bundles/*
 /web/css/*
 /web/js/*
+/web/fonts/*
 !app/logs/.gitkeep
 !app/cache/.gitkeep
 !/web/thumbnails/.gitkeep

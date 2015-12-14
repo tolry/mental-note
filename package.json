@@ -1,0 +1,22 @@
+{
+  "name": "mental-note-assets",
+  "main": "gulpfile.js",
+  "description": "SimpSpector",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0",
+    "gulp": "~3.8.10",
+    "gulp-concat": "~2.4.2",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-uglify": "^1.0.1",
+    "jquery": "^2.0.0",
+    "jscroll": "^2.3.2",
+    "select2": "^4.0.0"
+  },
+  "scripts": {
+    "postinstall": "node_modules/.bin/gulp",
+    "start": "node_modules/.bin/gulp watch"
+  },
+  "author": "",
+  "license": "MIT"
+}

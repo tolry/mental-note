@@ -5,7 +5,7 @@
         <li class = "active">
             <a href="{{ path('homepage', { filter: criteria.getQuery({'query': null})}) }}" title="remove filter">
                 <div class="pull-right">
-                    <i class="icon-remove-sign"></i>
+                    <i class="fa fa-remove-sign"></i>
                 </div>
                 fulltext "{{ criteria.query }}"
             </a>
@@ -16,14 +16,14 @@
             <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': false}) }) }}">
                 only show pending
                 <div class="pull-right">
-                    <i class="icon-check"></i>
+                    <i class="fa fa-check"></i>
                 </div>
             </a>
             {% else %}
             <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': true}) }) }}">
                 only show pending
                 <div class="pull-right">
-                    <i class="icon-check-empty"></i>
+                    <i class="fa fa-check-empty"></i>
                 </div>
             </a>
             {% endif %}
@@ -36,7 +36,7 @@
         <li class = "active">
             <a href="{{ path('homepage', { filter: criteria.getQuery({'category': null})}) }}" title="remove filter">
                 <div class="pull-right">
-                    <i class="icon-remove-sign"></i>
+                    <i class="fa fa-remove-sign"></i>
                 </div>
                 <i class="{{ mn_category(criteria.category).icon }}"></i>
                 {{ mn_category(criteria.category).label }}
@@ -65,7 +65,7 @@
         <li class = "active">
             <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': null})}) }}" title="remove filter">
                 <div class="pull-right">
-                    <i class="icon-remove-sign"></i>
+                    <i class="fa fa-remove-sign"></i>
                 </div>
                 {{ criteria.tag }}
             </a>
