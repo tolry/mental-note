@@ -22,7 +22,6 @@
             "guzzle/guzzle": "3.*",
             "white-october/pagerfanta-bundle": "*",
             "leafo/lessphp": "dev-master",
-            "ext-memcached": ">=1.0",
             "doctrine/doctrine-migrations-bundle": "1.0.*"
         },
         "require-dev": {
