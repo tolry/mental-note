@@ -7,8 +7,6 @@ namespace Olry\MentalNoteBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
 
 use Doctrine\ORM\EntityManager;
 use Olry\MentalNoteBundle\Entity\Category;
@@ -18,7 +16,6 @@ class EntryType extends AbstractType
 {
 
     private $em;
-    private $user;
 
     public function __construct(EntityManager $em, $user)
     {
@@ -30,10 +27,14 @@ class EntryType extends AbstractType
     {
         $repo = $this->em->getRepository('Olry\MentalNoteBundle\Entity\Tag');
 
-        $tagNames = [];
-        foreach ($repo->search('', $this->user)->getQuery()->getResult() as $tag) {
-            $tagNames[$tag->getName()] = $tag->getName();
+        $allowedTags = [];
+        foreach ($repo->search("", $this->user)->getQuery()->getResult() as $tag) {
+            if (trim($tag->getName()) == '') {
+                continue;
+            }
+            $allowedTags[] = $tag->getName();
         }
+
 
         $builder
             ->add(
@@ -51,34 +52,21 @@ class EntryType extends AbstractType
                 $builder
                     ->create(
                         'tags',
-                        'choice',
+                        'text',
                         [
-                            'choices' => $tagNames,
                             'required' => false,
                             'label' => 'Tags',
-                            'multiple' => true,
-                            'expanded' => false,
+                            'attr' => [
+                                'class' => 'awesomplete',
+                                'data-list' => implode(', ', $allowedTags),
+                                'data-multiple' => '',
+                                'data-minchars' => 1,
+                            ]
                         ]
                     )
                     ->addModelTransformer(new EntryTagTransformer($repo))
             )
         ;
-
-        // add preBindListener in order to accept all given input
-        $builder->addEventListener(FormEvents::PRE_BIND, function (FormEvent $e) {
-            $form = $e->getForm();
-            $data = $e->getData();
-            $builder = $form['tags']->getConfig();
-            $allowedTags = $builder->getOption('choices');
-
-            foreach ($data['tags'] as $tag) {
-                if (! isset($allowedTags[$tag])) {
-                    $allowedTags[$tag] = 1;
-                }
-            }
-
-            $builder->setOption('choices', $allowedTags);
-        });
     }
 
     public function getName()

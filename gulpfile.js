@@ -6,8 +6,8 @@ var gulp        = require('gulp'),
 
 var cssFiles = [
     'node_modules/bootstrap/dist/css/bootstrap.css',
-    'node_modules/select2/dist/css/select2.css',
     'node_modules/font-awesome/css/font-awesome.css',
+    'node_modules/awesomplete/awesomplete.css',
     'assets/css/loaders.css/loaders.css',
     'assets/css/*css'
 ];
@@ -15,8 +15,8 @@ var cssFiles = [
 var jsFiles = [
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
-    'node_modules/select2/dist/js/select2.js',
     'node_modules/jscroll/jquery.jscroll.js',
+    'node_modules/awesomplete/awesomplete.js',
     'assets/js/jquery-imageloader/jquery.imageloader.js',
     'assets/js/jQuery.modalAjaxForm.js',
     'assets/js/main.js'
