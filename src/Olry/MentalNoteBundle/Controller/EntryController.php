@@ -84,7 +84,7 @@ class EntryController extends AbstractBaseController
     public function createAction(Request $request)
     {
         $entry = new Entry($this->getUser());
-        $form  = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
+        $form  = $this->createForm(new EntryType($this->getDoctrine()->getManager(), $this->getUser()), $entry);
 
         if ($this->processForm($form, $entry, $request)) {
             return new Response('created', 201);
@@ -99,7 +99,7 @@ class EntryController extends AbstractBaseController
      */
     public function editAction(Entry $entry, Request $request)
     {
-        $form = $this->createForm(new EntryType($this->getDoctrine()->getManager()), $entry);
+        $form = $this->createForm(new EntryType($this->getDoctrine()->getManager(), $this->getUser()), $entry);
 
         if ($this->processForm($form, $entry, $request)) {
             return new Response('changed', 201);

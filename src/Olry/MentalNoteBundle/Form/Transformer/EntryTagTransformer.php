@@ -28,21 +28,20 @@ class EntryTagTransformer implements DataTransformerInterface
     public function transform($tags)
     {
         if (empty($tags)) {
-            return "";
+            return [];
         }
 
-        $tagNames = array();
+        $tagNames = [];
         foreach ($tags as $tag) {
-            $tagNames[] = $tag->getName();
+            $tagNames[$tag->getName()] = $tag->getName();
         }
 
-        return implode(', ', $tagNames);
+        return $tagNames;
     }
 
-    public function reverseTransform($tagsString)
+    public function reverseTransform($tagNames)
     {
-        $tagNames = explode(',', $tagsString);
-        $tags     = new ArrayCollection();
+        $tags = new ArrayCollection();
 
         if (!is_array($tagNames) || empty($tagNames)) {
             return $tags;

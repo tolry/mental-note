@@ -15,7 +15,7 @@ var cssFiles = [
 var jsFiles = [
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
-    'node_modules/select2/dist/css/select2.js',
+    'node_modules/select2/dist/js/select2.js',
     'node_modules/jscroll/jquery.jscroll.js',
     'assets/js/jquery-imageloader/jquery.imageloader.js',
     'assets/js/jQuery.modalAjaxForm.js',

@@ -68,10 +68,9 @@ var application = {
 
         var tagInput = $("#entry_tags");
         if (tagInput.length > 0) {
-
             tagInput.select2({
                 tokenSeperator: [','],
-                tags: application.searchTags()
+                tags: true
             });
         }
 
