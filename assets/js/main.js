@@ -68,8 +68,7 @@ var application = {
 
         var $tagInput = $("#entry_tags");
         if ($tagInput.length > 0) {
-            new Awesomplete($tagInput[0], {
-            });
+            new Awesomplete($tagInput[0]);
         }
 
         $('.visit-link').mousedown(function(e){

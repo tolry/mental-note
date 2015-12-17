@@ -54,12 +54,12 @@ class EntryType extends AbstractType
                         'tags',
                         'text',
                         [
+                            'datalist' => $allowedTags,
                             'required' => false,
                             'label' => 'Tags',
                             'attr' => [
                                 'class' => 'awesomplete',
-                                'data-list' => implode(', ', $allowedTags),
-                                'data-multiple' => '',
+                                'data-multiple' => 1,
                                 'data-minchars' => 1,
                             ]
                         ]
