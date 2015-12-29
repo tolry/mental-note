@@ -68,7 +68,17 @@ var application = {
 
         var $tagInput = $("#entry_tags");
         if ($tagInput.length > 0) {
-            new Awesomplete($tagInput[0]);
+            new Awesomplete($tagInput[0],{
+                filter: function(text, input) {
+                    return Awesomplete.FILTER_CONTAINS(text, input.match(/[^,]*$/)[0]);
+                },
+
+                replace: function(text) {
+                    var before = this.input.value.match(/^.+,\s*|/)[0];
+                    this.input.value = before + text + ", ";
+                }
+
+            });
         }
 
         $('.visit-link').mousedown(function(e){
