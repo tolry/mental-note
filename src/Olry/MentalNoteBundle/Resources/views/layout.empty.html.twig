@@ -13,28 +13,12 @@
             var mentalNote = {
                 route: {
                     url_metainfo: '{{ path('url_metainfo') }}',
-                    tag_search: '{{ path('tag_search') }}' 
+                    tag_search: '{{ path('tag_search') }}'
                 }
             }
         </script>
 
-        <!-- Le styles -->
-        {% stylesheets filter="cssrewrite"
-        'bundles/olrymentalnote/components/bootstrap3/css/bootstrap.min.css'
-        'bundles/olrymentalnote/components/select2/select2.css'
-        'bundles/olrymentalnote/components/font-awesome/css/font-awesome.min.css'
-        'bundles/olrymentalnote/css/*css'
-        %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
+        <link rel="stylesheet" href="{{ asset('css/all.min.css') }}" />
 
     </head>
 
@@ -48,17 +32,7 @@
         </div>
     </div>
 
-    <!-- Le javascript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    {% javascripts
-    'bundles/olrymentalnote/components/jquery/jquery.min.js'
-    'bundles/olrymentalnote/components/bootstrap3/js/bootstrap.min.js'
-    'bundles/olrymentalnote/components/select2/select2.js'
-    'bundles/olrymentalnote/components/jquery-imageloader/jquery.imageloader.js'
-    'bundles/olrymentalnote/js/*.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script src="{{ asset('js/all.min.js') }}"></script>
 
 </body>
 </html>

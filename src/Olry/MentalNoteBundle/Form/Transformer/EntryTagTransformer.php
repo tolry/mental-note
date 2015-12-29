@@ -31,7 +31,7 @@ class EntryTagTransformer implements DataTransformerInterface
             return "";
         }
 
-        $tagNames = array();
+        $tagNames = [];
         foreach ($tags as $tag) {
             $tagNames[] = $tag->getName();
         }
@@ -42,7 +42,7 @@ class EntryTagTransformer implements DataTransformerInterface
     public function reverseTransform($tagsString)
     {
         $tagNames = explode(',', $tagsString);
-        $tags     = new ArrayCollection();
+        $tags = new ArrayCollection();
 
         if (!is_array($tagNames) || empty($tagNames)) {
             return $tags;
@@ -69,5 +69,3 @@ class EntryTagTransformer implements DataTransformerInterface
         return $tags;
     }
 }
-
-

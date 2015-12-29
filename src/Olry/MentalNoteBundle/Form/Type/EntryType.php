@@ -7,19 +7,35 @@ namespace Olry\MentalNoteBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+
 use Doctrine\ORM\EntityManager;
 use Olry\MentalNoteBundle\Entity\Category;
 use Olry\MentalNoteBundle\Form\Transformer\EntryTagTransformer;
 
 class EntryType extends AbstractType
 {
-    public function __construct(EntityManager $em)
+
+    private $em;
+
+    public function __construct(EntityManager $em, $user)
     {
         $this->em = $em;
+        $this->user = $user;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $repo = $this->em->getRepository('Olry\MentalNoteBundle\Entity\Tag');
+
+        $allowedTags = [];
+        foreach ($repo->search("", $this->user)->getQuery()->getResult() as $tag) {
+            if (trim($tag->getName()) == '') {
+                continue;
+            }
+            $allowedTags[] = $tag->getName();
+        }
+
+
         $builder
             ->add(
                 'category',
@@ -34,8 +50,21 @@ class EntryType extends AbstractType
             ->add('title', 'text', array('label' => 'title', 'attr' => array('class' => 'input-large')))
             ->add(
                 $builder
-                    ->create('tags', 'text', array('required' => false, 'label' => 'Tags', 'attr' => array('class' => 'input-large')))
-                    ->addModelTransformer(new EntryTagTransformer($this->em->getRepository('Olry\MentalNoteBundle\Entity\Tag')))
+                    ->create(
+                        'tags',
+                        'text',
+                        [
+                            'required' => false,
+                            'label' => 'Tags',
+                            'attr' => [
+                                'class' => 'awesomplete',
+                                'data-list' => implode(', ', $allowedTags),
+                                'data-multiple' => 1,
+                                'data-minchars' => 1,
+                            ]
+                        ]
+                    )
+                    ->addModelTransformer(new EntryTagTransformer($repo))
             )
         ;
     }

@@ -58,4 +58,9 @@ class Tag extends AbstractEntity
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
