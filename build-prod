@@ -1,5 +1,2 @@
 #!/bin/bash
-sudo app/console cache:clear --env=dev
-sudo app/console cache:clear --env=prod
-#sudo app/console assetic:dump web/ --env=prod
 sudo chown -R www-data app/cache/ app/logs/

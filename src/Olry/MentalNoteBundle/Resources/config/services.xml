@@ -18,8 +18,5 @@
         <service id="olry_mental_note.twig_extension" class="Olry\MentalNoteBundle\Twig\MentalNoteTwigExtension">
             <tag name="twig.extension" />
         </service>
-        <service id="form.typ_extension.data_list" class="Olry\MentalNoteBundle\Form\Extension\DataListExtension">
-            <tag name="form.type_extension" alias="text"/>
-        </service>
     </services>
 </container>
