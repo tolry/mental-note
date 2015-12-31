@@ -20,6 +20,7 @@ framework:
     session:
         handler_id: %session_handler_id%
     http_method_override: true
+    assets: ~
 
 # Twig Configuration
 twig:
