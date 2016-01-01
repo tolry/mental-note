@@ -16,10 +16,7 @@
 {% block content %}
 <h2>change password</h2>
 {{ form_start(form) }}
-    {{ form_errors(form) }}
-
-    {{ form_row(form.current_password) }}
-    {{ form_row(form.new) }}
+    {{ form_widget(form) }}
 
     <div class="btn-group">
         <a class="btn btn-danger" href="{{ path('homepage') }}">cancel</a>
