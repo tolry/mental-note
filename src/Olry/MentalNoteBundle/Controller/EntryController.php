@@ -120,14 +120,13 @@ class EntryController extends AbstractBaseController
         $filter  = (array) $request->get('filter', array());
         $form    = $this->createFormBuilder($entry)->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $this->getEm()->remove($entry);
-                $this->getEm()->flush();
+        $form->handleRequest($request);
 
-                return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
-            }
+        if ($form->isValid()) {
+            $this->getEm()->remove($entry);
+            $this->getEm()->flush();
+
+            return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
         }
 
         return array(
