@@ -28,7 +28,7 @@ php app/console do:mi:version --add 20150515104913
 Translations
 ------------
 
-** Update xliff files **
+**Update xliff files**
 
 To update cliff translation files use following command:
 
