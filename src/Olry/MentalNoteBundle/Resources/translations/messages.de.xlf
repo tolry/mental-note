@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="de" target-language="de" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="cc7c24aa76187a59a7e83e23f0905041" resname="MentalNote - organize your web findings">
+        <source>MentalNote - organize your web findings</source>
+        <target>MentalNote - Organisiere Deine Webfünde</target>
+      </trans-unit>
+      <trans-unit id="0f1fbbf3f443610f18b08f32924bf0d1" resname="add link">
+        <source>add link</source>
+        <target>Link hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="f3f43e30c8c7d78c6ac0173515e57a00" resname="Filters">
+        <source>Filters</source>
+        <target>Filter</target>
+      </trans-unit>
+      <trans-unit id="3ca2ef7250c55661336121bb9fd44a24" resname="fulltext">
+        <source>fulltext</source>
+        <target>Volltext</target>
+      </trans-unit>
+      <trans-unit id="d8bad1e1809cc16d8a1e6e08b032f6b3" resname="only show pending">
+        <source>only show pending</source>
+        <target>Nur Unerledigte anzeigen</target>
+      </trans-unit>
+      <trans-unit id="af1b98adf7f686b84cd0b443e022b7a0" resname="Categories">
+        <source>Categories</source>
+        <target>Kategorien</target>
+      </trans-unit>
+      <trans-unit id="e11bcd6c7d75a160104def3e6c5d7157" resname="all entries">
+        <source>all entries</source>
+        <target>Alle Einträge</target>
+      </trans-unit>
+      <trans-unit id="c8b13954dcc357de4adfc4d52d12ef9c" resname="create a new entry">
+        <source>create a new entry</source>
+        <target>Neuen Eintrag erstellen</target>
+      </trans-unit>
+      <trans-unit id="43781db5c40ecc39fd718685594f0956" resname="save">
+        <source>save</source>
+        <target>Speichern</target>
+      </trans-unit>
+      <trans-unit id="a44e8b3ad62a1a443767ef802c4e670d" resname="Do you really want to delete this entry?">
+        <source>Do you really want to delete this entry?</source>
+        <target>Möchtest Du wirklich diesen Eintrag löschen?</target>
+      </trans-unit>
+      <trans-unit id="93cba07454f06a4a960172bbd6e2a435" resname="Yes">
+        <source>Yes</source>
+        <target>Ja</target>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+        <source>Cancel</source>
+        <target>Abbruch</target>
+      </trans-unit>
+      <trans-unit id="1f285aeea55dc8a640ef70ff06f4b1a5" resname="editing entry">
+        <source>editing entry</source>
+        <target>Eintrag bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="de95b43bceeb4b998aed4aed5cef1ae7" resname="edit">
+        <source>edit</source>
+        <target>Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="6b2ded51d81a4403d8a4bd25fa1e57ee" resname="done">
+        <source>done</source>
+        <target>Fertig</target>
+      </trans-unit>
+      <trans-unit id="099af53f601532dbd31e0ea99ffdeb64" resname="delete">
+        <source>delete</source>
+        <target>Löschen</target>
+      </trans-unit>
+      <trans-unit id="6c7195551da0802a39b5e2bc7187df54" resname="Toggle navigation">
+        <source>Toggle navigation</source>
+        <target>Navigation umschalten</target>
+      </trans-unit>
+      <trans-unit id="769c7899bc220542d7140ce037d941ab" resname="MentalNote">
+        <source>MentalNote</source>
+        <target>MentalNote</target>
+      </trans-unit>
+      <trans-unit id="bc14b0a9c516310fc195a778937cc0a0" resname="Entries">
+        <source>Entries</source>
+        <target>Einträge</target>
+      </trans-unit>
+      <trans-unit id="f869892c79135c92c071462875d7779f" resname="Visit regularly">
+        <source>Visit regularly</source>
+        <target>Reguläre Besuche</target>
+      </trans-unit>
+      <trans-unit id="7d97481b1fe66f4b51db90da7e794d9f" resname="profile">
+        <source>profile</source>
+        <target>Profil</target>
+      </trans-unit>
+      <trans-unit id="8df25be65e2e6d9d13ad84cd96b7f528" resname="change password">
+        <source>change password</source>
+        <target>Passwort ändern</target>
+      </trans-unit>
+      <trans-unit id="4236a440a662cc8253d7536e5aa17942" resname="logout">
+        <source>logout</source>
+        <target>Ausloggen</target>
+      </trans-unit>
+      <trans-unit id="6267f0f14279e9b592ca8ba4595b2ad6" resname="MentalNote: Login">
+        <source>MentalNote: Login</source>
+        <target>MentalNote: Login</target>
+      </trans-unit>
+      <trans-unit id="14c4b06b824ec593239362517f538b29" resname="username">
+        <source>username</source>
+        <target>Benutzername</target>
+      </trans-unit>
+      <trans-unit id="5f4dcc3b5aa765d61d8327deb882cf99" resname="password">
+        <source>password</source>
+        <target>Passwort</target>
+      </trans-unit>
+      <trans-unit id="b19a25c6a06bd7844cd3572d898d77e4" resname="sign in">
+        <source>sign in</source>
+        <target>Einloggen</target>
+      </trans-unit>
+      <trans-unit id="99dea78007133396a7b8ed70578ac6ae" resname="Login">
+        <source>Login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="082e55a73f10496681c84231dc1c88f7" resname="E-Mail">
+        <source>E-Mail</source>
+        <target>E-Mail</target>
+      </trans-unit>
+      <trans-unit id="10aec35353f9c4096a71c38654c3d402" resname="cancel">
+        <source>cancel</source>
+        <target>Abbrechen</target>
+      </trans-unit>
+      <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3" resname="Search">
+        <source>Search</source>
+        <target>Suchen</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
