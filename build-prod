@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo chown -R www-data app/cache/ app/logs/
+sudo chown -R www-data var
