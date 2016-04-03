@@ -20,6 +20,7 @@ framework:
     session:
         handler_id: %session_handler_id%
     http_method_override: true
+    assets: ~
 
 # Twig Configuration
 twig:
@@ -63,5 +64,5 @@ services:
 
     session.handler.memcache:
         class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
-        arguments: [ @session.memcached, { prefix: %session_memcache_prefix%, expiretime: %session_memcache_expire% } ]
+        arguments: [ "@session.memcached", { prefix: %session_memcache_prefix%, expiretime: %session_memcache_expire% } ]
 
