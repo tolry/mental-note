@@ -1,6 +1,6 @@
 <div class="modal-dialog">
     <div class="modal-content">
-        <form style="margin: 0;" id="entry_form" role="form" action="{{ path('entry_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_start(form, {attr: {role: "form", style: "margin:0;", id: "entry_form"}, method: "post", action: path('entry_create')}) }}
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">create a new entry</h4>

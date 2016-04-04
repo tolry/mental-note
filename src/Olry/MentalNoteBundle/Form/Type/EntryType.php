@@ -7,6 +7,7 @@ namespace Olry\MentalNoteBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type as CoreType;
 
 use Doctrine\ORM\EntityManager;
 use Olry\MentalNoteBundle\Entity\Category;
@@ -17,10 +18,10 @@ class EntryType extends AbstractType
 
     private $em;
 
-    public function __construct(EntityManager $em, $user)
+    public function __construct(EntityManager $em, $token)
     {
         $this->em = $em;
-        $this->user = $user;
+        $this->user = $token->getToken()->getUser();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -39,20 +40,20 @@ class EntryType extends AbstractType
         $builder
             ->add(
                 'category',
-                'choice',
+                CoreType\ChoiceType::class,
                 array(
                     'expanded'       => true,
                     'choices'        => Category::getChoiceArray(),
                     'error_bubbling' => true
                 )
             )
-            ->add('url', 'text', array('label' => 'url', 'attr' => array('class' => 'input-large', 'focus' => 'focus')))
-            ->add('title', 'text', array('label' => 'title', 'attr' => array('class' => 'input-large')))
+            ->add('url', CoreType\TextType::class, array('label' => 'url', 'attr' => array('class' => 'input-large', 'focus' => 'focus')))
+            ->add('title', CoreType\TextType::class, array('label' => 'title', 'attr' => array('class' => 'input-large')))
             ->add(
                 $builder
                     ->create(
                         'tags',
-                        'text',
+                        CoreType\TextType::class,
                         [
                             'required' => false,
                             'label' => 'Tags',
