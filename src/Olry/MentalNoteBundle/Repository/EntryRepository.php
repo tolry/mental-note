@@ -25,11 +25,12 @@ class EntryRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')
-            ->from('Olry\MentalNoteBundle\Entity\Entry', 'e')
+            ->from(Entry::class, 'e')
             ->leftJoin('e.tags', 't')
             ->andWhere('e.user = :user_id')
             ->setParameter('user_id', $user->getId())
-            ->add('orderBy', 'e.created DESC');
+            ->orderBy('e.id', 'DESC')
+        ;
 
         if ($includeVisits) {
             $qb->select('e, v')
@@ -41,7 +42,7 @@ class EntryRepository extends EntityRepository
                 ->setParameter('category', $criteria->category);
         }
 
-        if ( ! empty($criteria->tag)) {
+        if (! empty($criteria->tag)) {
             $qb->andWhere('t.name = :tag')
                 ->setParameter('tag', $criteria->tag);
         }
@@ -74,8 +75,9 @@ class EntryRepository extends EntityRepository
         $adapter = new DoctrineORMAdapter($qb);
         $pager   = new Pagerfanta($adapter);
 
-        $pager->setMaxPerPage($criteria->limit)
-                ->setCurrentPage($criteria->page);
+        $pager
+            ->setMaxPerPage($criteria->limit)
+            ->setCurrentPage($criteria->page);
 
         return $pager;
     }
@@ -90,7 +92,7 @@ class EntryRepository extends EntityRepository
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('en.category, SUM(en.pending) AS pending, COUNT(en.id) AS total')
-            ->from('Olry\MentalNoteBundle\Entity\Entry', 'en')
+            ->from(Entry::class, 'en')
             ->andWhere('en.id IN (' . $innerQb->getDql() . ')')
             ->add('groupBy', 'en.category')
             ->add('orderBy', 'en.category ASC');
@@ -115,7 +117,7 @@ class EntryRepository extends EntityRepository
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('tag.name, tag.id, SUM(en.pending) AS pending, COUNT(en.id) AS total')
-            ->from('Olry\MentalNoteBundle\Entity\Tag', 'tag')
+            ->from(Tag::class, 'tag')
             ->innerJoin('tag.entries', 'en')
             ->andWhere('en.id IN (' . $innerQb->getDql() . ')')
             ->add('groupBy', 'tag.id')
@@ -126,5 +128,4 @@ class EntryRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
 }
