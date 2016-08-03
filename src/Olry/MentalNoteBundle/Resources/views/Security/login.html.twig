@@ -7,9 +7,9 @@
         <legend><i class="fa fa-bookmark large icon-fancy"></i> MentalNote: Login</legend>
 
         {% if error %}
-            <fieldset class="form-group error">
-                <span class="help-inline">{{ error|trans({}, 'FOSUserBundle') }}</span>
-            </fieldset>
+            <div class="form-group text-danger">
+                {{ error.messageKey|trans(error.messageData, 'security')  }}
+            </div>
         {% endif %}
 
         <div class="form-group">

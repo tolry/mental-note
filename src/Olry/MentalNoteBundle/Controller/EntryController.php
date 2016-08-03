@@ -42,9 +42,9 @@ class EntryController extends AbstractBaseController
         $entry->setPending(!$entry->getPending());
         $this->getEm()->flush();
 
-        $filter = (array) $request->get('filter', array());
+        $filter = (array) $request->get('filter', []);
 
-        return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
+        return $this->redirect($this->generateUrl('homepage', ['filter' => $filter]));
     }
 
     /**
