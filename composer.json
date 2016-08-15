@@ -1,68 +1,71 @@
 {
     "name": "symfony/framework-standard-edition",
-        "license": "MIT",
-        "type": "project",
-        "description": "The \"Symfony Standard Edition\" distribution",
-        "autoload": {
-            "psr-0": { "": "src/", "SymfonyStandard": "app/" },
-            "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+    "license": "MIT",
+    "type": "project",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-0": { "": "src/", "SymfonyStandard": "app/" },
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+    },
+    "require": {
+        "php": "^5.5.9|7.0.*",
+        "symfony/symfony": "~3.0",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "twig/extensions": "~1.0",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "sensio/distribution-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "guzzlehttp/guzzle": "3.*",
+        "white-october/pagerfanta-bundle": "*",
+        "leafo/lessphp": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "1.0.*"
+    },
+    "require-dev": { },
+    "scripts": {
+        "post-root-package-install": [
+            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        ],
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
+            "./build-prod"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
+            "./build-prod"
+        ]
+    },
+    "config": {
+        "platform": {
+            "php": "5.6"
         },
-        "require": {
-            "php": "^5.5.9|7.0.*",
-            "symfony/symfony": "~3.0",
-            "doctrine/orm": "^2.5",
-            "doctrine/doctrine-bundle": "^1.6",
-            "doctrine/doctrine-cache-bundle": "^1.2",
-            "twig/extensions": "~1.0",
-            "symfony/swiftmailer-bundle": "^2.3",
-            "symfony/monolog-bundle": "^2.8",
-            "sensio/distribution-bundle": "^5.0",
-            "sensio/framework-extra-bundle": "^3.0.2",
-            "incenteev/composer-parameter-handler": "^2.0",
-            "friendsofsymfony/user-bundle": "~2.0@dev",
-            "guzzle/guzzle": "3.*",
-            "white-october/pagerfanta-bundle": "*",
-            "leafo/lessphp": "dev-master",
-            "doctrine/doctrine-migrations-bundle": "1.0.*"
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
         },
-        "require-dev": { },
-        "scripts": {
-            "post-root-package-install": [
-                "SymfonyStandard\\Composer::hookRootPackageInstall"
-            ],
-            "post-install-cmd": [
-                "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-                "./build-prod"
-            ],
-            "post-update-cmd": [
-                "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-                "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-                "./build-prod"
-            ]
-        },
-        "config": {
-            "bin-dir": "bin"
-        },
-        "extra": {
-            "symfony-app-dir": "app",
-            "symfony-bin-dir": "bin",
-            "symfony-var-dir": "var",
-            "symfony-web-dir": "web",
-            "symfony-assets-install": "symlink",
-            "incenteev-parameters": {
-                "file": "app/config/parameters.yml"
-            },
-            "branch-alias": {
-                "dev-master": "2.5-dev"
-            }
+        "branch-alias": {
+            "dev-master": "2.5-dev"
         }
+    }
 }
