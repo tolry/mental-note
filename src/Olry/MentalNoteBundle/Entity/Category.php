@@ -58,8 +58,9 @@ class Category
     {
         $choices = array();
         foreach (self::$data as $key=>$category) {
-            $choices[$key] = $category['label'];
+            $choices[$category['label']] = $key;
         }
+
         return $choices;
     }
 

@@ -44,7 +44,7 @@ class EntryType extends AbstractType
                 array(
                     'expanded'       => true,
                     'choices'        => Category::getChoiceArray(),
-                    'error_bubbling' => true
+                    'error_bubbling' => true,
                 )
             )
             ->add('url', CoreType\TextType::class, array('label' => 'url', 'attr' => array('class' => 'input-large', 'focus' => 'focus')))
