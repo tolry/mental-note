@@ -2,28 +2,29 @@
 
 namespace Olry\MentalNoteBundle\Entity;
 
-
 /**
  * @author Tobias Olry (tobias.olry@web.de)
  */
 class Category
 {
 
-    const READ            = 'read';
-    const LOOK_AT         = 'look_at';
-    const WATCH           = 'watch';
-    const LISTEN          = 'listen';
-    const EVALUATE        = 'evaluate';
+    const READ = 'read';
+    const LOOK_AT = 'look_at';
+    const WATCH = 'watch';
+    const LISTEN = 'listen';
+    const EVALUATE = 'evaluate';
     const VISIT_REGULARLY = 'visit_regularly';
+    const PURCHASE = 'purchase';
 
-    private static $data = array(
-        self::READ            => array('label'=>'read', 'icon'=>'icon-book', 'default_view'=>'', 'description'=>''),
-        self::LOOK_AT         => array('label'=>'look at', 'icon'=>'icon-picture', 'default_view'=>'', 'description'=>''),
-        self::WATCH           => array('label'=>'watch', 'icon'=>'icon-film', 'default_view'=>'', 'description'=>''),
-        self::LISTEN          => array('label'=>'listen to', 'icon'=>'icon-volume-up', 'default_view'=>'', 'description'=>''),
-        self::EVALUATE        => array('label'=>'evaluate', 'icon'=>'icon-question-sign', 'default_view'=>'', 'description'=>''),
-        self::VISIT_REGULARLY => array('label'=>'visit regularly', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>''),
-    );
+    private static $data = [
+        self::READ => ['label'=>'read', 'icon'=>'icon-book', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::LOOK_AT => ['label'=>'look at', 'icon'=>'icon-picture', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::WATCH => ['label'=>'watch', 'icon'=>'icon-film', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::LISTEN => ['label'=>'listen to', 'icon'=>'icon-volume-up', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::EVALUATE => ['label'=>'evaluate', 'icon'=>'icon-question-sign', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::VISIT_REGULARLY => ['label'=>'visit regularly', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>'', 'active' => false],
+        self::PURCHASE => ['label'=>'purchase', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>'', 'active' => true],
+    ];
 
     private $key;
     private $label;
@@ -57,7 +58,11 @@ class Category
     public static function getChoiceArray()
     {
         $choices = array();
-        foreach (self::$data as $key=>$category) {
+        foreach (self::$data as $key => $category) {
+            if (! $category['active']) {
+                continue;
+            }
+
             $choices[$category['label']] = $key;
         }
 
@@ -113,6 +118,4 @@ class Category
     {
         $this->description = $description;
     }
-
-
 }
