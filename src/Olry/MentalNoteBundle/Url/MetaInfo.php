@@ -19,15 +19,35 @@ class MetaInfo
 
     private static $videoDomains = array(
         'youtube',
-        'vimeo'
+        'vimeo',
+        'netflix',
+        'myvideo',
+        'clipfish',
     );
 
     private static $imageDomains = array(
         'imgur',
+        'flickr',
+        '500px',
+        'fotocommunity',
+        'deviantart',
     );
 
     private static $musicDomains = array(
         'bandcamp',
+        'spotify',
+        'myspace',
+        'itun',
+        'itunes',
+    );
+
+    private static $purchaseDomains = array(
+        'amazon',
+        'ebay',
+        'gearbest',
+        'aliexpress',
+        'zalando',
+        'tchibo',
     );
 
     private function translate($url)
@@ -114,6 +134,10 @@ class MetaInfo
             return Category::LISTEN;
         }
 
+        if (in_array($this->info->sld, self::$purchaseDomains)) {
+            return Category::PURCHASE;
+        }
+
         return Category::READ;
     }
 
@@ -127,5 +151,3 @@ class MetaInfo
         return $this->info;
     }
 }
-
-
