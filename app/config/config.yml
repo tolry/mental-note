@@ -9,14 +9,17 @@ fos_user:
 
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
+    translator:
+        enabled:    true
+        fallback:   en
+        logging:    true
     secret:          %secret%
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
     form:            true
     csrf_protection: true
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-    default_locale:  %locale%
+    default_locale:  de
     session:
         handler_id: %session_handler_id%
     http_method_override: true

@@ -4,7 +4,7 @@
 <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     <fieldset>
-        <legend><i class="fa fa-bookmark large icon-fancy"></i> MentalNote: Login</legend>
+        <legend><i class="fa fa-bookmark large icon-fancy"></i> {% trans %}MentalNote: Login{% endtrans %}</legend>
 
         {% if error %}
             <div class="form-group text-danger">
@@ -13,17 +13,17 @@
         {% endif %}
 
         <div class="form-group">
-            <label class="control-label" for="username">username</label>
+            <label class="control-label" for="username">{% trans %}username{% endtrans %}</label>
                 <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
         </div>
 
         <div class="form-group">
-            <label for="password" class="control-label">password</label>
+            <label for="password" class="control-label">{% trans %}password{% endtrans %}</label>
                 <input type="password" class="form-control" id="password" name="_password" />
         </div>
 
         <div class="pull-right">
-            <input type="submit" class="btn btn-primary" id="_submit" name="_submit" value="sign in" />
+            <input type="submit" class="btn btn-primary" id="_submit" name="_submit" value="{% trans %}sign in{% endtrans %}" />
         </div>
 
         <div class="clearfix">&nbsp;</div>

@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-    <div class="panel-heading">Filters</div>
+    <div class="panel-heading">{% trans %}Filters{% endtrans %}</div>
     <ul class="nav">
         {% if criteria.query|length > 0 %}
         <li class = "active">
@@ -7,21 +7,21 @@
                 <div class="pull-right">
                     <i class="fa fa-times-circle"></i>
                 </div>
-                fulltext "{{ criteria.query }}"
+                {% trans %}fulltext{% endtrans %} "{{ criteria.query }}"
             </a>
         </li>
         {% endif %}
         <li>
             {% if criteria.pendingOnly %}
             <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': false}) }) }}">
-                only show pending
+                {% trans %}only show pending{% endtrans %}
                 <div class="pull-right">
                     <i class="fa fa-check-square-o"></i>
                 </div>
             </a>
             {% else %}
             <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': true}) }) }}">
-                only show pending
+                {% trans %}only show pending{% endtrans %}
                 <div class="pull-right">
                     <i class="fa fa-square-o"></i>
                 </div>
@@ -30,7 +30,7 @@
         </li>
     </ul>
 
-    <div class="panel-heading">Categories</div>
+    <div class="panel-heading">{% trans %}Categories{% endtrans %}</div>
     <ul class="nav">
         {% if criteria.category %}
         <li class = "active">

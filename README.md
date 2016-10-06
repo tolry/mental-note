@@ -25,3 +25,13 @@ if your dev installation is older than 2015-05-15 you will need to add the initi
 php app/console do:mi:version --add 20150515104913
 ```
 
+Translations
+------------
+
+**Update xliff files**
+
+To update cliff translation files use following command:
+
+```
+app/console translation:update --force --output-format=xlf de src/Olry/MentalNoteBundle
+```
