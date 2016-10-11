@@ -1,4 +1,4 @@
-<div class="thumbnail entry-finished">
+<div class="thumbnail {{ entry.pending ? '' : 'entry-finished' }}">
     <div class="row">
         <div class="col-sm-12 col-md-4">
             <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
