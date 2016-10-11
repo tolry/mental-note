@@ -1,59 +1,49 @@
-<div class="panel panel-default entry{{ entry.pending ? '' : ' entry-finished' }}">
-    <div class="panel-body">
-        <div class="row">
-
-            <div class="col-sm-12 col-md-4">
-                <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
-                    <img class="deferred-image image-responsive img-rounded" src="http://placehold.it/300x150&text=loading" data-src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
-                </a>
+<div class="thumbnail">
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
+                <img class="deferred-image image-responsive" src="http://placehold.it/300x150&text=loading" data-src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
+            </a>
+        </div>
+        <div class="col-sm-12 col-md-8">
+            {% if show_actions|default(false) %}
+            <div class="pull-right">
+                <a href="{{ path('entry_edit', {id: entry.id}) }}" class="modal-ajax-form text-muted" title="edit entry"><i class="fa fa-pencil "></i></a>
+                &nbsp;
+                <a href="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="text-muted"><i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> </a>
+                &nbsp;
+                <a href="{{ path('entry_delete', {id: entry.id, filter: app.request.query.get('filter')}) }}" title="delete" class="text-danger"><i class="fa fa-trash "></i></a>
+                &nbsp;
             </div>
+            {% endif %}
+            <div>
+                {% for tag in entry.tags %}
+                <a class="label{{ entry.pending ? ' label-info' : '' }}" href="{{ path('homepage', {filter: {tag: tag.name}}) }}">{{ tag.name }}</a>
+                {% else %}
+                &nbsp;
+                {% endfor %}
+            </div>
+            <h4 class="one-line">
+                <i class="{{ mn_category(entry.category).icon}} " title="{{ mn_category(entry.category).label}}"></i>
+                <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
+                    {{ entry.title }}
+                </a>
+                <small>
+                </small>
+            </h4>
+            <p class="text-muted">
+                <i class="fa fa-globe" title="domain"></i>
+                {{ entry.domain }}
 
-            <div class="col-sm-12 col-md-8">
-                <h4>
-                    <i class="{{ mn_category(entry.category).icon}} " title="{{ mn_category(entry.category).label}}"></i>
-                    <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
-                        {{ entry.title }}
-                    </a>
-                    <small>
-                        {{ entry.domain }}
-                    </small>
-                </h4>
-
-                <p>
-                    {% for tag in entry.tags %}
-                    <a class="label{{ entry.pending ? ' label-info' : '' }}" href="{{ path('homepage', {filter: {tag: tag.name}}) }}">{{ tag.name }}</a>
-                    {% endfor %}
-                </p>
+                <i class="fa fa-clock-o"></i>
+                {{ entry.age }}
 
                 {% if entry.visits|length > 0 %}
-                <p>
+                    <i class="fa fa-mouse-pointer"></i>
                     {{ entry.visits|length }} visit(s)
-                </p>
                 {% endif %}
-
-            </div>
+            </p>
         </div>
     </div>
-
-    {% if show_actions|default(false) %}
-    <div class="panel-footer">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="btn-toolbar small pull-right">
-                    <div class="btn-group">
-                        <a href="{{ path('entry_edit', {id: entry.id}) }}" class="btn btn-default btn-md modal-ajax-form"><i class="fa fa-pencil "></i> edit</a>
-                        <a href="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" class="btn btn-md btn-default"><i class="fa {{ entry.pending ? 'fa-square-o' : 'fa-check-square-o'}} "></i> done</a>
-                    </div>
-                    <div class="btn-group">
-                        <a href="{{ path('entry_delete', {id: entry.id, filter: app.request.query.get('filter')}) }}" class="btn btn-md btn-danger"><i class="fa fa-trash "></i> delete</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
 </div>
-
-
 

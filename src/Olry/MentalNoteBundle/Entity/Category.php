@@ -17,11 +17,11 @@ class Category
     const PURCHASE = 'purchase';
 
     private static $data = [
-        self::READ => ['label'=>'read', 'icon'=>'icon-book', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::LOOK_AT => ['label'=>'look at', 'icon'=>'icon-picture', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::WATCH => ['label'=>'watch', 'icon'=>'icon-film', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::LISTEN => ['label'=>'listen to', 'icon'=>'icon-volume-up', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::EVALUATE => ['label'=>'evaluate', 'icon'=>'icon-question-sign', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::READ => ['label'=>'read', 'icon'=>'fa fa-book', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::LOOK_AT => ['label'=>'look at', 'icon'=>'fa fa-picture-o', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::WATCH => ['label'=>'watch', 'icon'=>'fa fa-film', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::LISTEN => ['label'=>'listen to', 'icon'=>'fa fa-volume-up', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::EVALUATE => ['label'=>'evaluate', 'icon'=>'fa fa-question-circle', 'default_view'=>'', 'description'=>'', 'active' => true],
         self::VISIT_REGULARLY => ['label'=>'visit regularly', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>'', 'active' => false],
         self::PURCHASE => ['label'=>'purchase', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>'', 'active' => true],
     ];

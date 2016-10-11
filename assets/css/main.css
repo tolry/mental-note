@@ -68,3 +68,9 @@ body {
 }
 
 div.awesomplete { width: 100%; }
+
+.one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

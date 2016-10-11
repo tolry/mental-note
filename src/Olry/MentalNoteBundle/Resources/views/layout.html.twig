@@ -39,11 +39,8 @@
                 <div class="collapse navbar-collapse">
 
                     <ul class="nav navbar-nav">
-                        <li{{ active_menu|default('') == 'entries' ?  ' class="active"' : '' }}>
-                        <a href="{{ path('homepage') }}">Entries</a>
-                        </li>
-                        <li{{ active_menu|default('') == 'visit_regularly' ?  ' class="active"' : '' }}>
-                        <a href="{{ path('visit_regularly') }}">Visit regularly</a>
+                        <li>
+                            <button type="button" href="{{ path('entry_create') }}" id="add-url" class="modal-ajax-form btn btn-default navbar-btn"><i class="fa fa-plus"></i> add link...</a>
                         </li>
                     </ul>
 
