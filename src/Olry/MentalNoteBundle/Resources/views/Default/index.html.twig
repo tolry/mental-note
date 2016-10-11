@@ -6,21 +6,12 @@
 
 {% block content %}
 
-<div class="nav pull-right">
-    <a href="{{ path('entry_create') }}" id="add-url" class="modal-ajax-form btn btn-primary"><i class="fa fa-plus"></i> add link</a>
-</div>
-
 <div class="entry-list">
-{% set lastAge = '' %}
-{% for entry in pager %}
-    {% if lastAge != entry.age %}
-    {% set lastAge = entry.age %}
-    <h4>{{ entry.age }}</h4>
-    {% endif %}
-    {% include "OlryMentalNoteBundle:Entry:line.html.twig" with {show_actions: true} %}
-{% endfor %}
+    {% for entry in pager %}
+        {% include "OlryMentalNoteBundle:Entry:line.html.twig" with {show_actions: true} %}
+    {% endfor %}
     <div class="hide">
-    {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]" }) : '' }}
+        {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]" }) : '' }}
     </div>
 </div>
 
