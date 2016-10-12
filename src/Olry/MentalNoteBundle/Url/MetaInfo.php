@@ -54,8 +54,9 @@ class MetaInfo
     {
         $info = new Info($url);
         if ($info->host == 'i.imgur.com') {
-            $this->imageUrl = $url;
+            $this->imageUrl = $this->translateGifv($url);
             $newPath = str_replace('.' . $info->fileExtension, '', $info->path);
+
             return "http://imgur.com" . $newPath;
         }
         return $url;
@@ -99,6 +100,10 @@ class MetaInfo
             return $this->info->url;
         }
 
+        if ($this->info->fileExtension == 'gifv') {
+            return substr($this->info->url, 0, -1);
+        }
+
         $xpaths = array(
             '//meta[@property="og:image"]/@content',
             '//link[@rel="image_src"]/@href',
@@ -107,12 +112,21 @@ class MetaInfo
 
         foreach ($xpaths as $xpath) {
             $result = $this->getXpath($xpath);
-            if (!empty($result)) {
-                return $result;
+            if (! empty($result)) {
+                return $this->translateGifv($result);
             }
         }
 
         return false;
+    }
+
+    private function translateGifv($url)
+    {
+        if (! preg_match('/\.gifv$/i', $url)) {
+            return $url;
+        }
+
+        return substr($url, 0, -1);
     }
 
     public function getTitle()

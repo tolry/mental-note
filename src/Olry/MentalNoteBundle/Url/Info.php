@@ -107,11 +107,9 @@ class Info
 
     public function getInfo($key, $default = null)
     {
-        syslog(LOG_INFO, "getting info for key $key on request " . $_SERVER['REQUEST_URI']);
         if (empty($this->info)) {
             $this->info = array();
 
-            syslog(LOG_INFO, 'guzzle start for url ' . $this->url);
             $guzzle = new GuzzleClient($this->url);
             $guzzle->getEventDispatcher()->addListener('request.error', function(Event $event) {
                 $event->stopPropagation();
@@ -125,11 +123,8 @@ class Info
             if ($response->isSuccessful()) {
                 $this->info = $response->getInfo();
             }
-            syslog(LOG_INFO, 'guzzle stop for url ' . $this->url);
         }
 
         return isset($this->info[$key]) ? $this->info[$key] : $default;
     }
-
 }
-
