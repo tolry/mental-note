@@ -73,7 +73,7 @@ class EntryController extends AbstractBaseController
         } catch (\Exception $e) {
             $this->get('logger')->error('Exception: ' . $e->getMessage());
 
-            return $this->redirect("https://placehold.it/${width}x${height}", 301);
+            return $this->redirect("https://placehold.it/${width}x${height}?text=no%20preview", 301);
         }
     }
 
