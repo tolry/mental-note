@@ -74,3 +74,12 @@ div.awesomplete { width: 100%; }
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.label-ghost {
+    color: gray;
+    border:1px solid gray;
+}
+
+a.label-ghost:hover {
+    color: black;
+}

@@ -10,8 +10,6 @@
             <div class="pull-right">
                 <a href="{{ path('entry_edit', {id: entry.id}) }}" class="modal-ajax-form text-muted" title="edit entry"><i class="fa fa-pencil "></i></a>
                 &nbsp;
-                <a href="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="text-muted"><i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> </a>
-                &nbsp;
                 <a href="{{ path('entry_delete', {id: entry.id, filter: app.request.query.get('filter')}) }}" title="delete" class="text-danger"><i class="fa fa-trash "></i></a>
                 &nbsp;
             </div>
@@ -41,6 +39,9 @@
                     {{ entry.visits|length }} visit(s)
                 {% endif %}
             </p>
+            <div>
+                <a href="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="label label-ghost"><i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> mark as {{ entry.pending ? 'done' : 'pending' }}</a>
+            </div>
         </div>
     </div>
 </div>
