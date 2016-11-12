@@ -23,7 +23,7 @@ class Category
         self::LISTEN => ['label'=>'listen to', 'icon'=>'fa fa-volume-up', 'default_view'=>'', 'description'=>'', 'active' => true],
         self::EVALUATE => ['label'=>'evaluate', 'icon'=>'fa fa-question-circle', 'default_view'=>'', 'description'=>'', 'active' => true],
         self::VISIT_REGULARLY => ['label'=>'visit regularly', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>'', 'active' => false],
-        self::PURCHASE => ['label'=>'purchase', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::PURCHASE => ['label'=>'purchase', 'icon'=>'fa fa-shopping-cart', 'default_view'=>'', 'description'=>'', 'active' => true],
     ];
 
     private $key;
