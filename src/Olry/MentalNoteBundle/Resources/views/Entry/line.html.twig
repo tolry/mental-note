@@ -8,8 +8,8 @@
         <div class="col-sm-12 col-md-8">
             {% if show_actions|default(false) %}
             <div class="pull-right">
-                <a href="https://twitter.com/intent/tweet?text={{ entry.url ~ ' ' ~ entry.title | url_encode }}" title="{{ entry.title }}" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.url }}" title="{{ entry.title }}"  target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>&nbsp;&nbsp;
+                <a href="https://twitter.com/intent/tweet?text={{ entry.url ~ ' ' ~ entry.title | url_encode }}" title="Share with Twitter" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.url }}" title="Share with Facebook"  target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>&nbsp;&nbsp;
                 <a href="{{ path('entry_edit', {id: entry.id}) }}" class="modal-ajax-form text-muted" title="edit entry"><i class="fa fa-pencil "></i></a>
                 <a href="{{ path('entry_delete', {id: entry.id, filter: app.request.query.get('filter')}) }}" title="delete" class="text-danger"><i class="fa fa-trash "></i></a>
             </div>
