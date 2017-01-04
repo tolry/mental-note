@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-4">
             <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
-                <img class="deferred-image image-responsive" src="//placehold.it/300x150&text=loading" data-src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
+                <img class="deferred-image image-responsive" src="{{ asset("images/placeholder_loading.png") }}" data-src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
             </a>
         </div>
         <div class="col-sm-12 col-md-8">
