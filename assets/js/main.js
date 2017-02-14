@@ -4,9 +4,11 @@ var timeouts = {
 
 var entryForm = {
     form: function(){return $("#entry_form");},
+    previewImage: function(){return $("#preview");},
     fields: {
         url: function(){return $('input#entry_url');},
         title: function(){return $('input#entry_title');},
+        tags: function(){return $('input#entry_tags');},
         categories: function(){return $('input[name="entry[category]"]');},
         notificationSpan: function(){return $('span#metainfo-notification');}
     }
@@ -28,10 +30,18 @@ var application = {
                     entryForm.fields.title().val(data.title);
                 }
 
+                if (data.image_url) {
+                    var previewImage = $('<img/>')
+                        .attr('src', data.image_url)
+                        .attr('height', 200);
+                    entryForm.previewImage().html(previewImage);
+                }
+
                 var id = entryForm.fields.categories().filter('[value=' + data.category + ']').attr('id');
                 if (id) {
                     $('[for=' + id + ']').trigger('click');
                 }
+                entryForm.fields.tags().focus();
             },
             error: function() {
                 entryForm.fields.notificationSpan().html('error retrieving URL meta data');
@@ -66,7 +76,7 @@ var application = {
             }
         });
 
-        var $tagInput = $("#entry_tags");
+        var $tagInput = entryForm.fields.tags();
         if ($tagInput.length > 0) {
             new Awesomplete($tagInput[0],{
                 filter: function(text, input) {
