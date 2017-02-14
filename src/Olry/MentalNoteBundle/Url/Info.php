@@ -111,9 +111,13 @@ class Info
             $this->info = array();
 
             $guzzle = new GuzzleClient($this->url);
-            $guzzle->getEventDispatcher()->addListener('request.error', function(Event $event) {
-                $event->stopPropagation();
-            });
+            $guzzle->setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+            $guzzle->getEventDispatcher()->addListener(
+                'request.error',
+                function(Event $event) {
+                    $event->stopPropagation();
+                }
+            );
 
             $response = $guzzle->head()->send();
             if (!$response->isSuccessful()) {

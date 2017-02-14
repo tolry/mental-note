@@ -6,8 +6,10 @@
 
 namespace Olry\MentalNoteBundle\Url;
 
-use Symfony\Component\DomCrawler\Crawler;
+use Guzzle\Service\Client as GuzzleClient;
+use Guzzle\Common\Event;
 use Olry\MentalNoteBundle\Entity\Category;
+use Symfony\Component\DomCrawler\Crawler;
 
 class MetaInfo
 {
@@ -67,11 +69,34 @@ class MetaInfo
         $url = $this->translate($url);
 
         $this->info = new Info($url);
+
         if ($this->info->isHtml()) {
-            $this->html = file_get_contents($url);
+            $this->html = $this->fetchHtml($url);
         }
     }
 
+    private function fetchHtml($url)
+    {
+        $guzzle = new GuzzleClient($url);
+        $guzzle->setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+        $guzzle->getEventDispatcher()->addListener(
+            'request.error',
+            function (Event $event) {
+                $event->stopPropagation();
+            }
+        );
+
+        $response = $guzzle->get()->send();
+        if ($response->isSuccessful()) {
+            return $response->getBody(true);
+        }
+
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
     protected function getXpath($xpath)
     {
         if (!$this->info->isHtml()) {
@@ -105,6 +130,7 @@ class MetaInfo
             '//meta[@property="twitter:image"]/@content',
             '//link[@rel="image_src"]/@href',
             '//*[@id="comic"]//img/@src',
+            '//img[@id="cover-img"]/@src',
         );
 
         foreach ($xpaths as $xpath) {
