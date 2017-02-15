@@ -12,75 +12,15 @@
             </li>
         {% endif %}
         <li>
-            {% if criteria.pendingOnly %}
-                <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': false}) }) }}">
-                    only show pending
-                    <div class="pull-right">
-                        <i class="fa fa-check-square-o"></i>
-                    </div>
-                </a>
-            {% else %}
-                <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': true}) }) }}">
-                    only show pending
-                    <div class="pull-right">
-                        <i class="fa fa-square-o"></i>
-                    </div>
-                </a>
-            {% endif %}
+            <a href="{{ path('homepage', {'filter': criteria.query({'pendingOnly': not criteria.pendingOnly}) }) }}">
+                only show pending
+                <div class="pull-right">
+                    <i class="fa {{ criteria.pendingOnly ? "fa-check-square-o" : "fa-square-o" }}"></i>
+                </div>
+            </a>
         </li>
     </ul>
 
-    <div class="panel-heading">Categories</div>
-    <ul class="nav">
-        {% if criteria.category %}
-            <li class = "active">
-                <a href="{{ path('homepage', { filter: criteria.getQuery({'category': null})}) }}" title="remove filter">
-                    <div class="pull-right">
-                        <i class="fa fa-times-circle"></i>
-                    </div>
-                    <i class="{{ mn_category(criteria.category).icon }}"></i>
-                    {{ mn_category(criteria.category).label }}
-                </a>
-            </li>
-        {% else %}
-            {% for category in categories %}
-                <li {{ (criteria.category == category.category.key) ? ' class="active"' : '' }}>
-                    <a href="{{ path('homepage', {'filter': criteria.getQuery({'category': category.category.key})}) }}">
-                        <i class="{{ category.category.icon}} "></i>
-                        {{ category.category.label }}
-                        {% if category.pending > 0 %}
-                            <div class="pull-right">
-                                <span class="label {% if category.pending > 10 %}label-danger{% elseif category.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ category.pending }}/{{ category.total }}</span>
-                            </div>
-                        {% endif %}
-                    </a>
-                </li>
-            {% endfor%}
-        {% endif %}
-    </ul>
-
-    <div class="panel-heading">Tags</div>
-    <ul class="nav">
-        {% if criteria.tag != "" %}
-            <li class = "active">
-                <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': null})}) }}" title="remove filter">
-                    <div class="pull-right">
-                        <i class="fa fa-times-circle"></i>
-                    </div>
-                    {{ criteria.tag }}
-                </a>
-            </li>
-        {% else %}
-            {% for tag in tags %}
-                <li>
-                    <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': tag.name})}) }}">
-                        {{ tag.name }}
-                        <div class="pull-right">
-                            <span class="label {% if tag.pending > 10 %}label-danger{% elseif tag.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ tag.pending }}/{{ tag.total }}</span>
-                        </div>
-                    </a>
-                </li>
-            {% endfor%}
-        {% endif  %}
-    </ul>
+    {% include "OlryMentalNoteBundle:Default:sidebar-categories.html.twig" with {criteria: criteria, categories: categories} %}
+    {% include "OlryMentalNoteBundle:Default:sidebar-tags.html.twig" with {criteria: criteria, tags: tags} %}
 </div>
