@@ -8,7 +8,6 @@
 namespace Olry\MentalNoteBundle\Url;
 
 use Guzzle\Service\Client as GuzzleClient;
-use Guzzle\Http\Message\BadResponseException;
 use Guzzle\Common\Event;
 
 class Info
@@ -114,7 +113,7 @@ class Info
             $guzzle->setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
             $guzzle->getEventDispatcher()->addListener(
                 'request.error',
-                function(Event $event) {
+                function (Event $event) {
                     $event->stopPropagation();
                 }
             );
