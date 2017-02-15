@@ -13,7 +13,7 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            Ohthaechoosheekohngov2iepaothae5ahd5ya9kie
 
     session_handler_id: session.handler.native_file
     # session_handler_id: session.handler.memcache
