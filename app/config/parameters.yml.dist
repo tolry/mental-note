@@ -2,9 +2,9 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     mental_note
-    database_user:     mental_note
-    database_password: 9hej5QsJSnKPVZq9
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
 
     mailer_transport:  smtp
     mailer_host:       localhost
