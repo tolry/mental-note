@@ -3,13 +3,13 @@
 /build/
 /vendor/
 /node_modules/
-/bin/
 /composer.phar
 
 /var/*
 /var/cache/*
 /var/logs/*
 /var/sessions/*
+/bin/*
 
 /web/thumbnails/*
 /web/bundles/*
@@ -26,3 +26,4 @@
 !/web/bundles/.gitkeep
 !/web/css/.gitkeep
 !/web/js/.gitkeep
+!/bin/console
