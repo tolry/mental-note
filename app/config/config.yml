@@ -21,7 +21,9 @@ framework:
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  %locale%
     session:
+        name: mental_note
         handler_id: %session_handler_id%
+        save_path: "%kernel.root_dir%/var/sessions"
     http_method_override: true
     assets: ~
 
