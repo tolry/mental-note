@@ -78,6 +78,7 @@ div.awesomplete { width: 100%; }
 .label-ghost {
     color: gray;
     border:1px solid gray;
+    background: white;
 }
 
 a.label-ghost:hover {

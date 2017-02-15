@@ -36,11 +36,11 @@ class EntryController extends AbstractBaseController
 
     /**
      * @Route("/entry/{id}/toggle_pending.json",name="entry_toggle_pending")
-     * @Method("GET")
+     * @Method("POST")
      */
     public function togglePendingAction(Entry $entry, Request $request)
     {
-        $entry->setPending(!$entry->getPending());
+        $entry->setPending(! $entry->getPending());
         $this->getEm()->flush();
 
         $filter = (array) $request->get('filter', []);

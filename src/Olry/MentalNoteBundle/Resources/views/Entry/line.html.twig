@@ -39,7 +39,11 @@
                 {% endif %}
             </p>
             <div>
-                <a href="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="label label-ghost"><i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> mark as {{ entry.pending ? 'done' : 'pending' }}</a>
+                <form action="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" method="POST">
+                    <button title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="label label-ghost">
+                        <i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> mark as {{ entry.pending ? 'done' : 'pending' }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>
