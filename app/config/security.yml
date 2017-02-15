@@ -9,7 +9,7 @@ security:
     firewalls:
         main:
             remember_me:
-                secret: '%secret'
+                secret: '%secret%'
                 name: 'mental-note'
                 lifetime: 604800
                 path: /
