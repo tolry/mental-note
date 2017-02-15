@@ -18,7 +18,7 @@ class TagRepository extends EntityRepository
         $qb = $this->createQueryBuilder('t');
 
         $qb
-            ->andWhere("t IN (SELECT DISTINCT t2 FROM \Olry\MentalNoteBundle\Entity\Tag t2 INNER JOIN t2.entries e WHERE e.user = :user)")
+            ->andWhere("t IN (SELECT DISTINCT t2 FROM " . Tag::class . " t2 INNER JOIN t2.entries e WHERE e.user = :user)")
             ->setParameter('user', $user)
         ;
 

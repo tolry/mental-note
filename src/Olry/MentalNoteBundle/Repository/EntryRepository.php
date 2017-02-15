@@ -3,7 +3,6 @@
 namespace Olry\MentalNoteBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\EntityManager;
 
 use Olry\MentalNoteBundle\Entity\User;
 use Olry\MentalNoteBundle\Entity\Entry;

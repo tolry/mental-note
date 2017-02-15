@@ -6,7 +6,6 @@
 namespace Olry\MentalNoteBundle\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\ORM\EntityRepository;
 
 use Doctrine\Common\Collections\ArrayCollection;

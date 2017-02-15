@@ -4,16 +4,8 @@ namespace Olry\MentalNoteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\DomCrawler\Crawler;
-
-use Olry\MentalNoteBundle\Criteria\EntryCriteria;
-
-use FOS\UserBundle\Form\Type\ChangePasswordFormType;
-use FOS\UserBundle\Form\Model\ChangePassword;
 
 class UserController extends AbstractBaseController
 {
