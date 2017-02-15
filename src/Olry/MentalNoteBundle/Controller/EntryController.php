@@ -16,8 +16,8 @@ class EntryController extends AbstractBaseController
 {
 
     /**
-     * @param \Symfony\Component\Form\Form $form
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Form $form
+     * @param Request $request
      */
     private function processForm(Form $form, Entry $entry, Request $request)
     {
@@ -36,6 +36,7 @@ class EntryController extends AbstractBaseController
 
     /**
      * @Route("/entry/{id}/toggle_pending.json",name="entry_toggle_pending")
+     * @Method("GET")
      */
     public function togglePendingAction(Entry $entry, Request $request)
     {
@@ -49,6 +50,7 @@ class EntryController extends AbstractBaseController
 
     /**
      * @Route("/thumbnails/{id}_{width}x{height}.png",name="entry_thumbnail")
+     * @Method("GET")
      */
     public function thumbnailAction(Entry $entry, $width, $height)
     {
@@ -80,6 +82,7 @@ class EntryController extends AbstractBaseController
     /**
      * @Route("/entry/create.html",name="entry_create")
      * @Template()
+     * @Method({"GET", "POST"})
      */
     public function createAction(Request $request)
     {
@@ -96,6 +99,7 @@ class EntryController extends AbstractBaseController
     /**
      * @Route("/entry/{id}/edit.html",name="entry_edit")
      * @Template()
+     * @Method({"GET", "POST"})
      */
     public function editAction(Entry $entry, Request $request)
     {
@@ -114,6 +118,7 @@ class EntryController extends AbstractBaseController
     /**
      * @Route("/entry/{id}/delete.html",name="entry_delete")
      * @Template()
+     * @Method({"GET", "POST"})
      */
     public function deleteAction(Request $request, Entry $entry)
     {

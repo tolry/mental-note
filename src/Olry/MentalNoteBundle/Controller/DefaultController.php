@@ -3,6 +3,7 @@
 namespace Olry\MentalNoteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,7 @@ class DefaultController extends AbstractBaseController
     /**
      * @Route("/quick-add",name="quick_add")
      * @Template()
+     * @Method("GET")
      */
     public function quickAddAction(Request $request)
     {
@@ -40,6 +42,7 @@ class DefaultController extends AbstractBaseController
     /**
      * @Route("/",name="homepage")
      * @Template()
+     * @Method("GET")
      */
     public function indexAction(Request $request)
     {
@@ -63,25 +66,9 @@ class DefaultController extends AbstractBaseController
     }
 
     /**
-     * @Route("/visit_regularly", name="visit_regularly")
-     * @Template()
-     */
-    public function visitRegularlyAction(Request $request)
-    {
-        $criteria = $this->getFilterCriteria($request);
-
-        $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
-
-        return array(
-            'pager' => $pager,
-            'criteria' => $criteria,
-            'active_menu' => 'visit_regularly',
-        );
-    }
-
-    /**
      * @Route("/url/metainfo",name="url_metainfo")
      * @Template()
+     * @Method("GET")
      */
     public function urlMetainfoAction(Request $request)
     {
@@ -101,24 +88,9 @@ class DefaultController extends AbstractBaseController
         return new Response(\json_encode($metaInfo));
     }
 
-    protected function getTitle($url)
-    {
-        if (preg_match('%https?://i\.imgur.com/([0-9a-z]+)\.(jpe?g|gif|png)%i', $url, $matches)) {
-            $url = "http://imgur.com/" . $matches[1];
-        }
-
-        try {
-            $crawler = new Crawler(file_get_contents($url));
-            $title = $crawler->filterXPath('//head/title')->first()->text();
-
-            return trim($title);
-        } catch (\Exception $e) {
-            return null;
-        }
-    }
-
     /**
      * @Route("/sidebar",name="sidebar")
+     * @Method("GET")
      * @Template()
      */
     public function sidebarAction(Request $request)
