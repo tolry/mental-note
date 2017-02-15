@@ -4,6 +4,7 @@ namespace Olry\MentalNoteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -13,6 +14,7 @@ class UserController extends AbstractBaseController
     /**
      * @Route("/user/change-password",name="user_change_password")
      * @Template()
+     * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request)
     {
