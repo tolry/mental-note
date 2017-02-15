@@ -15,7 +15,7 @@ class AbstractBaseController extends Controller
     /**
      * @return Olry\MentalNoteBundle\Entity\User
      */
-    public function getUser()
+    protected function getUser()
     {
         return parent::getUser();
     }
@@ -23,7 +23,7 @@ class AbstractBaseController extends Controller
     /**
      * @return Olry\MentalNote\Repository\EntryRepository
      */
-    public function getEntryRepository()
+    protected function getEntryRepository()
     {
         return $this->getEm()->getRepository('\Olry\MentalNoteBundle\Entity\Entry');
     }
@@ -31,14 +31,13 @@ class AbstractBaseController extends Controller
     /**
      * @return Olry\MentalNote\Repository\TagRepository
      */
-    public function getTagRepository()
+    protected function getTagRepository()
     {
         return $this->getEm()->getRepository('\Olry\MentalNoteBundle\Entity\Tag');
     }
 
-    public function getEm()
+    protected function getEm()
     {
         return $this->getDoctrine()->getManager();
     }
-
 }

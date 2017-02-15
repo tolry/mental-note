@@ -22,7 +22,6 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "guzzlehttp/guzzle": "3.*",
         "white-october/pagerfanta-bundle": "*",
-        "leafo/lessphp": "dev-master",
         "doctrine/doctrine-migrations-bundle": "1.0.*"
     },
     "require-dev": { },
