@@ -38,7 +38,6 @@ class ThumbnailService
 
         $imageUrl = $metainfo->getImageUrl();
         if ($imageUrl) {
-            // todo use something more sophisticated, e.g. guzzle
             file_put_contents($file, file_get_contents($imageUrl));
 
             return;
