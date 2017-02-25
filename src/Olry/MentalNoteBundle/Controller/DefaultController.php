@@ -2,12 +2,13 @@
 
 namespace Olry\MentalNoteBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Olry\MentalNoteBundle\Criteria\EntryCriteria;
+use Olry\MentalNoteBundle\Url\MetaInfo;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractBaseController
 {
@@ -76,13 +77,18 @@ class DefaultController extends AbstractBaseController
             throw $this->createNotFoundException('no url given');
         }
 
-        $info = new \Olry\MentalNoteBundle\Url\MetaInfo($url);
+        $info = new MetaInfo($url);
 
-        $metaInfo = array(
+        $metaInfo = [
             'title' => $info->getTitle(),
             'image_url' => $info->getImageUrl(),
             'category' => $info->getDefaultCategory(),
-        );
+            'url_duplicate' => $this->getEntryRepository()->urlAlreadyTaken(
+                $this->getUser(),
+                $url,
+                $request->get('edit_id')
+            )
+        ];
 
         return new Response(\json_encode($metaInfo));
     }

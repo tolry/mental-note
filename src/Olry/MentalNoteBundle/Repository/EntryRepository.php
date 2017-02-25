@@ -127,4 +127,27 @@ class EntryRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function urlAlreadyTaken(User $user, $url, $excludeId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('e')
+            ->from(Entry::class, 'e')
+            ->andWhere('e.user = :user')
+            ->andWhere('e.url = :url')
+            ->setParameter('user', $user)
+            ->setParameter('url', $url)
+        ;
+
+        if ($excludeId) {
+            $qb
+                ->andWhere('e.id <> :excludeId')
+                ->setParameter('excludeId', $excludeId)
+            ;
+        }
+
+        $entries = $qb->getQuery()->getResult();
+
+        return (count($entries) > 0);
+    }
 }

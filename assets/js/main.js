@@ -17,11 +17,13 @@ var entryForm = {
 var application = {
     getMetaInfo: function($urlElement){
         entryForm.fields.notificationSpan().html('trying to retrieve URL meta data ...');
+
         $.ajax({
             url: mentalNote.route.url_metainfo,
             dataType: 'json',
             data: {
-                url: $urlElement.val()
+                url: $urlElement.val(),
+                edit_id: entryForm.form().data('edit-id')
             },
             success: function(data){
                 entryForm.fields.notificationSpan().html('');
@@ -42,6 +44,12 @@ var application = {
                     $('[for=' + id + ']').trigger('click');
                 }
                 entryForm.fields.tags().focus();
+
+                $urlElement.parent().removeClass('has-error');
+                if (data.url_duplicate) {
+                    $urlElement.parent().addClass('has-error');
+                    entryForm.fields.notificationSpan().html('URL already taken');
+                }
             },
             error: function() {
                 entryForm.fields.notificationSpan().html('error retrieving URL meta data');

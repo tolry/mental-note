@@ -14,9 +14,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class MetaInfo
 {
     private $info;
-
     private $html;
-
     private $imageUrl = null;
 
     private static $videoDomains = array(
