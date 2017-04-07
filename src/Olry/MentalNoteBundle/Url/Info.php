@@ -20,7 +20,7 @@ class Info
     public $user;
     public $pass;
     public $path;
-    public $query = array();
+    public $query = [];
     public $fragment;
 
     public $fileExtension;
@@ -30,6 +30,10 @@ class Info
     public $subdomain;
 
     private $info;
+
+    private static $noGoogleUserAgent = [
+        'medium',
+    ];
 
     public function __construct($url)
     {
@@ -41,7 +45,7 @@ class Info
             throw new \Exception("could not parse url $url");
         }
 
-        $urlInfo = array_merge(array(
+        $urlInfo = array_merge([
             'scheme' => null,
             'host' => null,
             'port' => null,
@@ -50,7 +54,7 @@ class Info
             'path' => null,
             'query' => null,
             'fragment' => null,
-        ), $urlInfo);
+        ], $urlInfo);
 
         $this->scheme = $urlInfo['scheme'];
         $this->host = $urlInfo['host'];
@@ -77,9 +81,18 @@ class Info
 
     }
 
+    public function getUserAgent($defaultUserAgent)
+    {
+        if (in_array($this->sld, self::$noGoogleUserAgent)) {
+            return $defaultUserAgent;
+        }
+
+        return 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html';
+    }
+
     public function isImage()
     {
-        if (in_array($this->fileExtension, array('jpeg', 'jpg', 'png', 'gif'))) {
+        if (in_array($this->fileExtension, ['jpeg', 'jpg', 'png', 'gif'])) {
             return true;
         }
 
@@ -101,16 +114,16 @@ class Info
 
     public function getDomain()
     {
-        return  $this->sld . '.' . $this->tld;
+        return $this->sld . '.' . $this->tld;
     }
 
     public function getInfo($key, $default = null)
     {
         if (empty($this->info)) {
-            $this->info = array();
+            $this->info = [];
 
             $guzzle = new GuzzleClient($this->url);
-            $guzzle->setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+            $guzzle->setUserAgent($this->getUserAgent($guzzle->getDefaultUserAgent()));
             $guzzle->getEventDispatcher()->addListener(
                 'request.error',
                 function (Event $event) {

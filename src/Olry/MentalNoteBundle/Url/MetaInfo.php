@@ -17,38 +17,38 @@ class MetaInfo
     private $html;
     private $imageUrl = null;
 
-    private static $videoDomains = array(
+    private static $videoDomains = [
         'youtube',
         'vimeo',
         'netflix',
         'myvideo',
         'clipfish',
-    );
+    ];
 
-    private static $imageDomains = array(
+    private static $imageDomains = [
         'imgur',
         'flickr',
         '500px',
         'fotocommunity',
         'deviantart',
-    );
+    ];
 
-    private static $musicDomains = array(
+    private static $musicDomains = [
         'bandcamp',
         'spotify',
         'myspace',
         'itun',
         'itunes',
-    );
+    ];
 
-    private static $purchaseDomains = array(
+    private static $purchaseDomains = [
         'amazon',
         'ebay',
         'gearbest',
         'aliexpress',
         'zalando',
         'tchibo',
-    );
+    ];
 
     private function translate($url)
     {
@@ -76,7 +76,12 @@ class MetaInfo
     private function fetchHtml($url)
     {
         $guzzle = new GuzzleClient($url);
-        $guzzle->setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+        $guzzle->setUserAgent(
+            $this->info->getUserAgent(
+                $guzzle->getDefaultUserAgent()
+            )
+        );
+
         $guzzle->getEventDispatcher()->addListener(
             'request.error',
             function (Event $event) {
@@ -123,17 +128,17 @@ class MetaInfo
             return $this->info->url;
         }
 
-        $xpaths = array(
+        $xpaths = [
             '//meta[@property="og:image"]/@content',
             '//meta[@property="twitter:image"]/@content',
             '//link[@rel="image_src"]/@href',
             '//*[@id="comic"]//img/@src',
             '//img[@id="cover-img"]/@src',
-        );
+        ];
 
         foreach ($xpaths as $xpath) {
             $result = $this->getXpath($xpath);
-            if (! empty($result)) {
+            if (!empty($result)) {
                 return $result;
             }
         }
