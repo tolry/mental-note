@@ -31,6 +31,15 @@ class EntryRepository extends EntityRepository
             ->orderBy('e.id', 'DESC')
         ;
 
+        switch ($criteria->sortOrder) {
+            case EntryCriteria::SORT_TIMESTAMP_DESC:
+                $qb->orderBy('e.id', 'DESC');
+                break;
+            case EntryCriteria::SORT_TIMESTAMP_ASC:
+                $qb->orderBy('e.id', 'ASC');
+                break;
+        }
+
         if ($includeVisits) {
             $qb->select('e, v')
                 ->leftJoin('e.visits', 'v');
