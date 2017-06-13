@@ -1,4 +1,20 @@
 <div class="panel panel-default">
+    <div class="panel-heading">Sort</div>
+    <ul class="nav">
+        {% for identifier, label in criteria.sortOptions %}
+            <li>
+                <a href="{{ path('homepage', { filter: criteria.getQuery({'sortOrder': identifier})}) }}">
+                    {{ label }}
+                    <div class="pull-right">
+                        <i class="fa {{ criteria.sortOrder == identifier ? "fa-check-square-o" : "fa-square-o" }}"></i>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="panel panel-default">
     <div class="panel-heading">Filters</div>
     <ul class="nav">
         {% if criteria.query|length > 0 %}
