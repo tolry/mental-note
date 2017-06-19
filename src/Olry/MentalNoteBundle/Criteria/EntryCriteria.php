@@ -44,7 +44,8 @@ final class EntryCriteria
             'page'        => $this->page,
             'limit'       => $this->limit,
             'query'       => $this->query,
-            'pendingOnly' => $this->pendingOnly ? 1 : 0
+            'pendingOnly' => $this->pendingOnly ? 1 : 0,
+            'sortOrder'   => $this->sortOrder,
         ];
 
         return array_merge($query, $changes);
