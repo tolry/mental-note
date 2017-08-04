@@ -43,24 +43,7 @@ class ThumbnailService
             return;
         }
 
-        $cmd = "xvfb-run --auto-servernum --server-args='-screen 0, 1024x768x24' cutycapt --url=%s --out=%s";
-        $process = new Process(sprintf($cmd,
-            \escapeshellarg($url),
-            \escapeshellarg($file . '.png'))
-        );
-
-        $process
-            ->setTimeout(60)
-            ->run()
-        ;
-
-        if ( ! $process->isSuccessful()) {
-            throw new \Exception($process->getErrorOutput());
-        }
-
-        rename($file . '.png', $file);
-
-        return;
+        throw new \Exception('no file found for url ' . $url);
     }
 
     public function generate($url, $width, $height, $name)

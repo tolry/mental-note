@@ -75,6 +75,9 @@ class EntryController extends AbstractBaseController
         } catch (\Exception $e) {
             $this->get('logger')->error('Exception: ' . $e->getMessage());
 
+            $target = $documentRoot . "/images/placeholder_no-preview.png";
+            symlink($target, $pathNew);
+
             return $this->redirect("/images/placeholder_no-preview.png", 301);
         }
     }
