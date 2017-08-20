@@ -1,16 +1,15 @@
 {% extends "OlryMentalNoteBundle::layout.html.twig" %}
 
-{% block breadcrumb %}
-<ul class="breadcrumb">
-    <li><a href="{{ path('homepage') }}">all entries</a> <span class="divider">/</span></li>
-</ul>
-{% endblock breadcrumb %}
-
-{% block sidebar %}
-SIDEBAR
-{% endblock sidebar %}
+{% block sidebar %}{% endblock sidebar %}
 
 {% block content %}
-CONTENT
+    <div class="entry-list">
+        {% for entry in pager %}
+            {% include "OlryMentalNoteBundle:Entry:line.html.twig" with {show_actions: true} %}
+        {% endfor %}
+        <div class="hide">
+            {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]" }) : '' }}
+        </div>
+    </div>
 {% endblock content %}
 

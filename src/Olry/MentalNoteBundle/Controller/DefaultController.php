@@ -12,13 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractBaseController
 {
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     private function getFilterCriteria(Request $request)
     {
-        $filter = (array) $request->get('filter', array());
+        $filter = (array) $request->get('filter', []);
 
         return new EntryCriteria($filter);
     }
@@ -40,29 +36,49 @@ class DefaultController extends AbstractBaseController
     }
 
     /**
+     * @Route("/visit-regularly",name="visit_regularly")
+     * @Template()
+     * @Method("GET")
+     */
+    public function visitRegularlyAction(Request $request)
+    {
+        try {
+            $criteria = EntryCriteria::createForVisitRegularly();
+            $criteria->page = $request->query->getInt('page', 1);
+
+            $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
+        } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $e) {
+            return $this->redirectToRoute('homepage', ['page' => $criteria->page--]);
+        }
+
+        return [
+            'pager' => $pager,
+        ];
+    }
+
+    /**
      * @Route("/",name="homepage")
      * @Template()
      * @Method("GET")
      */
     public function indexAction(Request $request)
     {
-        $criteria = $this->getFilterCriteria($request);
-
         try {
+            $criteria = $this->getFilterCriteria($request);
             $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
         } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $e) {
-            $filter = (array) $request->get('filter', array());
-            $filter['page']--;
+            $filter = (array) $request->get('filter', []);
+            --$filter['page'];
 
             return $this->redirectToRoute('homepage', ['filter' => $filter]);
         }
 
-        return array(
-            'pager'       => $pager,
-            'criteria'    => $criteria,
+        return [
+            'pager' => $pager,
+            'criteria' => $criteria,
             'active_menu' => 'entries',
-            'add_url'     => $this->get('session')->getFlashBag()->get('add_url'),
-        );
+            'add_url' => $this->get('session')->getFlashBag()->get('add_url'),
+        ];
     }
 
     /**
@@ -87,7 +103,7 @@ class DefaultController extends AbstractBaseController
                 $this->getUser(),
                 $url,
                 $request->get('edit_id')
-            )
+            ),
         ];
 
         return new Response(\json_encode($metaInfo));
@@ -102,10 +118,10 @@ class DefaultController extends AbstractBaseController
     {
         $criteria = $this->getFilterCriteria($request);
 
-        return array(
-            'tags'       => $this->getEntryRepository()->getTagStats($this->getUser(), $criteria),
+        return [
+            'tags' => $this->getEntryRepository()->getTagStats($this->getUser(), $criteria),
             'categories' => $this->getEntryRepository()->getCategoryStats($this->getUser(), $criteria),
-            'criteria'   => $criteria,
-        );
+            'criteria' => $criteria,
+        ];
     }
 }

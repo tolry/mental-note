@@ -29,7 +29,13 @@ class EntryRepository extends EntityRepository
             ->andWhere('e.user = :user_id')
             ->setParameter('user_id', $user->getId())
             ->orderBy('e.id', 'DESC')
+            ->groupBy('e.id')
         ;
+
+        if ($includeVisits) {
+            $qb->select('e, v, MAX(v.timestamp) AS HIDDEN last_visit')
+                ->leftJoin('e.visits', 'v');
+        }
 
         switch ($criteria->sortOrder) {
             case EntryCriteria::SORT_TIMESTAMP_DESC:
@@ -38,16 +44,25 @@ class EntryRepository extends EntityRepository
             case EntryCriteria::SORT_TIMESTAMP_ASC:
                 $qb->orderBy('e.id', 'ASC');
                 break;
-        }
-
-        if ($includeVisits) {
-            $qb->select('e, v')
-                ->leftJoin('e.visits', 'v');
+            case EntryCriteria::SORT_LAST_VISIT:
+                if (! $includeVisits) {
+                    throw new \RuntimeException('sort by last visits only possible if visits are queried at the same time');
+                }
+                $qb->orderBy('last_visit', 'DESC');
+                break;
         }
 
         if ($criteria->category) {
             $qb->andWhere('e.category = :category')
                 ->setParameter('category', $criteria->category);
+        }
+
+        if ($criteria->mode === EntryCriteria::MODE_NO_REGULARLY) {
+            $qb->andWhere('e.category <> :category_mode')
+                ->setParameter('category_mode', Category::VISIT_REGULARLY);
+        } elseif ($criteria->mode === EntryCriteria::MODE_ONLY_REGULARLY) {
+            $qb->andWhere('e.category = :category_mode')
+                ->setParameter('category_mode', Category::VISIT_REGULARLY);
         }
 
         if (! empty($criteria->tag)) {
