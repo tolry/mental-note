@@ -182,6 +182,18 @@ class Entry extends AbstractEntity
         return $this->visits;
     }
 
+    /**
+     * return DateTime|null
+     */
+    public function getLastVisitTimestamp()
+    {
+        if ($this->visits->isEmpty()) {
+            return null;
+        }
+
+        return $this->visits->last()->getTimestamp();
+    }
+
     public function getDomain()
     {
         return $this->getUrlInfo()->getDomain();

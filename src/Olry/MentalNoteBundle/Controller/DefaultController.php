@@ -46,7 +46,7 @@ class DefaultController extends AbstractBaseController
             $criteria = EntryCriteria::createForVisitRegularly();
             $criteria->page = $request->query->getInt('page', 1);
 
-            $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
+            $pager = $this->getEntryRepository()->filterWithoutPager($this->getUser(), $criteria);
         } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $e) {
             return $this->redirectToRoute('homepage', ['page' => $criteria->page--]);
         }

@@ -5,11 +5,8 @@
 {% block content %}
     <div class="entry-list">
         {% for entry in pager %}
-            {% include "OlryMentalNoteBundle:Entry:line.html.twig" with {show_actions: true} %}
+            {% include "OlryMentalNoteBundle:Entry:card.html.twig" with {show_actions: true} %}
         {% endfor %}
-        <div class="hide">
-            {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]" }) : '' }}
-        </div>
     </div>
 {% endblock content %}
 

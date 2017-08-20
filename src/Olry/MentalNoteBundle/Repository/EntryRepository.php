@@ -29,11 +29,10 @@ class EntryRepository extends EntityRepository
             ->andWhere('e.user = :user_id')
             ->setParameter('user_id', $user->getId())
             ->orderBy('e.id', 'DESC')
-            ->groupBy('e.id')
-        ;
+            ;
 
         if ($includeVisits) {
-            $qb->select('e, v, MAX(v.timestamp) AS HIDDEN last_visit')
+            $qb->select('e, v')
                 ->leftJoin('e.visits', 'v');
         }
 
@@ -43,12 +42,6 @@ class EntryRepository extends EntityRepository
                 break;
             case EntryCriteria::SORT_TIMESTAMP_ASC:
                 $qb->orderBy('e.id', 'ASC');
-                break;
-            case EntryCriteria::SORT_LAST_VISIT:
-                if (! $includeVisits) {
-                    throw new \RuntimeException('sort by last visits only possible if visits are queried at the same time');
-                }
-                $qb->orderBy('last_visit', 'DESC');
                 break;
         }
 
@@ -96,13 +89,29 @@ class EntryRepository extends EntityRepository
     {
         $qb = $this->getQueryBuilder($user, $criteria);
         $adapter = new DoctrineORMAdapter($qb);
-        $pager   = new Pagerfanta($adapter);
+        $pager = new Pagerfanta($adapter);
 
         $pager
             ->setMaxPerPage($criteria->limit)
             ->setCurrentPage($criteria->page);
 
         return $pager;
+    }
+
+    public function filterWithoutPager(User $user, EntryCriteria $criteria)
+    {
+        $qb = $this->getQueryBuilder($user, $criteria);
+
+        $entries = $qb->getQuery()->getResult();
+        if ($criteria->sortOrder == EntryCriteria::SORT_LAST_VISIT_ASC) {
+            usort($entries, function (Entry $entryA, Entry $entryB) {
+                return ($entryA->getLastVisitTimestamp() < $entryB->getLastVisitTimestamp())
+                    ? -1
+                    : 1;
+            });
+        }
+
+        return $entries;
     }
 
     public function getCategoryStats(User $user, EntryCriteria $criteria)
@@ -161,13 +170,13 @@ class EntryRepository extends EntityRepository
             ->andWhere('e.url = :url')
             ->setParameter('user', $user)
             ->setParameter('url', $url)
-        ;
+            ;
 
         if ($excludeId) {
             $qb
                 ->andWhere('e.id <> :excludeId')
                 ->setParameter('excludeId', $excludeId)
-            ;
+                ;
         }
 
         $entries = $qb->getQuery()->getResult();

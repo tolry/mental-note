@@ -6,7 +6,7 @@ final class EntryCriteria
 {
     const SORT_TIMESTAMP_DESC = 'sort-timestamp-desc';
     const SORT_TIMESTAMP_ASC = 'sort-timestamp-asc';
-    const SORT_LAST_VISIT = 'sort-last-visit';
+    const SORT_LAST_VISIT_ASC = 'sort-last-visit';
 
     const MODE_NO_REGULARLY = 'normal';
     const MODE_ONLY_REGULARLY = 'regularly';
@@ -38,7 +38,7 @@ final class EntryCriteria
     {
         return new self([
             'mode' => self:: MODE_ONLY_REGULARLY,
-            'sortOrder' => self::SORT_LAST_VISIT,
+            'sortOrder' => self::SORT_LAST_VISIT_ASC,
         ]);
     }
 

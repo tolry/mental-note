@@ -36,4 +36,12 @@ class Visit
         $this->timestamp = $timestamp;
         $this->entry = $entry;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
 }
