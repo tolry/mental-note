@@ -8,7 +8,6 @@ namespace Olry\MentalNoteBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type as CoreType;
-
 use Doctrine\ORM\EntityManager;
 use Olry\MentalNoteBundle\Entity\Category;
 use Olry\MentalNoteBundle\Form\Transformer\EntryTagTransformer;

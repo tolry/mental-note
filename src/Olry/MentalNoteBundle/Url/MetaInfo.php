@@ -98,6 +98,7 @@ class MetaInfo
     }
 
     /**
+     * @param string $xpath
      * @return string|null
      */
     protected function getXpath($xpath)
