@@ -7,9 +7,7 @@ namespace Olry\MentalNoteBundle\Entity;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use Doctrine\ORM\Mapping as ORM;
-
 use Olry\MentalNoteBundle\Url\MetaInfo;
 use Olry\MentalNoteBundle\Url\Info;
 
@@ -109,6 +107,9 @@ class Entry extends AbstractEntity
         return $this->pending;
     }
 
+    /**
+     * @param boolean $pending
+     */
     public function setPending($pending)
     {
         $this->pending = $pending;
