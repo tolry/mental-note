@@ -72,12 +72,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
-                    {% block breadcrumb %}{% endblock %}
-                </div>
-            </div>
-
-            <div class="row">
+                {% block content_full_width %}
                 <div class="col-sm-3 hidden-xs">
                     {% block sidebar %}{% endblock %}
                 </div>
@@ -85,8 +80,8 @@
                 <div class="col-sm-9 col-xs-12">
                     {% block content %}{% endblock %}
                 </div>
+                {% endblock %}
             </div>
-
         </div>
 
         {% include 'OlryMentalNoteBundle::_footer.html.twig' %}

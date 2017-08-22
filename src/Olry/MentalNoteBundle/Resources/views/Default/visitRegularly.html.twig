@@ -2,11 +2,11 @@
 
 {% block sidebar %}{% endblock sidebar %}
 
-{% block content %}
+{% block content_full_width %}
     <div class="entry-list">
         {% for entry in pager %}
             {% include "OlryMentalNoteBundle:Entry:card.html.twig" with {show_actions: true} %}
         {% endfor %}
     </div>
-{% endblock content %}
+{% endblock content_full_width %}
 
