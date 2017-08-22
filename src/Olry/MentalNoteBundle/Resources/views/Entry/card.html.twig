@@ -1,21 +1,22 @@
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
     <div class="thumbnail">
-        <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
+        <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" target="_blank" title="{{ entry.title }}">
             <img class="deferred-image image-responsive" src="{{ asset("images/placeholder_loading.png") }}" data-src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
         </a>
         <div class="pull-right">
             <a href="{{ path('entry_edit', {id: entry.id}) }}" class="modal-ajax-form text-muted" title="edit entry"><i class="fa fa-pencil "></i></a>
             <a href="{{ path('entry_delete', {id: entry.id, filter: app.request.query.get('filter')}) }}" title="delete" class="text-danger"><i class="fa fa-trash "></i></a>
         </div>
-        <div>
+        <div class="one-line">
             {% for tag in entry.tags %}
                 <a class="label{{ entry.pending ? ' label-info' : '' }}" href="{{ path('homepage', {filter: {tag: tag.name}}) }}">{{ tag.name }}</a>
             {% else %}
+                &nbsp;
             {% endfor %}
         </div>
         <h5 class="one-line">
             <i class="{{ mn_category(entry.category).icon}} " title="{{ mn_category(entry.category).label}}"></i>
-            <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
+            <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" target="_blank" title="{{ entry.title }}">
                 {{ entry.title }}
             </a>
         </h5>
@@ -30,8 +31,8 @@
         </div>
         <div>
             <form action="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" method="POST">
-                <button title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="label label-ghost">
-                    <i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> mark as {{ entry.pending ? 'done' : 'pending' }}
+                <button title="{{ entry.pending ? 'archive' : 'revert to active list' }}" class="label label-ghost">
+                    <i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> {{ entry.pending ? 'archive' : 'revert to active list' }}
                 </button>
             </form>
         </div>
