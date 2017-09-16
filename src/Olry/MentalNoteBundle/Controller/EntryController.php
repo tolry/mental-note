@@ -89,14 +89,22 @@ class EntryController extends AbstractBaseController
      */
     public function createAction(Request $request)
     {
+        $backlink = $request->query->get('backlink');
         $entry = new Entry($this->getUser());
         $form  = $this->createForm(EntryType::class, $entry);
 
         if ($this->processForm($form, $entry, $request)) {
-            return new Response('created', 201);
+            if (empty($backlink)) {
+                return $this->redirect($this->generateUrl('homepage'));
+            }
+
+            return $this->redirect($backlink);
         }
 
-        return array('form' => $form->createView());
+        return array(
+            'form' => $form->createView(),
+            'backlink' => $backlink,
+        );
     }
 
     /**
@@ -106,15 +114,21 @@ class EntryController extends AbstractBaseController
      */
     public function editAction(Entry $entry, Request $request)
     {
+        $backlink = $request->query->get('backlink');
         $form = $this->createForm(EntryType::class, $entry);
 
         if ($this->processForm($form, $entry, $request)) {
-            return new Response('changed', 201);
+            if (empty($backlink)) {
+                return $this->redirect($this->generateUrl('homepage'));
+            }
+
+            return $this->redirect($backlink);
         }
 
         return array(
             'form'  => $form->createView(),
             'entry' => $entry,
+            'backlink' => $backlink,
         );
     }
 

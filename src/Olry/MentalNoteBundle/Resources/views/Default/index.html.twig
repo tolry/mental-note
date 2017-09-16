@@ -1,19 +1,18 @@
 {% extends "OlryMentalNoteBundle::layout.html.twig" %}
 
-{% block sidebar %}
+{% block filter %}
     {{ render(controller('OlryMentalNoteBundle:Default:sidebar', { "filter": app.request.get('filter') })) }}
-{% endblock sidebar %}
+{% endblock %}
 
 {% block content %}
-    <br/>
     <div class="row card-deck entry-list">
         {% for entry in pager %}
             {% include "OlryMentalNoteBundle:Entry:line.html.twig" with {show_actions: true} %}
         {% endfor %}
-        <div class="hide">
+        <div class="d-none">
             {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]" }) : '' }}
         </div>
     </div>
-{% endblock content %}
+{% endblock %}
 
 {% block additional_javascript %} mentalNote.addUrl = {{ add_url|json_encode()|raw }};{% endblock %}

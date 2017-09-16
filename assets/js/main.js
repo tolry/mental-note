@@ -70,20 +70,6 @@ var application = {
             }
         });
 
-        $domElement.find('.modal-ajax-form').modalAjaxForm({
-            onComplete: function($element){
-                application.registerEvents($element);
-                $element.find(':text').first().focus();
-                if (mentalNote.addUrl.length > 0) {
-                    entryForm.fields.url()
-                        .val(mentalNote.addUrl)
-                        .trigger('keydown')
-                    ;
-                    mentalNote.addUrl = undefined;
-                }
-            }
-        });
-
         var $tagInput = entryForm.fields.tags();
         if ($tagInput.length > 0) {
             new Awesomplete($tagInput[0],{
@@ -100,20 +86,18 @@ var application = {
         }
 
         $('.visit-link').mousedown(function(e){
-            $.ajax($(this).data('link'),{
-                  type: 'POST'
-            });
+            $.ajax($(this).data('link'), {type: 'POST'});
         });
 
-        $('div.entry-list').jscroll({
-            loadingHtml: '<div class="text-center"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>',
-            padding: 20,
-            nextSelector: 'ul.pagination li.next a',
-            contentSelector: 'div.entry-list',
-            callback: function() {
-                application.registerEvents($(this));
-            }
-        });
+        //$('div.entry-list').jscroll({
+            //loadingHtml: '<div class="text-center"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>',
+            //padding: 20,
+            //nextSelector: 'ul.pagination li.next a',
+            //contentSelector: 'div.entry-list',
+            //callback: function() {
+                //application.registerEvents($(this));
+            //}
+        //});
 
         $domElement.find('.deferred-image').imageloader();
     },
@@ -129,12 +113,6 @@ var application = {
         });
 
         return tags;
-    },
-    checkForAddURL: function() {
-        var $button = $("#add-url");
-        if (mentalNote.addUrl.length > 0) {
-            $button.trigger('click');
-        }
     }
 }
 
@@ -143,6 +121,3 @@ var application = {
 // and won't be triggered again
 
 application.registerEvents($(document));
-
-application.checkForAddURL();
-
