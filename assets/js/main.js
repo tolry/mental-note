@@ -15,8 +15,9 @@ var entryForm = {
 }
 
 var application = {
+    loaderHtml: '<div class="loader-inner ball-pulse"> <div></div> <div></div> <div></div> </div>',
     getMetaInfo: function($urlElement){
-        entryForm.fields.notificationSpan().html('trying to retrieve URL meta data ...');
+        entryForm.fields.notificationSpan().html('trying to retrieve URL meta data ...' + application.loaderHtml);
 
         $.ajax({
             url: mentalNote.route.url_metainfo,
@@ -90,7 +91,7 @@ var application = {
         });
 
         //$('div.entry-list').jscroll({
-            //loadingHtml: '<div class="text-center"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>',
+            //loadingHtml: application.loaderHtml,
             //padding: 20,
             //nextSelector: 'ul.pagination li.next a',
             //contentSelector: 'div.entry-list',
