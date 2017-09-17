@@ -84,6 +84,7 @@ class EntryController extends AbstractBaseController
 
     /**
      * @Route("/entry/create.html",name="entry_create")
+     * @Route("/quick-add")
      * @Template()
      * @Method({"GET", "POST"})
      */
@@ -91,8 +92,13 @@ class EntryController extends AbstractBaseController
     {
         $backlink = $request->query->get('backlink');
         $entry = new Entry($this->getUser());
-        $form  = $this->createForm(EntryType::class, $entry);
 
+        if ($request->isMethod(Request::METHOD_GET)) {
+            $entry->setUrl($request->query->get('url'));
+            $entry->setTitle($request->query->get('title'));
+        }
+
+        $form  = $this->createForm(EntryType::class, $entry);
         if ($this->processForm($form, $entry, $request)) {
             if (empty($backlink)) {
                 return $this->redirect($this->generateUrl('homepage'));
