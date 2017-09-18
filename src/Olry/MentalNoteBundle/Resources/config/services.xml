@@ -13,6 +13,7 @@
         <service id="olry_mental_note.form.entry_type" class="Olry\MentalNoteBundle\Form\Type\EntryType">
             <argument type="service" id="doctrine.orm.default_entity_manager"></argument>
             <argument type="service" id="security.token_storage"></argument>
+            <argument type="service" id="router"></argument>
             <tag name="form.type"/>
         </service>
         <service id="olry_mental_note.thumbnail_service" class="%olry_mental_note.thumbnail_service.class%">

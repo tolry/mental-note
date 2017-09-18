@@ -17,10 +17,11 @@ var entryForm = {
 var application = {
     loaderHtml: '<div class="loader-inner ball-pulse"> <div></div> <div></div> <div></div> </div>',
     getMetaInfo: function($urlElement){
-        entryForm.fields.notificationSpan().html('trying to retrieve URL meta data ...' + application.loaderHtml);
+        entryForm.fields.notificationSpan().html(application.loaderHtml);
+        const url = $urlElement.data('metainfo-url');
 
         $.ajax({
-            url: mentalNote.route.url_metainfo,
+            url: url,
             dataType: 'json',
             data: {
                 url: $urlElement.val(),
@@ -63,8 +64,10 @@ var application = {
         timeouts.keydown = setTimeout(function(){application.getMetaInfo($element)}, 500);
     },
     registerEvents: function($domElement) {
+        entryForm.fields.url()
+            .on('input', application.getMetaInfoDelayed)
+            .trigger('input');
 
-        entryForm.fields.url().keydown(application.getMetaInfoDelayed);
         entryForm.form().keydown(function(event) {
             if (event.ctrlKey && event.keyCode == 13) {
                 entryForm.form().submit();
@@ -77,12 +80,10 @@ var application = {
                 filter: function(text, input) {
                     return Awesomplete.FILTER_CONTAINS(text, input.match(/[^,]*$/)[0]);
                 },
-
                 replace: function(text) {
                     var before = this.input.value.match(/^.+,\s*|/)[0];
                     this.input.value = before + text + ", ";
                 }
-
             });
         }
 

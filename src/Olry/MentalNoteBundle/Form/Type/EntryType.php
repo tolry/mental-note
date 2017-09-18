@@ -17,11 +17,14 @@ class EntryType extends AbstractType
 {
 
     private $em;
+    private $user;
+    private $router;
 
-    public function __construct(EntityManager $em, $token)
+    public function __construct(EntityManager $em, $token, $router)
     {
         $this->em = $em;
         $this->user = $token->getToken()->getUser();
+        $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -47,7 +50,17 @@ class EntryType extends AbstractType
                     'error_bubbling' => true,
                 )
             )
-            ->add('url', CoreType\TextType::class, array('label' => 'url', 'attr' => array('class' => 'input-large', 'focus' => 'focus')))
+            ->add(
+                'url',
+                CoreType\TextType::class,
+                array(
+                    'label' => 'url',
+                    'attr' => array(
+                        'class' => 'input-large',
+                        'data-metainfo-url' => $this->router->generate('url_metainfo')
+                    )
+                )
+            )
             ->add('title', CoreType\TextType::class, array('label' => 'title', 'attr' => array('class' => 'input-large')))
             ->add(
                 $builder

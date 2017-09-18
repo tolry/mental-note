@@ -1,26 +1,12 @@
 {% extends "OlryMentalNoteBundle::layout.html.twig" %}
 
 {% block content %}
+    {% include "OlryMentalNoteBundle:Entry:_form.html.twig" with {
+        form: form,
+        entry: null,
+        action: path('entry_create', {backlink: backlink}),
+        legend: 'add a new link'
+    } only %}
+
     {{ form_start(form, {attr: {role: "form", style: "margin:0;", id: "entry_form"}, method: "post", action: path('entry_create', {backlink: backlink})}) }}
-    <div class="row justify-content-center pb-4">
-        <div class="col-12 col-lg-8 col-xl-6">
-            <div class="card">
-                <div class="card-body">
-                    <fieldset class="form-group">
-                        <legend>add a new link</legend>
-
-                        {% include 'OlryMentalNoteBundle:Entry:_form.html.twig' %}
-
-                    </fieldset>
-                </div>
-                <div class="card-footer justify-content-end">
-                    <div class="float-right">
-                        <button type="submit" name="submit" class="btn btn-outline-primary"><i class="fa fa-plus"></i> save</button>
-                    </div>
-                    <div id="metainfo-notification"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{ form_rest(form) }}
 {% endblock %}
