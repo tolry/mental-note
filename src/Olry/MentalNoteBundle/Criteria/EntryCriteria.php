@@ -10,7 +10,7 @@ final class EntryCriteria
     public $tag;
     public $query;
     public $category;
-    public $limit       = 10;
+    public $limit       = 12;
     public $page        = 1;
     public $pendingOnly = true;
     public $sortOrder = self::SORT_TIMESTAMP_DESC;

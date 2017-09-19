@@ -24,5 +24,8 @@
         <service id="olry_mental_note.twig_extension" class="Olry\MentalNoteBundle\Twig\MentalNoteTwigExtension">
             <tag name="twig.extension" />
         </service>
+        <service id="pagerfanta.view.twitter_bootstrap4" class="Pagerfanta\View\TwitterBootstrap4View" public="false">
+            <tag name="pagerfanta.view" alias="twitter_bootstrap4" />
+        </service>
     </services>
 </container>

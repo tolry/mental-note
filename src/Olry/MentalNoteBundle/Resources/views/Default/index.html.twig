@@ -9,8 +9,8 @@
         {% for entry in pager %}
             {% include "OlryMentalNoteBundle:Entry:line.html.twig" with {show_actions: true} %}
         {% endfor %}
-        <div class="d-none">
-            {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap3_translated', { pageParameter: "[filter][page]" }) : '' }}
+        <div class="justify-content-center">
+            {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap4', { pageParameter: "[filter][page]" }) : '' }}
         </div>
     </div>
 {% endblock %}
