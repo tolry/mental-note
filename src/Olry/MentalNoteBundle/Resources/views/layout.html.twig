@@ -41,7 +41,7 @@
         </div>
 
         <div id="content">
-            <div class="container pt-4">
+            <div class="{% block container_class %}container{% endblock %} pt-4">
                 {% block content %}{% endblock %}
             </div>
         </div>
