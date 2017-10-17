@@ -157,12 +157,11 @@ class EntryController extends AbstractBaseController
             return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
         }
 
-        return array(
+        return [
             'form'   => $form->createView(),
             'entry'  => $entry,
             'filter' => $filter,
-        );
-
+        ];
     }
 
     /**

@@ -21,16 +21,16 @@
             </div>
 
             <p class="card-text text-muted">
-                <i class="fa fa-globe" title="domain"></i> {{ entry.domain }} <br>
+            <i class="fa fa-globe" title="domain"></i> {{ entry.domain }} <br>
 
-                <i class="fa fa-clock-o"></i> {{ entry.age }} <br>
+            <i class="fa fa-clock-o"></i> {{ entry.age }} <br>
 
-                <i class="fa fa-mouse-pointer"></i>
-                {% if entry.visits|length > 0 %}
-                    {{ entry.visits|length }} visit(s)
-                {% else %}
-                    never visited
-                {% endif %}
+            <i class="fa fa-mouse-pointer"></i>
+            {% if entry.visits|length > 0 %}
+                {{ entry.visits|length }} visit(s)
+            {% else %}
+                never visited
+            {% endif %}
             </p>
         </div>
 
@@ -53,6 +53,16 @@
                     <button title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="btn btn-outline-secondary btn-sm">
                         <i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> mark as {{ entry.pending ? 'done' : 'pending' }}
                     </button>
+                </form>
+            </div>
+        {% elseif delete_form|default(false) %}
+            <div class="card-footer">
+                <form class="form form-inline top" action="{{ path('entry_delete', {id: entry.id, filter: filter}) }}" method="post">
+                    <div class="pull-right">
+                        <input type="submit" class="btn btn-danger" value="Yes" />
+                        <a href="{{ path('homepage', {filter: filter}) }}" class="btn">Cancel</a>
+                    </div>
+                    {{ form_widget(delete_form) }}
                 </form>
             </div>
         {% endif %}
