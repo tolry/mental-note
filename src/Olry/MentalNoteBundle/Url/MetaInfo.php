@@ -173,8 +173,6 @@ class MetaInfo
     }
 
     /**
-     * Get info.
-     *
      * @return Info
      */
     public function getInfo()

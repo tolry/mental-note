@@ -32,7 +32,7 @@ class Tag extends AbstractEntity
     /**
      * Get name.
      *
-     * @return name.
+     * @return string name.
      */
     public function getName()
     {
@@ -50,9 +50,7 @@ class Tag extends AbstractEntity
     }
 
     /**
-     * Get id.
-     *
-     * @return id.
+     * @return int id
      */
     public function getId()
     {

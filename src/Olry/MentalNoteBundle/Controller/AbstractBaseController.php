@@ -2,18 +2,21 @@
 
 namespace Olry\MentalNoteBundle\Controller;
 
+use Olry\MentalNoteBundle\Entity\User;
+use Olry\MentalNoteBundle\Repository\EntryRepository;
+use Olry\MentalNoteBundle\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Description of AbstractBaseController
  *
- * @author korgano
+ * @author Tobias Olry <tobias.olry@gmail.com>
  */
 class AbstractBaseController extends Controller
 {
 
     /**
-     * @return Olry\MentalNoteBundle\Entity\User
+     * @return User
      */
     protected function getUser()
     {
@@ -21,7 +24,7 @@ class AbstractBaseController extends Controller
     }
 
     /**
-     * @return Olry\MentalNote\Repository\EntryRepository
+     * @return EntryRepository
      */
     protected function getEntryRepository()
     {
@@ -29,7 +32,7 @@ class AbstractBaseController extends Controller
     }
 
     /**
-     * @return Olry\MentalNote\Repository\TagRepository
+     * @return TagRepository
      */
     protected function getTagRepository()
     {
