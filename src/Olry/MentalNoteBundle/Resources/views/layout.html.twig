@@ -9,87 +9,51 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script type="text/javascript">
-            var mentalNote = {
-                route: {
-                    url_metainfo: '{{ path('url_metainfo') }}',
-                    tag_search: '{{ path('tag_search') }}'
-                }
-            }
-        </script>
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/all.min.css') }}" />
     </head>
 
-    <body>
+    <body class="bg-secondary">
+        {% block body %}
+        <div class="sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ path('homepage') }}"> <i class="text-secondary fa fa-bookmark"></i> MentalNote</a>
+                    <a href="{{ path('entry_create', {backlink: app.request.uri}) }}" id="add-url" class="btn btn-outline-primary btn-sm"><i class="fa fa-plus"></i> add link...</a>
 
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ path('homepage') }}"> <i class="text-primary fa fa-bookmark"></i> MentalNote</a>
-                </div>
 
-                <div class="collapse navbar-collapse">
-
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <button type="button" href="{{ path('entry_create') }}" id="add-url" class="modal-ajax-form btn btn-default navbar-btn"><i class="fa fa-plus"></i> add link...</a>
-                        </li>
-                    </ul>
-
-                    <div class="nav navbar-right">
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="javascript://" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> profile <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ path('user_change_password') }}"><i class="fa fa-key"></i> change password</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{{ path('logout') }}" title="logout"><i class="fa fa-off"></i> logout</a>
-                            </li>
-                        </ul>
-
-                        <form class="navbar-form navbar-right" role="form" action="{{ path('homepage') }}">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="filter[query]" placeholder="Search" focus="focus" />
-                                <input type="hidden" name="filter[pendingOnly]" value="0" />
-                            </div>
-                        </form>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <div class="dropdown">
+                            <button class="dropdown-toggle btn btn-outline-secondary btn-sm" data-toggle="dropdown"><i class="fa fa-user"></i> {{ app.user }}</button>
+                            <ul class="dropdown-menu" style="z-index: 1200;">
+                                <a href="{{ path('user_change_password') }}" class="dropdown-item"><i class="fa fa-key"></i> change password</a></li>
+                            <a href="{{ path('logout') }}" class="dropdown-item" title="logout"><i class="fa fa-sign-out"></i> logout</a>
+                            </ul>
+                        </div>
                     </div>
+                </div>
+            </nav>
 
-                </div><!--/.nav-collapse -->
-            </div>
+            {% block filter %}{% endblock %}
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    {% block breadcrumb %}{% endblock %}
-                </div>
+        <div id="content">
+            <div class="{% block container_class %}container{% endblock %} pt-4">
+                {% block content %}{% endblock %}
             </div>
-
-            <div class="row">
-                <div class="col-sm-3 hidden-xs">
-                    {% block sidebar %}{% endblock %}
-                </div>
-
-                <div class="col-sm-9 col-xs-12">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
-
         </div>
 
         {% include 'OlryMentalNoteBundle::_footer.html.twig' %}
+
+        {% endblock body %}
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
         <script type="text/javascript">
             {% block additional_javascript %}{% endblock %}
@@ -112,8 +76,6 @@
             } else {
                 window.onload = loadJsDeferred;
             }
-
         </script>
-
     </body>
 </html>

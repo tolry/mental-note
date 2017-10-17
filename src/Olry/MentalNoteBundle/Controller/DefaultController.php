@@ -24,22 +24,6 @@ class DefaultController extends AbstractBaseController
     }
 
     /**
-     * @Route("/quick-add",name="quick_add")
-     * @Template()
-     * @Method("GET")
-     */
-    public function quickAddAction(Request $request)
-    {
-        if ($request->get('url')) {
-            $this->addFlash('add_url', $request->get('url'));
-
-            return $this->redirectToRoute('homepage');
-        }
-
-        throw $this->createNotFoundException('missing url parameter');
-    }
-
-    /**
      * @Route("/",name="homepage")
      * @Template()
      * @Method("GET")
@@ -60,8 +44,6 @@ class DefaultController extends AbstractBaseController
         return array(
             'pager'       => $pager,
             'criteria'    => $criteria,
-            'active_menu' => 'entries',
-            'add_url'     => $this->get('session')->getFlashBag()->get('add_url'),
         );
     }
 

@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "guzzlehttp/guzzle": "3.*",
-        "white-october/pagerfanta-bundle": "*",
+        "pagerfanta/pagerfanta": "^1.0.5",
+        "white-october/pagerfanta-bundle": "^1.0.5",
         "doctrine/doctrine-migrations-bundle": "1.0.*"
     },
     "require-dev": { },

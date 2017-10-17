@@ -1,25 +1,20 @@
-<div class="panel-heading">Tags</div>
-<ul class="nav">
-    {% if criteria.tag != "" %}
-        <li class = "active">
-            <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': null})}) }}" title="remove filter">
-                <div class="pull-right">
-                    <i class="fa fa-times-circle"></i>
-                </div>
-                {{ criteria.tag }}
-            </a>
-        </li>
-    {% else %}
-        {% for tag in tags %}
-            <li>
-                <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': tag.name})}) }}">
+{% if criteria.tag %}
+    <a href="{{ path('homepage', { filter: criteria.getQuery({'tag': null})}) }}" class="btn btn-light border border-info text-info">
+        <i class="fa fa-tag"></i> Tag: {{ criteria.tag }} <i class="fa fa-times-circle"></i>
+    </a>
+{% else %}
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-tag"></i> Tags
+        </button>
+        <div class="dropdown-menu">
+            {% for tag in tags %}
+                <a class="dropdown-item" href="{{ path('homepage', { filter: criteria.getQuery({'tag': tag.name})}) }}">
                     {{ tag.name }}
-                    <div class="pull-right">
-                        <span class="label {% if tag.pending > 10 %}label-danger{% elseif tag.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ tag.pending }}/{{ tag.total }}</span>
-                    </div>
+                    <span class="badge {% if tag.pending > 10 %}badge-danger{% elseif tag.pending > 0 %}badge-warning{% else %}badge-default{% endif %}">{{ tag.pending }}/{{ tag.total }}</span>
                 </a>
-            </li>
-        {% endfor%}
-    {% endif  %}
-</ul>
+            {% endfor%}
+        </div>
+    </div>
+{% endif %}
 

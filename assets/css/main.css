@@ -1,68 +1,10 @@
-
-.large{ font-size: 1.5em; }
-
-.icon-fancy{ text-shadow: 2px 2px 3px white; }
-.icon-fancy-highlight{ text-shadow: 2px 2px 3px #eee; color: orange }
-
-#entry_category label{ display: inline-block; margin-right: 1em; }
-
-.input-large{ width: 420px; }
-
-.first-child { margin-left: 0 !important; }
-
-.image-responsive { width: 100%; }
-
 .entry-finished,
 .entry-finished a { color: gray; }
-
 .entry-finished img {
     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
     filter: gray; /* IE6-9 */
     -webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
 }
-
-.double-lineheight { line-height: 2em; }
-.top { margin-top:0; }
-.bottom { margin-bottom:0; }
-.pagination { margin-top:0; }
-
-.dl-horizontal-narrow dt { width: 80px; }
-.dl-horizontal-narrow dd { margin-left: 100px; }
-
-.nav-tabs > li > a { color:#555; }
-.nav-tabs > li.active > a > i { color:orange; }
-
-.sidebar .nav > li > a { padding: 6px 9px; }
-
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-    padding-top: 70px;
-    padding-bottom: 20px;
-}
-
-#entry_category.form-control {
-    padding: 0;
-    border: none;
-}
-
-.clear {clear: both;}
-
-@media (min-width: 768px) {
-  .container {
-    width: auto;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
-}
-
 .ball-pulse > div {
     background: gray;
 }
@@ -75,12 +17,17 @@ div.awesomplete { width: 100%; }
     white-space: nowrap;
 }
 
-.label-ghost {
-    color: gray;
-    border:1px solid gray;
-    background: white;
+.dropdown-toggle:after {
+    content: none;
+}
+#content {
+    background: #eee;
+}
+.card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-a.label-ghost:hover {
-    color: black;
+.card:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }

@@ -84,19 +84,33 @@ class EntryController extends AbstractBaseController
 
     /**
      * @Route("/entry/create.html",name="entry_create")
+     * @Route("/quick-add")
      * @Template()
      * @Method({"GET", "POST"})
      */
     public function createAction(Request $request)
     {
+        $backlink = $request->query->get('backlink');
         $entry = new Entry($this->getUser());
-        $form  = $this->createForm(EntryType::class, $entry);
 
-        if ($this->processForm($form, $entry, $request)) {
-            return new Response('created', 201);
+        if ($request->isMethod(Request::METHOD_GET)) {
+            $entry->setUrl($request->query->get('url'));
+            $entry->setTitle($request->query->get('title'));
         }
 
-        return array('form' => $form->createView());
+        $form  = $this->createForm(EntryType::class, $entry);
+        if ($this->processForm($form, $entry, $request)) {
+            if (empty($backlink)) {
+                return $this->redirect($this->generateUrl('homepage'));
+            }
+
+            return $this->redirect($backlink);
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'backlink' => $backlink,
+        );
     }
 
     /**
@@ -106,15 +120,21 @@ class EntryController extends AbstractBaseController
      */
     public function editAction(Entry $entry, Request $request)
     {
+        $backlink = $request->query->get('backlink');
         $form = $this->createForm(EntryType::class, $entry);
 
         if ($this->processForm($form, $entry, $request)) {
-            return new Response('changed', 201);
+            if (empty($backlink)) {
+                return $this->redirect($this->generateUrl('homepage'));
+            }
+
+            return $this->redirect($backlink);
         }
 
         return array(
             'form'  => $form->createView(),
             'entry' => $entry,
+            'backlink' => $backlink,
         );
     }
 
@@ -137,12 +157,11 @@ class EntryController extends AbstractBaseController
             return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
         }
 
-        return array(
+        return [
             'form'   => $form->createView(),
             'entry'  => $entry,
             'filter' => $filter,
-        );
-
+        ];
     }
 
     /**

@@ -1,8 +1,33 @@
 {% form_theme form 'OlryMentalNoteBundle::_formtheme.html.twig' %}
 
-<div id="preview" class="text-center"></div>
-<br>
+    {{ form_start(form,
+        {attr:
+            {role: "form", id: "entry_form", "data-edit-id": entry ? entry.id : null},
+            method: "post",
+            action: action})
+    }}
+    <div class="row justify-content-center pb-4">
+        <div class="col-12 col-lg-8 col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <fieldset class="form-group">
+                        <legend>{{ legend }}</legend>
 
-{{ form_widget(form) }}
-{{ form_rest(form) }}
+                        <div id="preview" class="text-center"></div>
+
+                        {{ form_widget(form) }}
+                        {{ form_rest(form) }}
+
+                    </fieldset>
+                </div>
+                <div class="card-footer justify-content-end">
+                    <div class="float-right">
+                        <button type="submit" name="submit" class="btn btn-outline-primary"><i class="fa fa-plus"></i> save</button>
+                    </div>
+                    <div id="metainfo-notification"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
 

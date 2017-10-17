@@ -13,6 +13,7 @@
         <service id="olry_mental_note.form.entry_type" class="Olry\MentalNoteBundle\Form\Type\EntryType">
             <argument type="service" id="doctrine.orm.default_entity_manager"></argument>
             <argument type="service" id="security.token_storage"></argument>
+            <argument type="service" id="router"></argument>
             <tag name="form.type"/>
         </service>
         <service id="olry_mental_note.thumbnail_service" class="%olry_mental_note.thumbnail_service.class%">
@@ -22,6 +23,9 @@
         </service>
         <service id="olry_mental_note.twig_extension" class="Olry\MentalNoteBundle\Twig\MentalNoteTwigExtension">
             <tag name="twig.extension" />
+        </service>
+        <service id="pagerfanta.view.twitter_bootstrap4" class="Pagerfanta\View\TwitterBootstrap4View" public="false">
+            <tag name="pagerfanta.view" alias="twitter_bootstrap4" />
         </service>
     </services>
 </container>

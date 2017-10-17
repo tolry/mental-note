@@ -1,21 +1,12 @@
-<div class="modal-dialog">
-    <div class="modal-content">
-        {{ form_start(form, {attr: {role: "form", style: "margin:0;", id: "entry_form"}, method: "post", action: path('entry_create')}) }}
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">create a new entry</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        {% include 'OlryMentalNoteBundle:Entry:_form.html.twig' %}
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <span id="metainfo-notification"></span>
-                <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-plus"></i> save</button>
-            </div>
-        </form>
-    </div>
-</div>
+{% extends "OlryMentalNoteBundle::layout.html.twig" %}
+
+{% block content %}
+    {% include "OlryMentalNoteBundle:Entry:_form.html.twig" with {
+        form: form,
+        entry: null,
+        action: path('entry_create', {backlink: backlink}),
+        legend: 'add a new link'
+    } only %}
+
+    {{ form_start(form, {attr: {role: "form", style: "margin:0;", id: "entry_form"}, method: "post", action: path('entry_create', {backlink: backlink})}) }}
+{% endblock %}

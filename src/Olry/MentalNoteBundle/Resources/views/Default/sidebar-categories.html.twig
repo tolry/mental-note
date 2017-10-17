@@ -1,29 +1,22 @@
-<div class="panel-heading">Categories</div>
-<ul class="nav">
-    {% if criteria.category %}
-        <li class="active">
-            <a href="{{ path('homepage', { filter: criteria.getQuery({'category': null})}) }}" title="remove filter">
-                <div class="pull-right">
-                    <i class="fa fa-times-circle"></i>
-                </div>
-                <i class="{{ mn_category(criteria.category).icon }}"></i>
-                {{ mn_category(criteria.category).label }}
-            </a>
-        </li>
-    {% else %}
+{% if criteria.category %}
+<a href="{{ path('homepage', { filter: criteria.getQuery({'category': null})}) }}" class="btn btn-light border border-info text-info">
+    <i class="fa fa-circle-o-notch"></i> Category: {{ mn_category(criteria.category).label }} <i class="fa fa-times-circle"></i>
+</a>
+{% else %}
+<div class="dropdown">
+    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-circle-o-notch"></i> Categories
+    </button>
+    <div class="dropdown-menu">
         {% for category in categories %}
-            <li {{ (criteria.category == category.category.key) ? ' class="active"' : '' }}>
-                <a href="{{ path('homepage', {'filter': criteria.getQuery({'category': category.category.key})}) }}">
-                    <i class="{{ category.category.icon}} "></i>
-                    {{ category.category.label }}
-                    {% if category.pending > 0 %}
-                        <div class="pull-right">
-                            <span class="label {% if category.pending > 10 %}label-danger{% elseif category.pending > 0 %}label-warning{% else %}label-default{% endif %}">{{ category.pending }}/{{ category.total }}</span>
-                        </div>
-                    {% endif %}
-                </a>
-            </li>
+        <a class="dropdown-item" href="{{ path('homepage', {'filter': criteria.getQuery({'category': category.category.key})}) }}">
+            <i class="{{ category.category.icon}} "></i>
+            {{ category.category.label }}
+            {% if category.pending > 0 %}
+            <span class="badge {% if category.pending > 10 %}badge-danger{% elseif category.pending > 0 %}badge-warning{% else %}badge-default{% endif %}">{{ category.pending }}/{{ category.total }}</span>
+            {% endif %}
+        </a>
         {% endfor%}
-    {% endif %}
-</ul>
-
+    </div>
+</div>
+{% endif %}

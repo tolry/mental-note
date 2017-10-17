@@ -21,7 +21,7 @@ class Visit
 
     /**
      * @ORM\ManyToOne(targetEntity="Entry", inversedBy="visits")
-     * @var Olry\MentalNoteBundle\Entity\Entry
+     * @var Entry
      */
     private $entry;
 

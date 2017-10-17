@@ -1,33 +1,41 @@
-{% extends "OlryMentalNoteBundle::layout.empty.html.twig"%}
+{% extends "OlryMentalNoteBundle::layout.html.twig"%}
 
-{% block content %}
-<form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    <fieldset>
-        <legend><i class="fa fa-bookmark large icon-fancy"></i> MentalNote: Login</legend>
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card m-4">
+                    <div class="card-body">
+                        <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                            <fieldset>
+                                <legend><i class="fa fa-bookmark large icon-fancy"></i> MentalNote: Login</legend>
 
-        {% if error %}
-            <div class="form-group text-danger">
-                {{ error.messageKey|trans(error.messageData, 'security')  }}
+                                {% if error %}
+                                    <div class="form-group text-danger">
+                                        {{ error.messageKey|trans(error.messageData, 'security')  }}
+                                    </div>
+                                {% endif %}
+
+                                <div class="form-group">
+                                    <label class="control-label" for="username">username</label>
+                                    <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password" class="control-label">password</label>
+                                    <input type="password" class="form-control" id="password" name="_password" />
+                                </div>
+
+                                <div class="pull-right">
+                                    <input type="submit" class="btn btn-primary" id="_submit" name="_submit" value="sign in" />
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
-        {% endif %}
-
-        <div class="form-group">
-            <label class="control-label" for="username">username</label>
-                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
         </div>
-
-        <div class="form-group">
-            <label for="password" class="control-label">password</label>
-                <input type="password" class="form-control" id="password" name="_password" />
-        </div>
-
-        <div class="pull-right">
-            <input type="submit" class="btn btn-primary" id="_submit" name="_submit" value="sign in" />
-        </div>
-
-        <div class="clearfix">&nbsp;</div>
-    </fieldset>
-</form>
-{% endblock content %}
+    </div>
+{% endblock body %}
 
