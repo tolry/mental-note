@@ -2,15 +2,16 @@
 
 namespace Olry\MentalNoteBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Olry\MentalNoteBundle\Entity\Entry;
 use Olry\MentalNoteBundle\Form\Type\EntryType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Cache\Simple\Psr6Cache;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EntryController extends AbstractBaseController
 {
@@ -90,12 +91,15 @@ class EntryController extends AbstractBaseController
      */
     public function createAction(Request $request)
     {
+        $cache = $this->get('olry_mental_note.cache.metainfo');
         $backlink = $request->query->get('backlink');
         $entry = new Entry($this->getUser());
 
         if ($request->isMethod(Request::METHOD_GET)) {
-            $entry->setUrl($request->query->get('url'));
+            $url = $request->query->get('url');
+            $entry->setUrl($url);
             $entry->setTitle($request->query->get('title'));
+            $cache->set($url, 'preview', $request->query->get('preview'));
         }
 
         $form  = $this->createForm(EntryType::class, $entry);
@@ -121,7 +125,7 @@ class EntryController extends AbstractBaseController
     public function editAction(Entry $entry, Request $request)
     {
         $backlink = $request->query->get('backlink');
-        $form = $this->createForm(EntryType::class, $entry);
+        $form = $this->createForm(EntryType::class, $entry, ['url-readonly' => true]);
 
         if ($this->processForm($form, $entry, $request)) {
             if (empty($backlink)) {

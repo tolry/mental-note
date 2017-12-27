@@ -2,18 +2,22 @@
 
     {{ form_start(form,
         {attr:
-            {role: "form", id: "entry_form", "data-edit-id": entry ? entry.id : null},
+            {role: "form", id: "entry_form", "data-edit-id": entry ? entry.id : null, "data-mode": entry ? 'edit' : 'create' },
             method: "post",
             action: action})
     }}
     <div class="row justify-content-center pb-4">
         <div class="col-12 col-lg-8 col-xl-6">
             <div class="card">
+                {% if entry %}
+                    <img class="card-img-top" src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
+                {% else %}
+                    <div id="preview"></div>
+                {% endif %}
                 <div class="card-body">
                     <fieldset class="form-group">
                         <legend>{{ legend }}</legend>
 
-                        <div id="preview" class="text-center"></div>
 
                         {{ form_widget(form) }}
                         {{ form_rest(form) }}

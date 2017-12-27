@@ -15,9 +15,6 @@ parameters:
     locale:            en
     secret:            Ohthaechoosheekohngov2iepaothae5ahd5ya9kie
 
-    session_handler_id: session.handler.native_file
-    # session_handler_id: session.handler.memcache
-
     session_memcache_host: localhost
     session_memcache_port: 11211
     session_memcache_prefix: mn_sess
