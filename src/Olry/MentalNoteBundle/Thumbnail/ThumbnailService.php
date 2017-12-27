@@ -4,7 +4,6 @@ namespace Olry\MentalNoteBundle\Thumbnail;
 
 use Olry\MentalNoteBundle\Cache\MetainfoCache;
 use Olry\MentalNoteBundle\Url\MetaInfo;
-use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
@@ -50,7 +49,7 @@ class ThumbnailService
             return;
         }
 
-        throw new \Exception('no file found for url ' . $url);
+        throw new \Exception('no file found for url '.$url);
     }
 
     public function generate($url, $width, $height, $name)
@@ -62,23 +61,23 @@ class ThumbnailService
         $thumbnail->width        = $width;
         $thumbnail->height       = $height;
         $thumbnail->relativePath = $this->compilePattern($width, $height, $name);
-        $thumbnail->absolutePath = $this->documentRoot . '/' . $thumbnail->relativePath;
+        $thumbnail->absolutePath = $this->documentRoot.'/'.$thumbnail->relativePath;
 
         if ($this->fs->exists($thumbnail->absolutePath)) {
             return $thumbnail;
         }
 
-        $tmpFile = $this->cacheDir . '/' . $hash;
+        $tmpFile = $this->cacheDir.'/'.$hash;
 
-        if (! $this->fs->exists($this->cacheDir)) {
+        if (!$this->fs->exists($this->cacheDir)) {
             $this->fs->mkdir($this->cacheDir);
         }
 
-        if (! $this->fs->exists($tmpFile)) {
+        if (!$this->fs->exists($tmpFile)) {
             $this->getImageForUrl($url, $tmpFile);
         }
 
-        if (! $this->fs->exists(dirname($thumbnail->absolutePath))) {
+        if (!$this->fs->exists(dirname($thumbnail->absolutePath))) {
             $this->fs->mkdir(dirname($thumbnail->absolutePath));
         }
 
@@ -95,7 +94,7 @@ class ThumbnailService
         ));
         $process->run();
 
-        if (! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new \Exception($process->getErrorOutput());
         }
 
