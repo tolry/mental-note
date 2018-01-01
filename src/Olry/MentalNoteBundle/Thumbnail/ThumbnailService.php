@@ -2,9 +2,10 @@
 
 namespace Olry\MentalNoteBundle\Thumbnail;
 
-use Symfony\Component\Process\Process;
-use Symfony\Component\Filesystem\Filesystem;
+use Olry\MentalNoteBundle\Cache\MetainfoCache;
 use Olry\MentalNoteBundle\Url\MetaInfo;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
 
 class ThumbnailService
 {
@@ -12,13 +13,15 @@ class ThumbnailService
     private $filepattern;
     private $cacheDir;
     private $fs;
+    private $cache;
 
-    public function __construct($documentRoot, $cacheDir, $filepattern)
+    public function __construct($documentRoot, $cacheDir, $filepattern, MetainfoCache $cache)
     {
         $this->documentRoot = $documentRoot;
-        $this->cacheDir     = $cacheDir;
-        $this->filepattern  = $filepattern;
-        $this->fs           = new Filesystem();
+        $this->cacheDir = $cacheDir;
+        $this->filepattern = $filepattern;
+        $this->fs = new Filesystem();
+        $this->cache = $cache;
     }
 
     private function compilePattern($width, $height, $name)
@@ -34,16 +37,19 @@ class ThumbnailService
      */
     public function getImageForUrl($url, $file)
     {
-        $metainfo = new MetaInfo($url);
+        $imageUrl = $this->cache->get($url, 'preview');
 
-        $imageUrl = $metainfo->getImageUrl();
+        if (empty($imageUrl)) {
+            $imageUrl = (new MetaInfo($url))->getImageUrl();
+        }
+
         if ($imageUrl) {
             file_put_contents($file, file_get_contents($imageUrl));
 
             return;
         }
 
-        throw new \Exception('no file found for url ' . $url);
+        throw new \Exception('no file found for url '.$url);
     }
 
     public function generate($url, $width, $height, $name)
@@ -55,15 +61,15 @@ class ThumbnailService
         $thumbnail->width        = $width;
         $thumbnail->height       = $height;
         $thumbnail->relativePath = $this->compilePattern($width, $height, $name);
-        $thumbnail->absolutePath = $this->documentRoot . '/' . $thumbnail->relativePath;
+        $thumbnail->absolutePath = $this->documentRoot.'/'.$thumbnail->relativePath;
 
         if ($this->fs->exists($thumbnail->absolutePath)) {
             return $thumbnail;
         }
 
-        $tmpFile = $this->cacheDir . '/' . $hash;
+        $tmpFile = $this->cacheDir.'/'.$hash;
 
-        if ( ! $this->fs->exists($this->cacheDir)) {
+        if (!$this->fs->exists($this->cacheDir)) {
             $this->fs->mkdir($this->cacheDir);
         }
 
@@ -71,26 +77,27 @@ class ThumbnailService
             $this->getImageForUrl($url, $tmpFile);
         }
 
-        if ( ! $this->fs->exists(dirname($thumbnail->absolutePath))) {
+        if (!$this->fs->exists(dirname($thumbnail->absolutePath))) {
             $this->fs->mkdir(dirname($thumbnail->absolutePath));
         }
 
         $cmd = "convert %s[0] -resize '%dx%d^' -gravity center -crop %dx%d+0+0 +repage %s";
 
-        $process = new Process(
-            sprintf($cmd,
-                $tmpFile,
-                $width, $height,
-                $width, $height,
-                $thumbnail->absolutePath)
-        );
+        $process = new Process(sprintf(
+            $cmd,
+            $tmpFile,
+            $width,
+            $height,
+            $width,
+            $height,
+            $thumbnail->absolutePath
+        ));
         $process->run();
 
-        if ( ! $process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new \Exception($process->getErrorOutput());
         }
 
         return $thumbnail;
     }
 }
-

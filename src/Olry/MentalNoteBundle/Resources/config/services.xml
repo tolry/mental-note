@@ -20,6 +20,10 @@
             <argument>%kernel.root_dir%/../web</argument>
             <argument>%kernel.cache_dir%/thumbnails</argument>
             <argument>%olry_mental_note.thumbnail_filepattern%</argument>
+            <argument type="service" id="olry_mental_note.cache.metainfo"></argument>
+        </service>
+        <service id="olry_mental_note.cache.metainfo" class="Olry\MentalNoteBundle\Cache\MetainfoCache">
+            <argument type="service" id="app.cache.pool.metainfo"></argument>
         </service>
         <service id="olry_mental_note.twig_extension" class="Olry\MentalNoteBundle\Twig\MentalNoteTwigExtension">
             <tag name="twig.extension" />

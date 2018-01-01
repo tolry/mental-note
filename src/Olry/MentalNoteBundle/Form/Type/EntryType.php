@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type as CoreType;
 use Doctrine\ORM\EntityManager;
 use Olry\MentalNoteBundle\Entity\Category;
 use Olry\MentalNoteBundle\Form\Transformer\EntryTagTransformer;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EntryType extends AbstractType
 {
@@ -25,6 +26,13 @@ class EntryType extends AbstractType
         $this->em = $em;
         $this->user = $token->getToken()->getUser();
         $this->router = $router;
+    }
+
+    public function configureOptions(OptionsResolver $options)
+    {
+        $options->setDefaults([
+            'url-readonly' => false,
+        ]);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -57,6 +65,7 @@ class EntryType extends AbstractType
                     'label' => 'url',
                     'attr' => array(
                         'class' => 'input-large',
+                        'readonly' => $options['url-readonly'] ? true : false,
                         'data-metainfo-url' => $this->router->generate('url_metainfo')
                     )
                 )

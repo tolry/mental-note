@@ -116,7 +116,7 @@ class MetaInfo
     }
 
     /**
-     * @return string
+     * @return string|bool
      */
     public function getImageUrl()
     {
@@ -125,6 +125,8 @@ class MetaInfo
         }
 
         if ($this->info->isImage()) {
+            $this->imageUrl = $this->info->url;
+
             return $this->info->url;
         }
 
@@ -139,6 +141,8 @@ class MetaInfo
         foreach ($xpaths as $xpath) {
             $result = $this->getXpath($xpath);
             if (!empty($result)) {
+                $this->imageUrl = $result;
+
                 return $result;
             }
         }

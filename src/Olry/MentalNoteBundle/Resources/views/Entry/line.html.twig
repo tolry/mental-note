@@ -40,7 +40,6 @@
                     <div class="dropdown">
                         <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i></button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="{{ path('entry_edit', {id: entry.id, backlink: path('homepage', {filter: criteria.getQuery()})}) }}" class="modal-ajax-form dropdown-item" title="edit entry"><i class="fa fa-pencil "></i> edit</a>
                             <a href="{{ path('entry_delete', {id: entry.id, filter: app.request.query.get('filter')}) }}" class="dropdown-item" title="delete" class="text-danger"><i class="fa fa-trash "></i> delete</a>
                             <div class="dropdown-header">share with ...</div>
                             <a href="https://twitter.com/intent/tweet?text={{ entry.url ~ ' ' ~ entry.title | url_encode }}" class="dropdown-item" title="Share with Twitter" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i> Twitter</a>
@@ -50,9 +49,12 @@
                 </div>
 
                 <form action="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" method="POST">
-                    <button title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="btn btn-outline-secondary btn-sm">
-                        <i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> mark as {{ entry.pending ? 'done' : 'pending' }}
-                    </button>
+                    <div class="btn-group">
+                        <button title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> mark as {{ entry.pending ? 'done' : 'pending' }}
+                        </button>
+                        <a href="{{ path('entry_edit', {id: entry.id, backlink: path('homepage', {filter: criteria.getQuery()})}) }}" class="btn btn-outline-secondary btn-sm" title="edit entry"><i class="fa fa-pencil "></i></a>
+                    </div>
                 </form>
             </div>
         {% elseif delete_form|default(false) %}

@@ -5,12 +5,15 @@ var timeouts = {
 var entryForm = {
     form: function(){return $("#entry_form");},
     previewImage: function(){return $("#preview");},
+    isModeCreate: function () {
+        return (entryForm.form().data('mode') === 'create');
+    },
     fields: {
         url: function(){return $('input#entry_url');},
         title: function(){return $('input#entry_title');},
         tags: function(){return $('input#entry_tags');},
         categories: function(){return $('input[name="entry[category]"]');},
-        notificationSpan: function(){return $('span#metainfo-notification');}
+        notificationSpan: function(){return $('#metainfo-notification');}
     }
 }
 
@@ -37,7 +40,7 @@ var application = {
                 if (data.image_url) {
                     var previewImage = $('<img/>')
                         .attr('src', data.image_url)
-                        .attr('height', 200);
+                        .addClass('card-img-top');
                     entryForm.previewImage().html(previewImage);
                 }
 
@@ -64,9 +67,11 @@ var application = {
         timeouts.keydown = setTimeout(function(){application.getMetaInfo($element)}, 500);
     },
     registerEvents: function($domElement) {
-        entryForm.fields.url()
-            .on('input', application.getMetaInfoDelayed)
-            .trigger('input');
+        if (entryForm.isModeCreate()) {
+            entryForm.fields.url()
+                .on('input', application.getMetaInfoDelayed)
+                .trigger('input');
+        }
 
         entryForm.form().keydown(function(event) {
             if (event.ctrlKey && event.keyCode == 13) {
