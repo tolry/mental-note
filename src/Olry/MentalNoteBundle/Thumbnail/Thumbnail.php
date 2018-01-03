@@ -1,6 +1,6 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Thumbnail;
+namespace AppBundle\Thumbnail;
 
 class Thumbnail
 {

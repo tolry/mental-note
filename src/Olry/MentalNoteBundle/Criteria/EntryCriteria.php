@@ -1,6 +1,6 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Criteria;
+namespace AppBundle\Criteria;
 
 final class EntryCriteria
 {

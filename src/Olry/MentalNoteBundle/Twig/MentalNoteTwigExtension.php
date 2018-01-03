@@ -3,9 +3,9 @@
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
-namespace Olry\MentalNoteBundle\Twig;
+namespace AppBundle\Twig;
 
-use Olry\MentalNoteBundle\Entity\Category;
+use AppBundle\Entity\Category;
 
 class MentalNoteTwigExtension extends \Twig_Extension
 {

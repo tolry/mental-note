@@ -3,18 +3,18 @@
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
-namespace Olry\MentalNoteBundle\Entity;
+namespace AppBundle\Entity;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Olry\MentalNoteBundle\Url\MetaInfo;
-use Olry\MentalNoteBundle\Url\Info;
+use AppBundle\Url\MetaInfo;
+use AppBundle\Url\Info;
 
 /**
- * @ORM\Entity(repositoryClass="Olry\MentalNoteBundle\Repository\EntryRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EntryRepository")
  * @ORM\Table(name="entry")
  * @UniqueEntity(fields={"url", "user"}, message="url already in database")
  */

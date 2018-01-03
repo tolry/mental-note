@@ -1,12 +1,12 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
- * @ORM\Entity(repositoryClass="Olry\MentalNoteBundle\Repository\TagRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TagRepository")
  * @ORM\Table(name="tag")
  */
 class Tag extends AbstractEntity

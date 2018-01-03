@@ -1,10 +1,10 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Controller;
+namespace AppBundle\Controller;
 
-use Olry\MentalNoteBundle\Entity\User;
-use Olry\MentalNoteBundle\Repository\EntryRepository;
-use Olry\MentalNoteBundle\Repository\TagRepository;
+use AppBundle\Entity\User;
+use AppBundle\Repository\EntryRepository;
+use AppBundle\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -28,7 +28,7 @@ class AbstractBaseController extends Controller
      */
     protected function getEntryRepository()
     {
-        return $this->getEm()->getRepository('\Olry\MentalNoteBundle\Entity\Entry');
+        return $this->getEm()->getRepository('\AppBundle\Entity\Entry');
     }
 
     /**
@@ -36,7 +36,7 @@ class AbstractBaseController extends Controller
      */
     protected function getTagRepository()
     {
-        return $this->getEm()->getRepository('\Olry\MentalNoteBundle\Entity\Tag');
+        return $this->getEm()->getRepository('\AppBundle\Entity\Tag');
     }
 
     protected function getEm()

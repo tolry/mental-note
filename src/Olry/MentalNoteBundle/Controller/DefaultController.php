@@ -1,9 +1,9 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Controller;
+namespace AppBundle\Controller;
 
-use Olry\MentalNoteBundle\Criteria\EntryCriteria;
-use Olry\MentalNoteBundle\Url\MetaInfo;
+use AppBundle\Criteria\EntryCriteria;
+use AppBundle\Url\MetaInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

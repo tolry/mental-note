@@ -3,14 +3,14 @@
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
-namespace Olry\MentalNoteBundle\Form\Transformer;
+namespace AppBundle\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\ORM\EntityRepository;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Olry\MentalNoteBundle\Entity\Tag;
+use AppBundle\Entity\Tag;
 
 class EntryTagTransformer implements DataTransformerInterface
 {

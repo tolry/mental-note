@@ -1,9 +1,9 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Thumbnail;
+namespace AppBundle\Thumbnail;
 
-use Olry\MentalNoteBundle\Cache\MetainfoCache;
-use Olry\MentalNoteBundle\Url\MetaInfo;
+use AppBundle\Cache\MetainfoCache;
+use AppBundle\Url\MetaInfo;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 

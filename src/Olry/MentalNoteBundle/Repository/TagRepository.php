@@ -1,10 +1,10 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Olry\MentalNoteBundle\Entity\User;
-use Olry\MentalNoteBundle\Entity\Tag;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Tag;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)

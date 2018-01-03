@@ -1,6 +1,6 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Entity;
+namespace AppBundle\Entity;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)

@@ -4,11 +4,11 @@
  * @author Tobias Olry <tobias.olry@web.de>
  */
 
-namespace Olry\MentalNoteBundle\Url;
+namespace AppBundle\Url;
 
 use Guzzle\Service\Client as GuzzleClient;
 use Guzzle\Common\Event;
-use Olry\MentalNoteBundle\Entity\Category;
+use AppBundle\Entity\Category;
 use Symfony\Component\DomCrawler\Crawler;
 
 class MetaInfo

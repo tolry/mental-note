@@ -1,6 +1,6 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Tests\Controller;
+namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

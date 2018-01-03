@@ -1,15 +1,15 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-use Olry\MentalNoteBundle\Entity\User;
-use Olry\MentalNoteBundle\Entity\Entry;
-use Olry\MentalNoteBundle\Entity\Tag;
-use Olry\MentalNoteBundle\Entity\Category;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Entry;
+use AppBundle\Entity\Tag;
+use AppBundle\Entity\Category;
 
-use Olry\MentalNoteBundle\Criteria\EntryCriteria;
+use AppBundle\Criteria\EntryCriteria;
 
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;

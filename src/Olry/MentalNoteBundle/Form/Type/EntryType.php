@@ -3,15 +3,15 @@
  * @author Tobias Olry (tobias.olry@web.de)
  */
 
-namespace Olry\MentalNoteBundle\Form\Type;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type as CoreType;
 
 use Doctrine\ORM\EntityManager;
-use Olry\MentalNoteBundle\Entity\Category;
-use Olry\MentalNoteBundle\Form\Transformer\EntryTagTransformer;
+use AppBundle\Entity\Category;
+use AppBundle\Form\Transformer\EntryTagTransformer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EntryType extends AbstractType
@@ -37,7 +37,7 @@ class EntryType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $repo = $this->em->getRepository('Olry\MentalNoteBundle\Entity\Tag');
+        $repo = $this->em->getRepository('AppBundle\Entity\Tag');
 
         $allowedTags = [];
         foreach ($repo->search("", $this->user)->getQuery()->getResult() as $tag) {

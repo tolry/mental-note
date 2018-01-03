@@ -1,6 +1,6 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Cache;
+namespace AppBundle\Cache;
 
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\SimpleCache\CacheInterface as Psr16Interface;

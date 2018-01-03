@@ -1,9 +1,9 @@
 <?php
 
-namespace Olry\MentalNoteBundle;
+namespace AppBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class OlryMentalNoteBundle extends Bundle
+class AppBundle extends Bundle
 {
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Olry\MentalNoteBundle\Controller;
+namespace AppBundle\Controller;
 
-use Olry\MentalNoteBundle\Entity\Entry;
-use Olry\MentalNoteBundle\Form\Type\EntryType;
+use AppBundle\Entity\Entry;
+use AppBundle\Form\Type\EntryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

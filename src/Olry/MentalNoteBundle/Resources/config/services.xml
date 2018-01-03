@@ -6,11 +6,11 @@
 
     <parameters>
         <parameter key="olry_mental_note.thumbnail_filepattern">thumbnails/{name}_{width}x{height}.png</parameter>
-        <parameter key="olry_mental_note.thumbnail_service.class">Olry\MentalNoteBundle\Thumbnail\ThumbnailService</parameter>
+        <parameter key="olry_mental_note.thumbnail_service.class">AppBundle\Thumbnail\ThumbnailService</parameter>
     </parameters>
 
     <services>
-        <service id="olry_mental_note.form.entry_type" class="Olry\MentalNoteBundle\Form\Type\EntryType">
+        <service id="olry_mental_note.form.entry_type" class="AppBundle\Form\Type\EntryType">
             <argument type="service" id="doctrine.orm.default_entity_manager"></argument>
             <argument type="service" id="security.token_storage"></argument>
             <argument type="service" id="router"></argument>
@@ -22,10 +22,10 @@
             <argument>%olry_mental_note.thumbnail_filepattern%</argument>
             <argument type="service" id="olry_mental_note.cache.metainfo"></argument>
         </service>
-        <service id="olry_mental_note.cache.metainfo" class="Olry\MentalNoteBundle\Cache\MetainfoCache">
+        <service id="olry_mental_note.cache.metainfo" class="AppBundle\Cache\MetainfoCache">
             <argument type="service" id="app.cache.pool.metainfo"></argument>
         </service>
-        <service id="olry_mental_note.twig_extension" class="Olry\MentalNoteBundle\Twig\MentalNoteTwigExtension">
+        <service id="olry_mental_note.twig_extension" class="AppBundle\Twig\MentalNoteTwigExtension">
             <tag name="twig.extension" />
         </service>
         <service id="pagerfanta.view.twitter_bootstrap4" class="Pagerfanta\View\TwitterBootstrap4View" public="false">

@@ -5,7 +5,7 @@
  */
 
 
-namespace Olry\MentalNoteBundle\Url;
+namespace AppBundle\Url;
 
 use Guzzle\Service\Client as GuzzleClient;
 use Guzzle\Common\Event;
