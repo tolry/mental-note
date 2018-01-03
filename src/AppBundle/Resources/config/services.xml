@@ -5,27 +5,27 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="olry_mental_note.thumbnail_filepattern">thumbnails/{name}_{width}x{height}.png</parameter>
-        <parameter key="olry_mental_note.thumbnail_service.class">AppBundle\Thumbnail\ThumbnailService</parameter>
+        <parameter key="app.thumbnail_filepattern">thumbnails/{name}_{width}x{height}.png</parameter>
+        <parameter key="app.thumbnail_service.class">AppBundle\Thumbnail\ThumbnailService</parameter>
     </parameters>
 
     <services>
-        <service id="olry_mental_note.form.entry_type" class="AppBundle\Form\Type\EntryType">
+        <service id="app.form.entry_type" class="AppBundle\Form\Type\EntryType">
             <argument type="service" id="doctrine.orm.default_entity_manager"></argument>
             <argument type="service" id="security.token_storage"></argument>
             <argument type="service" id="router"></argument>
             <tag name="form.type"/>
         </service>
-        <service id="olry_mental_note.thumbnail_service" class="%olry_mental_note.thumbnail_service.class%">
+        <service id="app.thumbnail_service" class="%app.thumbnail_service.class%">
             <argument>%kernel.root_dir%/../web</argument>
             <argument>%kernel.cache_dir%/thumbnails</argument>
-            <argument>%olry_mental_note.thumbnail_filepattern%</argument>
-            <argument type="service" id="olry_mental_note.cache.metainfo"></argument>
+            <argument>%app.thumbnail_filepattern%</argument>
+            <argument type="service" id="app.cache.metainfo"></argument>
         </service>
-        <service id="olry_mental_note.cache.metainfo" class="AppBundle\Cache\MetainfoCache">
+        <service id="app.cache.metainfo" class="AppBundle\Cache\MetainfoCache">
             <argument type="service" id="app.cache.pool.metainfo"></argument>
         </service>
-        <service id="olry_mental_note.twig_extension" class="AppBundle\Twig\MentalNoteTwigExtension">
+        <service id="app.twig_extension" class="AppBundle\Twig\MentalNoteTwigExtension">
             <tag name="twig.extension" />
         </service>
         <service id="pagerfanta.view.twitter_bootstrap4" class="Pagerfanta\View\TwitterBootstrap4View" public="false">

@@ -61,7 +61,7 @@ class DefaultController extends AbstractBaseController
 
         $info = new MetaInfo($url);
 
-        $cache = $this->get('olry_mental_note.cache.metainfo');
+        $cache = $this->get('app.cache.metainfo');
         $cache->set($url, 'preview', $info->getImageUrl());
 
         $metaInfo = [

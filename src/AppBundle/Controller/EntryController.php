@@ -68,7 +68,7 @@ class EntryController extends AbstractBaseController
         }
 
         try {
-            $thumbnailService = $this->get('olry_mental_note.thumbnail_service');
+            $thumbnailService = $this->get('app.thumbnail_service');
             $thumbnailService->generate($entry->getUrl(), $width, $height, $entry->getId());
 
             return $this->redirect($route);
@@ -90,7 +90,7 @@ class EntryController extends AbstractBaseController
      */
     public function createAction(Request $request)
     {
-        $cache = $this->get('olry_mental_note.cache.metainfo');
+        $cache = $this->get('app.cache.metainfo');
         $backlink = $request->query->get('backlink');
         $entry = new Entry($this->getUser());
 
