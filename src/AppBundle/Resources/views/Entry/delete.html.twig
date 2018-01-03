@@ -1,10 +1,10 @@
-{% extends "OlryMentalNoteBundle::layout.html.twig" %}
+{% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="row card-deck entry-list">
-                {% include "OlryMentalNoteBundle:Entry:line.html.twig" with {delete_form: form} %}
+                {% include "AppBundle:Entry:line.html.twig" with {delete_form: form} %}
             </div>
         </div>
     </div>

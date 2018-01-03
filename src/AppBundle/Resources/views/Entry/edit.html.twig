@@ -1,7 +1,7 @@
-{% extends "OlryMentalNoteBundle::layout.html.twig" %}
+{% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-    {% include "OlryMentalNoteBundle:Entry:_form.html.twig" with {
+    {% include "AppBundle:Entry:_form.html.twig" with {
         form: form,
         entry: entry,
         action: path('entry_edit', {id: entry.id, backlink: backlink}),
