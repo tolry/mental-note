@@ -1,0 +1,12 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+    {% include "AppBundle:Entry:_form.html.twig" with {
+        form: form,
+        entry: null,
+        action: path('entry_create', {backlink: backlink}),
+        legend: 'add a new link'
+    } only %}
+
+    {{ form_start(form, {attr: {role: "form", style: "margin:0;", id: "entry_form"}, method: "post", action: path('entry_create', {backlink: backlink})}) }}
+{% endblock %}

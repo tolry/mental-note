@@ -1,0 +1,21 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block filter %}
+    {{ render(controller('AppBundle:Default:sidebar', { "filter": app.request.get('filter') })) }}
+{% endblock %}
+
+{% block container_class %}container-fluid{% endblock %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="row card-deck entry-list">
+                {% for entry in pager %}
+                    {% include "AppBundle:Entry:line.html.twig" with {show_actions: true} %}
+                {% endfor %}
+                <div class="justify-content-center">
+                    {{ pager.haveToPaginate() ? pagerfanta(pager, 'twitter_bootstrap4', { pageParameter: "[filter][page]" }) : '' }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
