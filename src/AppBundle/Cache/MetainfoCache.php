@@ -36,7 +36,7 @@ class MetainfoCache
             return;
         }
 
-        $this->cache->get($this->createKey($property, $url));
+        return $this->cache->get($this->createKey($property, $url));
     }
 
     private function createKey($property, $url)
