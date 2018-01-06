@@ -3,6 +3,7 @@
 namespace AppBundle\Thumbnail;
 
 use AppBundle\Cache\MetainfoCache;
+use AppBundle\Factory\MetainfoFactory;
 use AppBundle\Url\MetaInfo;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
@@ -13,15 +14,15 @@ class ThumbnailService
     private $filepattern;
     private $cacheDir;
     private $fs;
-    private $cache;
+    private $metainfoFactory;
 
-    public function __construct($documentRoot, $cacheDir, $filepattern, MetainfoCache $cache)
+    public function __construct($documentRoot, $cacheDir, $filepattern, MetainfoFactory $metainfoFactory)
     {
         $this->documentRoot = $documentRoot;
         $this->cacheDir = $cacheDir;
         $this->filepattern = $filepattern;
         $this->fs = new Filesystem();
-        $this->cache = $cache;
+        $this->metainfoFactory = $metainfoFactory;
     }
 
     private function compilePattern($width, $height, $name)
@@ -37,11 +38,7 @@ class ThumbnailService
      */
     public function getImageForUrl($url, $file)
     {
-        $imageUrl = $this->cache->get($url, 'preview');
-
-        if (empty($imageUrl)) {
-            $imageUrl = (new MetaInfo($url))->getImageUrl();
-        }
+        $imageUrl = $this->metainfoFactory->create($url)->getImageUrl();
 
         if ($imageUrl) {
             file_put_contents($file, file_get_contents($imageUrl));

@@ -3,10 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Criteria\EntryCriteria;
-use AppBundle\Url\MetaInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -54,15 +54,13 @@ class DefaultController extends AbstractBaseController
      */
     public function urlMetainfoAction(Request $request)
     {
+        $metainfoFactory = $this->get('app.factory.metainfo');
         $url = $request->get('url');
         if (empty($url)) {
             throw $this->createNotFoundException('no url given');
         }
 
-        $info = new MetaInfo($url);
-
-        $cache = $this->get('app.cache.metainfo');
-        $cache->set($url, 'preview', $info->getImageUrl());
+        $info = $metainfoFactory->create($url);
 
         $metaInfo = [
             'title' => $info->getTitle(),
@@ -75,7 +73,7 @@ class DefaultController extends AbstractBaseController
             )
         ];
 
-        return new Response(\json_encode($metaInfo));
+        return new JsonResponse(\json_encode($metaInfo));
     }
 
     /**

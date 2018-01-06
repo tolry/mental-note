@@ -20,10 +20,13 @@
             <argument>%kernel.root_dir%/../web</argument>
             <argument>%kernel.cache_dir%/thumbnails</argument>
             <argument>%app.thumbnail_filepattern%</argument>
-            <argument type="service" id="app.cache.metainfo"></argument>
+            <argument type="service" id="app.factory.metainfo"></argument>
         </service>
         <service id="app.cache.metainfo" class="AppBundle\Cache\MetainfoCache">
             <argument type="service" id="app.cache.pool.metainfo"></argument>
+        </service>
+        <service id="app.factory.metainfo" class="AppBundle\Factory\MetainfoFactory">
+            <argument type="service" id="app.cache.metainfo"></argument>
         </service>
         <service id="app.twig_extension" class="AppBundle\Twig\MentalNoteTwigExtension">
             <tag name="twig.extension" />
