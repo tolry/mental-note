@@ -73,7 +73,7 @@ class DefaultController extends AbstractBaseController
             )
         ];
 
-        return new JsonResponse(\json_encode($metaInfo));
+        return new JsonResponse($metaInfo);
     }
 
     /**
