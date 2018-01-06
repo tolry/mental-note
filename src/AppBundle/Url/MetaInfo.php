@@ -50,6 +50,10 @@ class MetaInfo
         'tchibo',
     ];
 
+    private static $noGoogleUserAgent = [
+        'medium',
+    ];
+
     private function translate($url)
     {
         $info = new Info($url);
@@ -68,7 +72,7 @@ class MetaInfo
 
         $this->info = new Info($url);
 
-        if ($this->info->isHtml()) {
+        if ($this->isHtml()) {
             $this->html = $this->fetchHtml($url);
         }
     }
@@ -77,7 +81,7 @@ class MetaInfo
     {
         $guzzle = new GuzzleClient($url);
         $guzzle->setUserAgent(
-            $this->info->getUserAgent(
+            $this->getUserAgent(
                 $guzzle->getDefaultUserAgent()
             )
         );
@@ -102,7 +106,7 @@ class MetaInfo
      */
     protected function getXpath($xpath)
     {
-        if (!$this->info->isHtml()) {
+        if (!$this->isHtml()) {
             return null;
         }
 
@@ -124,7 +128,7 @@ class MetaInfo
             return $this->imageUrl;
         }
 
-        if ($this->info->isImage()) {
+        if ($this->isImage()) {
             $this->imageUrl = $this->info->url;
 
             return $this->info->url;
@@ -182,5 +186,63 @@ class MetaInfo
     public function getInfo()
     {
         return $this->info;
+    }
+
+    public function isImage()
+    {
+        if (in_array($this->fileExtension, ['jpeg', 'jpg', 'png', 'gif'])) {
+            return true;
+        }
+
+        if (stripos($this->getHeaderInfo('content_type'), 'image/') === 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isHtml()
+    {
+        if (stripos($this->getHeaderInfo('content_type'), 'text/html') === 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function getHeaderInfo($key, $default = null)
+    {
+        if (empty($this->info)) {
+            $this->info = [];
+
+            $guzzle = new GuzzleClient($this->url);
+            $guzzle->setUserAgent($this->getUserAgent($guzzle->getDefaultUserAgent()));
+            $guzzle->getEventDispatcher()->addListener(
+                'request.error',
+                function (Event $event) {
+                    $event->stopPropagation();
+                }
+            );
+
+            $response = $guzzle->head()->send();
+            if (!$response->isSuccessful()) {
+                $response = $guzzle->get()->send();
+            }
+
+            if ($response->isSuccessful()) {
+                $this->info = $response->getInfo();
+            }
+        }
+
+        return isset($this->info[$key]) ? $this->info[$key] : $default;
+    }
+
+    private function getUserAgent($defaultUserAgent)
+    {
+        if (in_array($this->sld, self::$noGoogleUserAgent)) {
+            return $defaultUserAgent;
+        }
+
+        return 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html';
     }
 }
