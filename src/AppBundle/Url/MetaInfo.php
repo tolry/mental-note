@@ -9,6 +9,7 @@ namespace AppBundle\Url;
 use AppBundle\Cache\MetainfoCache;
 use AppBundle\Entity\Category;
 use Guzzle\Common\Event;
+use Guzzle\Http\Exception\CurlException;
 use Guzzle\Service\Client as GuzzleClient;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -234,15 +235,24 @@ class MetaInfo
 
         $guzzle = new GuzzleClient($this->info->url);
         $guzzle->setUserAgent($this->getUserAgent($guzzle->getDefaultUserAgent()));
-        $guzzle->getEventDispatcher()->addListener(
-            'request.error',
-            function (Event $event) {
-                $event->stopPropagation();
-            }
-        );
+        $guzzle->getEventDispatcher()
+            ->addListener(
+                'request.error',
+                function (Event $event) {
+                    $event->stopPropagation();
+                }
+            );
 
-        $response = $guzzle->head()->send();
-        if (!$response->isSuccessful()) {
+        // public function head($uri = null, $headers = null, array $options = array())
+        try {
+            $response = $guzzle
+                ->head(null, null, ['timeout' => 3])
+                ->send();
+        } catch (CurlException $e) {
+            $response = false;
+        }
+
+        if (!$response || !$response->isSuccessful()) {
             $response = $guzzle->get()->send();
         }
 
