@@ -6,9 +6,10 @@
 
 namespace AppBundle\Url;
 
-use Guzzle\Service\Client as GuzzleClient;
-use Guzzle\Common\Event;
+use AppBundle\Cache\MetaInfoCache;
 use AppBundle\Entity\Category;
+use Guzzle\Common\Event;
+use Guzzle\Service\Client as GuzzleClient;
 use Symfony\Component\DomCrawler\Crawler;
 
 class MetaInfo
@@ -66,10 +67,11 @@ class MetaInfo
         return $url;
     }
 
-    public function __construct($url)
+    public function __construct($url, MetaInfoCache $cache)
     {
         $url = $this->translate($url);
 
+        $this->cache = $cache;
         $this->info = new Info($url);
 
         if ($this->isHtml()) {
@@ -79,6 +81,12 @@ class MetaInfo
 
     private function fetchHtml($url)
     {
+        $html = $this->cache->get($url, 'html');
+
+        if ($html) {
+            return $html;
+        }
+
         $guzzle = new GuzzleClient($url);
         $guzzle->setUserAgent(
             $this->getUserAgent(
@@ -94,11 +102,14 @@ class MetaInfo
         );
 
         $response = $guzzle->get()->send();
-        if ($response->isSuccessful()) {
-            return $response->getBody(true);
+        if (! $response->isSuccessful()) {
+            return null;
         }
 
-        return null;
+        $html = $response->getBody(true);
+        $this->cache->set($url, 'html', $html);
+
+        return $html;
     }
 
     /**
