@@ -6,15 +6,19 @@
 
 namespace AppBundle\Url;
 
-use Guzzle\Service\Client as GuzzleClient;
-use Guzzle\Common\Event;
+use AppBundle\Cache\MetainfoCache;
 use AppBundle\Entity\Category;
+use Guzzle\Common\Event;
+use Guzzle\Http\Exception\CurlException;
+use Guzzle\Service\Client as GuzzleClient;
 use Symfony\Component\DomCrawler\Crawler;
 
 class MetaInfo
 {
     private $info;
+    private $headers;
     private $html;
+    private $cache;
     private $imageUrl = null;
 
     private static $videoDomains = [
@@ -50,6 +54,10 @@ class MetaInfo
         'tchibo',
     ];
 
+    private static $noGoogleUserAgent = [
+        'medium',
+    ];
+
     private function translate($url)
     {
         $info = new Info($url);
@@ -62,22 +70,29 @@ class MetaInfo
         return $url;
     }
 
-    public function __construct($url)
+    public function __construct($url, MetainfoCache $cache)
     {
         $url = $this->translate($url);
 
+        $this->cache = $cache;
         $this->info = new Info($url);
 
-        if ($this->info->isHtml()) {
+        if ($this->isHtml()) {
             $this->html = $this->fetchHtml($url);
         }
     }
 
     private function fetchHtml($url)
     {
+        $html = $this->cache->get($url, 'html');
+
+        if ($html) {
+            return $html;
+        }
+
         $guzzle = new GuzzleClient($url);
         $guzzle->setUserAgent(
-            $this->info->getUserAgent(
+            $this->getUserAgent(
                 $guzzle->getDefaultUserAgent()
             )
         );
@@ -90,11 +105,14 @@ class MetaInfo
         );
 
         $response = $guzzle->get()->send();
-        if ($response->isSuccessful()) {
-            return $response->getBody(true);
+        if (! $response->isSuccessful()) {
+            return null;
         }
 
-        return null;
+        $html = $response->getBody(true);
+        $this->cache->set($url, 'html', $html);
+
+        return $html;
     }
 
     /**
@@ -102,7 +120,7 @@ class MetaInfo
      */
     protected function getXpath($xpath)
     {
-        if (!$this->info->isHtml()) {
+        if (!$this->isHtml()) {
             return null;
         }
 
@@ -124,7 +142,7 @@ class MetaInfo
             return $this->imageUrl;
         }
 
-        if ($this->info->isImage()) {
+        if ($this->isImage()) {
             $this->imageUrl = $this->info->url;
 
             return $this->info->url;
@@ -182,5 +200,78 @@ class MetaInfo
     public function getInfo()
     {
         return $this->info;
+    }
+
+    public function isImage()
+    {
+        if (in_array($this->info->fileExtension, ['jpeg', 'jpg', 'png', 'gif'])) {
+            return true;
+        }
+
+        return (stripos($this->getHeader('content_type'), 'image/') === 0);
+    }
+
+    public function isHtml()
+    {
+        return (stripos($this->getHeader('content_type'), 'text/html') === 0);
+    }
+
+    private function getHeader($key, $default = null)
+    {
+        if (empty($this->headers)) {
+            $this->headers = $this->fetchHeaders();
+        }
+
+        return isset($this->headers[$key]) ? $this->headers[$key] : $default;
+    }
+
+    private function fetchHeaders()
+    {
+        $headers = $this->cache->get($this->info->url, 'headers');
+
+        if ($headers) {
+            return $headers;
+        }
+
+        $guzzle = new GuzzleClient($this->info->url);
+        $guzzle->setUserAgent($this->getUserAgent($guzzle->getDefaultUserAgent()));
+        $guzzle->getEventDispatcher()
+            ->addListener(
+                'request.error',
+                function (Event $event) {
+                    $event->stopPropagation();
+                }
+            );
+
+        // public function head($uri = null, $headers = null, array $options = array())
+        try {
+            $response = $guzzle
+                ->head(null, null, ['timeout' => 3])
+                ->send();
+        } catch (CurlException $e) {
+            $response = false;
+        }
+
+        if (!$response || !$response->isSuccessful()) {
+            $response = $guzzle->get()->send();
+        }
+
+        if ($response->isSuccessful()) {
+            $headers = $response->getInfo();
+            $this->cache->set($this->info->url, 'headers', $headers);
+
+            return $headers;
+        }
+
+        return [];
+    }
+
+    private function getUserAgent($defaultUserAgent)
+    {
+        if (in_array($this->info->sld, self::$noGoogleUserAgent)) {
+            return $defaultUserAgent;
+        }
+
+        return 'Mozilla/5.0 (compatible; MentalNoteBot/1.0; +https://github.com/tolry/mental-note/';
     }
 }

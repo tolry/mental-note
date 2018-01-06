@@ -31,10 +31,6 @@ class Info
 
     private $info;
 
-    private static $noGoogleUserAgent = [
-        'medium',
-    ];
-
     public function __construct($url)
     {
         $this->url = $url;
@@ -78,69 +74,10 @@ class Info
         if (!empty($hostParts)) {
             $this->subdomain = array_pop($hostParts);
         }
-
-    }
-
-    public function getUserAgent($defaultUserAgent)
-    {
-        if (in_array($this->sld, self::$noGoogleUserAgent)) {
-            return $defaultUserAgent;
-        }
-
-        return 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html';
-    }
-
-    public function isImage()
-    {
-        if (in_array($this->fileExtension, ['jpeg', 'jpg', 'png', 'gif'])) {
-            return true;
-        }
-
-        if (stripos($this->getInfo('content_type'), 'image/') === 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function isHtml()
-    {
-        if (stripos($this->getInfo('content_type'), 'text/html') === 0) {
-            return true;
-        }
-
-        return false;
     }
 
     public function getDomain()
     {
         return $this->sld . '.' . $this->tld;
-    }
-
-    public function getInfo($key, $default = null)
-    {
-        if (empty($this->info)) {
-            $this->info = [];
-
-            $guzzle = new GuzzleClient($this->url);
-            $guzzle->setUserAgent($this->getUserAgent($guzzle->getDefaultUserAgent()));
-            $guzzle->getEventDispatcher()->addListener(
-                'request.error',
-                function (Event $event) {
-                    $event->stopPropagation();
-                }
-            );
-
-            $response = $guzzle->head()->send();
-            if (!$response->isSuccessful()) {
-                $response = $guzzle->get()->send();
-            }
-
-            if ($response->isSuccessful()) {
-                $this->info = $response->getInfo();
-            }
-        }
-
-        return isset($this->info[$key]) ? $this->info[$key] : $default;
     }
 }
