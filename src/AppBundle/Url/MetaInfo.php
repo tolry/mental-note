@@ -243,7 +243,6 @@ class MetaInfo
                 }
             );
 
-        // public function head($uri = null, $headers = null, array $options = array())
         try {
             $response = $guzzle
                 ->head(null, null, ['timeout' => 3])
