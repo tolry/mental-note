@@ -137,11 +137,6 @@ class Entry extends AbstractEntity
         return $this->user;
     }
 
-    public function getUrlMetaInfo()
-    {
-        return new MetaInfo($this->url);
-    }
-
     public function getUrlInfo()
     {
         return new Info($this->url);

@@ -29,8 +29,6 @@ class Info
     public $sld;
     public $subdomain;
 
-    private $info;
-
     public function __construct($url)
     {
         $this->url = $url;
