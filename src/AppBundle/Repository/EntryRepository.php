@@ -11,6 +11,7 @@ use AppBundle\Entity\Category;
 
 use AppBundle\Criteria\EntryCriteria;
 
+use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -29,7 +30,7 @@ class EntryRepository extends EntityRepository
             ->andWhere('e.user = :user_id')
             ->setParameter('user_id', $user->getId())
             ->orderBy('e.id', 'DESC')
-        ;
+            ;
 
         switch ($criteria->sortOrder) {
             case EntryCriteria::SORT_TIMESTAMP_DESC:
@@ -60,18 +61,7 @@ class EntryRepository extends EntityRepository
         }
 
         if ($criteria->query) {
-            $parts = explode(' ', $criteria->query);
-            $partNumber = 1;
-            foreach ($parts as $query) {
-                if (empty($query)) {
-                    continue;
-                }
-
-                $query = '%' . strtolower($query) . '%';
-                $queryVariable = ':query' . $partNumber++;
-                $qb->andWhere("(LOWER(t.name) LIKE $queryVariable OR e.title LIKE $queryVariable or e.url LIKE $queryVariable)")
-                    ->setParameter($queryVariable, $query);
-            }
+            $this->addFulltextSearch($qb, $criteria->query);
         }
 
         return $qb;
@@ -80,8 +70,7 @@ class EntryRepository extends EntityRepository
     public function filter(User $user, EntryCriteria $criteria)
     {
         $qb = $this->getQueryBuilder($user, $criteria);
-        $adapter = new DoctrineORMAdapter($qb);
-        $pager   = new Pagerfanta($adapter);
+        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
 
         $pager
             ->setMaxPerPage($criteria->limit)
@@ -146,17 +135,36 @@ class EntryRepository extends EntityRepository
             ->andWhere('e.url = :url')
             ->setParameter('user', $user)
             ->setParameter('url', $url)
-        ;
+            ;
 
         if ($excludeId) {
             $qb
                 ->andWhere('e.id <> :excludeId')
                 ->setParameter('excludeId', $excludeId)
-            ;
+                ;
         }
 
         $entries = $qb->getQuery()->getResult();
 
         return (count($entries) > 0);
+    }
+
+    private function addFulltextSearch(QueryBuilder $qb, $query)
+    {
+        if (empty($query)) {
+            return;
+        }
+
+        $partNumber = 1;
+        foreach (explode(' ', $query) as $word) {
+            if (empty($word)) {
+                continue;
+            }
+
+            $word = '%' . strtolower($word) . '%';
+            $parameterName = ':querypart' . $partNumber++;
+            $qb->andWhere("(LOWER(t.name) LIKE $parameterName OR e.title LIKE $parameterName or e.url LIKE $queryVariable)")
+                ->setParameter($parameterName, $word);
+        }
     }
 }
