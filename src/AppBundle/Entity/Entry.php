@@ -144,7 +144,7 @@ class Entry extends AbstractEntity
 
     public function addVisit(\DateTime $timestamp = null)
     {
-        if (! $timestamp) {
+        if (!$timestamp) {
             $timestamp = new \DateTime();
         }
         $this->visits[] = new Visit($timestamp, $this);

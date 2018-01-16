@@ -51,7 +51,7 @@ class EntryRepository extends EntityRepository
                 ->setParameter('category', $criteria->category);
         }
 
-        if (! empty($criteria->tag)) {
+        if (!empty($criteria->tag)) {
             $qb->andWhere('t.name = :tag')
                 ->setParameter('tag', $criteria->tag);
         }
