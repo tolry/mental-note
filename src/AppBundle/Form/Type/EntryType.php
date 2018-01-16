@@ -17,13 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class EntryType extends AbstractType
 {
 
-    private $em;
+    private $entityManager;
     private $user;
     private $router;
 
-    public function __construct(EntityManager $em, $token, $router)
+    public function __construct(EntityManager $entityManager, $token, $router)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
         $this->user = $token->getToken()->getUser();
         $this->router = $router;
     }
@@ -37,7 +37,7 @@ class EntryType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $repo = $this->em->getRepository('AppBundle\Entity\Tag');
+        $repo = $this->entityManager->getRepository('AppBundle\Entity\Tag');
 
         $allowedTags = [];
         foreach ($repo->search("", $this->user)->getQuery()->getResult() as $tag) {
@@ -89,6 +89,14 @@ class EntryType extends AbstractType
                     )
                     ->addModelTransformer(new EntryTagTransformer($repo))
             )
+            ->add('pending', CoreType\ChoiceType::class, [
+                    'expanded' => true,
+                    'choices' => [
+                        'pending' => true,
+                        'archived' => false,
+                    ],
+                    'error_bubbling' => true,
+                ])
         ;
     }
 

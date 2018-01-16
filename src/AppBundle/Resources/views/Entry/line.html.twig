@@ -50,8 +50,8 @@
 
                 <form action="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" method="POST">
                     <div class="btn-group">
-                        <button title="mark as {{ entry.pending ? 'done' : 'pending' }}" class="btn btn-outline-secondary btn-sm">
-                            <i class="fa {{ entry.pending ? 'fa-eye' : 'fa-eye-slash'}}"></i> mark as {{ entry.pending ? 'done' : 'pending' }}
+                        <button title="{{ entry.pending ? 'archive' : 'unarchive' }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fa {{ entry.pending ? 'fa-check-square-o' : 'fa-square-o'}}"></i> {{ entry.pending ? 'archive' : 'unarchive' }}
                         </button>
                         <a href="{{ path('entry_edit', {id: entry.id, backlink: path('homepage', {filter: criteria.getQuery()})}) }}" class="btn btn-outline-secondary btn-sm" title="edit entry"><i class="fa fa-pencil "></i></a>
                     </div>

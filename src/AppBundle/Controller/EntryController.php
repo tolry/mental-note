@@ -98,7 +98,26 @@ class EntryController extends AbstractBaseController
             $url = $request->query->get('url');
             $entry->setUrl($url);
             $entry->setTitle($request->query->get('title'));
-            $cache->set($url, 'preview', $request->query->get('preview'));
+        }
+
+        if ($entry->getUrl()) {
+            $urlDuplicate = $this->getEntryRepository()->urlAlreadyTaken(
+                $this->getUser(),
+                $entry->getUrl(),
+                null
+            );
+
+            if ($urlDuplicate) {
+                $this->addFlash(
+                    'info',
+                    sprintf(
+                        'url was already added %s, redirected to edit form',
+                        $urlDuplicate->getAge()
+                    )
+                );
+
+                return $this->redirectToRoute('entry_edit', ['id' => $urlDuplicate->getId()]);
+            }
         }
 
         $form = $this->createForm(EntryType::class, $entry);

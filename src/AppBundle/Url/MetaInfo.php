@@ -259,6 +259,11 @@ class MetaInfo
             $headers = $response->getInfo();
             $this->cache->set($this->info->url, 'headers', $headers);
 
+            $html = $response->getBody(true);
+            if (!empty($html)) {
+                $this->cache->set($this->info->url, 'html', $html);
+            }
+
             return $headers;
         }
 
