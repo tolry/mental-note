@@ -61,16 +61,17 @@ class DefaultController extends AbstractBaseController
         }
 
         $info = $metainfoFactory->create($url);
+        $urlDuplicate = ($this->getEntryRepository()->urlAlreadyTaken(
+            $this->getUser(),
+            $url,
+            $request->get('edit_id')
+        ) !== null);
 
         $metaInfo = [
             'title' => $info->getTitle(),
             'image_url' => $info->getImageUrl(),
             'category' => $info->getDefaultCategory(),
-            'url_duplicate' => $this->getEntryRepository()->urlAlreadyTaken(
-                $this->getUser(),
-                $url,
-                $request->get('edit_id')
-            )
+            'url_duplicate' => $urlDuplicate,
         ];
 
         return new JsonResponse($metaInfo);

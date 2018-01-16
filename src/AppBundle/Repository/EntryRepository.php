@@ -126,6 +126,9 @@ class EntryRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return Entry|null
+     */
     public function urlAlreadyTaken(User $user, $url, $excludeId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -146,7 +149,9 @@ class EntryRepository extends EntityRepository
 
         $entries = $qb->getQuery()->getResult();
 
-        return (count($entries) > 0);
+        return (count($entries) > 0)
+            ? $entries[0]
+            : null;
     }
 
     private function addFulltextSearch(QueryBuilder $qb, $query)
