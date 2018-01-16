@@ -59,7 +59,7 @@ class Category
     {
         $choices = array();
         foreach (self::$data as $key => $category) {
-            if (! $category['active']) {
+            if (!$category['active']) {
                 continue;
             }
 

@@ -99,13 +99,13 @@ class MetaInfo
 
         $guzzle->getEventDispatcher()->addListener(
             'request.error',
-            function (Event $event) {
+            function(Event $event) {
                 $event->stopPropagation();
             }
         );
 
         $response = $guzzle->get()->send();
-        if (! $response->isSuccessful()) {
+        if (!$response->isSuccessful()) {
             return null;
         }
 
@@ -238,7 +238,7 @@ class MetaInfo
         $guzzle->getEventDispatcher()
             ->addListener(
                 'request.error',
-                function (Event $event) {
+                function(Event $event) {
                     $event->stopPropagation();
                 }
             );

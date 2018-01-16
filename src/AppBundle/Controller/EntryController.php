@@ -54,7 +54,7 @@ class EntryController extends AbstractBaseController
      */
     public function thumbnailAction(Entry $entry, $width, $height)
     {
-        $documentRoot = $this->container->getParameter('kernel.root_dir').'/../web';
+        $documentRoot = $this->container->getParameter('kernel.root_dir') . '/../web';
         $route        = $this->generateUrl('entry_thumbnail', array('id' => $entry->getId(), 'width' => $width, 'height' => $height));
 
         $pathNew = sprintf('%s/thumbnails/%d_%dx%d.png', $documentRoot, $entry->getId(), $width, $height);
@@ -62,7 +62,7 @@ class EntryController extends AbstractBaseController
         // for dev mode
         if (file_exists($pathNew)) {
             $response = new BinaryFileResponse($pathNew);
-            $this->get('logger')->error($entry->getId().':: file already exists, controller should not be executed');
+            $this->get('logger')->error($entry->getId() . ':: file already exists, controller should not be executed');
 
             return $response;
         }
@@ -73,9 +73,9 @@ class EntryController extends AbstractBaseController
 
             return $this->redirect($route);
         } catch (\Exception $e) {
-            $this->get('logger')->error('Exception: '.$e->getMessage());
+            $this->get('logger')->error('Exception: ' . $e->getMessage());
 
-            $target = $documentRoot."/images/placeholder_no-preview.png";
+            $target = $documentRoot . "/images/placeholder_no-preview.png";
             symlink($target, $pathNew);
 
             return $this->redirect("/images/placeholder_no-preview.png", 301);
