@@ -168,7 +168,7 @@ class EntryRepository extends EntityRepository
 
             $word = '%' . strtolower($word) . '%';
             $parameterName = ':querypart' . $partNumber++;
-            $qb->andWhere("(LOWER(t.name) LIKE $parameterName OR e.title LIKE $parameterName or e.url LIKE $queryVariable)")
+            $qb->andWhere("(LOWER(t.name) LIKE $parameterName OR e.title LIKE $parameterName or e.url LIKE $parameterName)")
                 ->setParameter($parameterName, $word);
         }
     }
