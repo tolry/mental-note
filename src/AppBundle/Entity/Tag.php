@@ -30,6 +30,11 @@ class Tag extends AbstractEntity
      */
     private $entries;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     /**
      * Get name.
      *
@@ -57,10 +62,5 @@ class Tag extends AbstractEntity
     public function getId()
     {
         return $this->id;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
     }
 }

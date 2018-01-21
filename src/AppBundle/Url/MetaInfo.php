@@ -57,18 +57,6 @@ class MetaInfo
         'medium',
     ];
 
-    private function translate($url)
-    {
-        $info = new Info($url);
-        if ($info->host === 'i.imgur.com') {
-            $newPath = str_replace('.' . $info->fileExtension, '', $info->path);
-
-            return 'http://imgur.com' . $newPath;
-        }
-
-        return $url;
-    }
-
     public function __construct($url, MetainfoCache $cache)
     {
         $url = $this->translate($url);
@@ -78,59 +66,6 @@ class MetaInfo
 
         if ($this->isHtml()) {
             $this->html = $this->fetchHtml($url);
-        }
-    }
-
-    private function fetchHtml($url)
-    {
-        $html = $this->cache->get($url, 'html');
-
-        if ($html) {
-            return $html;
-        }
-
-        $guzzle = new GuzzleClient($url);
-        $guzzle->setUserAgent(
-            $this->getUserAgent(
-                $guzzle->getDefaultUserAgent()
-            )
-        );
-
-        $guzzle->getEventDispatcher()->addListener(
-            'request.error',
-            function (Event $event): void {
-                $event->stopPropagation();
-            }
-        );
-
-        $response = $guzzle->get()->send();
-        if (!$response->isSuccessful()) {
-            return null;
-        }
-
-        $html = $response->getBody(true);
-        $this->cache->set($url, 'html', $html);
-
-        return $html;
-    }
-
-    /**
-     * @param mixed $xpath
-     *
-     * @return null|string
-     */
-    protected function getXpath($xpath)
-    {
-        if (!$this->isHtml()) {
-            return null;
-        }
-
-        try {
-            $crawler = new Crawler($this->html);
-
-            return trim($crawler->filterXPath($xpath)->first()->text());
-        } catch (\Exception $e) {
-            return null;
         }
     }
 
@@ -215,6 +150,71 @@ class MetaInfo
     public function isHtml()
     {
         return stripos($this->getHeader('content_type'), 'text/html') === 0;
+    }
+
+    /**
+     * @param mixed $xpath
+     *
+     * @return null|string
+     */
+    protected function getXpath($xpath)
+    {
+        if (!$this->isHtml()) {
+            return null;
+        }
+
+        try {
+            $crawler = new Crawler($this->html);
+
+            return trim($crawler->filterXPath($xpath)->first()->text());
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    private function translate($url)
+    {
+        $info = new Info($url);
+        if ($info->host === 'i.imgur.com') {
+            $newPath = str_replace('.' . $info->fileExtension, '', $info->path);
+
+            return 'http://imgur.com' . $newPath;
+        }
+
+        return $url;
+    }
+
+    private function fetchHtml($url)
+    {
+        $html = $this->cache->get($url, 'html');
+
+        if ($html) {
+            return $html;
+        }
+
+        $guzzle = new GuzzleClient($url);
+        $guzzle->setUserAgent(
+            $this->getUserAgent(
+                $guzzle->getDefaultUserAgent()
+            )
+        );
+
+        $guzzle->getEventDispatcher()->addListener(
+            'request.error',
+            function (Event $event): void {
+                $event->stopPropagation();
+            }
+        );
+
+        $response = $guzzle->get()->send();
+        if (!$response->isSuccessful()) {
+            return null;
+        }
+
+        $html = $response->getBody(true);
+        $this->cache->set($url, 'html', $html);
+
+        return $html;
     }
 
     private function getHeader($key, $default = null)

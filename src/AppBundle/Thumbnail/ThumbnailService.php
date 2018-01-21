@@ -25,14 +25,6 @@ class ThumbnailService
         $this->metainfoFactory = $metainfoFactory;
     }
 
-    private function compilePattern($width, $height, $name)
-    {
-        $search = ['{width}', '{height}', '{name}'];
-        $replace = [$width, $height, $name];
-
-        return str_replace($search, $replace, $this->filepattern);
-    }
-
     /**
      * @param string $file
      * @param mixed  $url
@@ -97,5 +89,13 @@ class ThumbnailService
         }
 
         return $thumbnail;
+    }
+
+    private function compilePattern($width, $height, $name)
+    {
+        $search = ['{width}', '{height}', '{name}'];
+        $replace = [$width, $height, $name];
+
+        return str_replace($search, $replace, $this->filepattern);
     }
 }

@@ -14,16 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends AbstractBaseController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    private function getFilterCriteria(Request $request)
-    {
-        $filter = (array) $request->get('filter', []);
-
-        return new EntryCriteria($filter);
-    }
-
-    /**
      * @Route("/",name="homepage")
      * @Template()
      * @Method("GET")
@@ -91,5 +81,15 @@ class DefaultController extends AbstractBaseController
             'categories' => $this->getEntryRepository()->getCategoryStats($this->getUser(), $criteria),
             'criteria' => $criteria,
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    private function getFilterCriteria(Request $request)
+    {
+        $filter = (array) $request->get('filter', []);
+
+        return new EntryCriteria($filter);
     }
 }

@@ -17,24 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 class EntryController extends AbstractBaseController
 {
     /**
-     * @param Form    $form
-     * @param Request $request
-     */
-    private function processForm(Form $form, Entry $entry, Request $request)
-    {
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $this->getEm()->persist($entry);
-            $this->getEm()->flush();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * @Route("/entry/{id}/toggle_pending.json",name="entry_toggle_pending")
      * @Method("POST")
      */
@@ -199,5 +181,23 @@ class EntryController extends AbstractBaseController
         $this->getEm()->flush();
 
         return new Response('', 200);
+    }
+
+    /**
+     * @param Form    $form
+     * @param Request $request
+     */
+    private function processForm(Form $form, Entry $entry, Request $request)
+    {
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->getEm()->persist($entry);
+            $this->getEm()->flush();
+
+            return true;
+        }
+
+        return false;
     }
 }
