@@ -1,8 +1,7 @@
 <?php
-/*
- *
- * @author Tobias Olry <tobias.olry@web.de>
- */
+
+declare(strict_types=1);
+// @author Tobias Olry <tobias.olry@web.de>
 
 namespace AppBundle\Url;
 
@@ -19,7 +18,7 @@ class MetaInfo
     private $headers;
     private $html;
     private $cache;
-    private $imageUrl = null;
+    private $imageUrl;
 
     private static $videoDomains = [
         'youtube',
@@ -61,10 +60,10 @@ class MetaInfo
     private function translate($url)
     {
         $info = new Info($url);
-        if ($info->host == 'i.imgur.com') {
+        if ($info->host === 'i.imgur.com') {
             $newPath = str_replace('.' . $info->fileExtension, '', $info->path);
 
-            return "http://imgur.com" . $newPath;
+            return 'http://imgur.com' . $newPath;
         }
 
         return $url;
@@ -99,7 +98,7 @@ class MetaInfo
 
         $guzzle->getEventDispatcher()->addListener(
             'request.error',
-            function(Event $event) {
+            function (Event $event): void {
                 $event->stopPropagation();
             }
         );
@@ -116,7 +115,9 @@ class MetaInfo
     }
 
     /**
-     * @return string|null
+     * @param mixed $xpath
+     *
+     * @return null|string
      */
     protected function getXpath($xpath)
     {
@@ -134,7 +135,7 @@ class MetaInfo
     }
 
     /**
-     * @return string|bool
+     * @return bool|string
      */
     public function getImageUrl()
     {
@@ -175,19 +176,19 @@ class MetaInfo
 
     public function getDefaultCategory()
     {
-        if (in_array($this->info->sld, self::$videoDomains)) {
+        if (in_array($this->info->sld, self::$videoDomains, true)) {
             return Category::WATCH;
         }
 
-        if (in_array($this->info->sld, self::$imageDomains)) {
+        if (in_array($this->info->sld, self::$imageDomains, true)) {
             return Category::LOOK_AT;
         }
 
-        if (in_array($this->info->sld, self::$musicDomains)) {
+        if (in_array($this->info->sld, self::$musicDomains, true)) {
             return Category::LISTEN;
         }
 
-        if (in_array($this->info->sld, self::$purchaseDomains)) {
+        if (in_array($this->info->sld, self::$purchaseDomains, true)) {
             return Category::PURCHASE;
         }
 
@@ -204,16 +205,16 @@ class MetaInfo
 
     public function isImage()
     {
-        if (in_array($this->info->fileExtension, ['jpeg', 'jpg', 'png', 'gif'])) {
+        if (in_array($this->info->fileExtension, ['jpeg', 'jpg', 'png', 'gif'], true)) {
             return true;
         }
 
-        return (stripos($this->getHeader('content_type'), 'image/') === 0);
+        return stripos($this->getHeader('content_type'), 'image/') === 0;
     }
 
     public function isHtml()
     {
-        return (stripos($this->getHeader('content_type'), 'text/html') === 0);
+        return stripos($this->getHeader('content_type'), 'text/html') === 0;
     }
 
     private function getHeader($key, $default = null)
@@ -238,7 +239,7 @@ class MetaInfo
         $guzzle->getEventDispatcher()
             ->addListener(
                 'request.error',
-                function(Event $event) {
+                function (Event $event): void {
                     $event->stopPropagation();
                 }
             );
@@ -272,7 +273,7 @@ class MetaInfo
 
     private function getUserAgent($defaultUserAgent)
     {
-        if (in_array($this->info->sld, self::$noGoogleUserAgent)) {
+        if (in_array($this->info->sld, self::$noGoogleUserAgent, true)) {
             return $defaultUserAgent;
         }
 

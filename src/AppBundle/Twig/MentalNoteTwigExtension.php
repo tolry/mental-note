@@ -1,7 +1,7 @@
 <?php
-/*
- * @author Tobias Olry <tobias.olry@gmail.com>
- */
+
+declare(strict_types=1);
+// @author Tobias Olry <tobias.olry@gmail.com>
 
 namespace AppBundle\Twig;
 
@@ -11,9 +11,9 @@ class MentalNoteTwigExtension extends \Twig_Extension
 {
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('mn_category', array($this, 'getCategoryInstance')),
-        );
+        return [
+            new \Twig_SimpleFunction('mn_category', [$this, 'getCategoryInstance']),
+        ];
     }
 
     public function getCategoryInstance($category)

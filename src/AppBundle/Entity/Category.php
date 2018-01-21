@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 /**
@@ -7,7 +9,6 @@ namespace AppBundle\Entity;
  */
 class Category
 {
-
     const READ = 'read';
     const LOOK_AT = 'look_at';
     const WATCH = 'watch';
@@ -17,13 +18,13 @@ class Category
     const PURCHASE = 'purchase';
 
     private static $data = [
-        self::READ => ['label'=>'read', 'icon'=>'fa fa-book', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::LOOK_AT => ['label'=>'look at', 'icon'=>'fa fa-picture-o', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::WATCH => ['label'=>'watch', 'icon'=>'fa fa-film', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::LISTEN => ['label'=>'listen to', 'icon'=>'fa fa-volume-up', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::EVALUATE => ['label'=>'evaluate', 'icon'=>'fa fa-question-circle', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::VISIT_REGULARLY => ['label'=>'visit regularly', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>'', 'active' => false],
-        self::PURCHASE => ['label'=>'purchase', 'icon'=>'fa fa-shopping-cart', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::READ => ['label' => 'read', 'icon' => 'fa fa-book', 'default_view' => '', 'description' => '', 'active' => true],
+        self::LOOK_AT => ['label' => 'look at', 'icon' => 'fa fa-picture-o', 'default_view' => '', 'description' => '', 'active' => true],
+        self::WATCH => ['label' => 'watch', 'icon' => 'fa fa-film', 'default_view' => '', 'description' => '', 'active' => true],
+        self::LISTEN => ['label' => 'listen to', 'icon' => 'fa fa-volume-up', 'default_view' => '', 'description' => '', 'active' => true],
+        self::EVALUATE => ['label' => 'evaluate', 'icon' => 'fa fa-question-circle', 'default_view' => '', 'description' => '', 'active' => true],
+        self::VISIT_REGULARLY => ['label' => 'visit regularly', 'icon' => 'icon-star', 'default_view' => '', 'description' => '', 'active' => false],
+        self::PURCHASE => ['label' => 'purchase', 'icon' => 'fa fa-shopping-cart', 'default_view' => '', 'description' => '', 'active' => true],
     ];
 
     private $key;
@@ -40,9 +41,9 @@ class Category
 
         $row = self::$data[$key];
 
-        $this->key         = $key;
-        $this->label       = $row['label'];
-        $this->icon        = $row['icon'];
+        $this->key = $key;
+        $this->label = $row['label'];
+        $this->icon = $row['icon'];
         $this->description = $row['description'];
 
         if (!empty($row['default_view'])) {
@@ -57,7 +58,7 @@ class Category
 
     public static function getChoiceArray()
     {
-        $choices = array();
+        $choices = [];
         foreach (self::$data as $key => $category) {
             if (!$category['active']) {
                 continue;
@@ -74,7 +75,7 @@ class Category
         return $this->key;
     }
 
-    public function setKey($key)
+    public function setKey($key): void
     {
         $this->key = $key;
     }
@@ -84,7 +85,7 @@ class Category
         return $this->label;
     }
 
-    public function setLabel($label)
+    public function setLabel($label): void
     {
         $this->label = $label;
     }
@@ -94,7 +95,7 @@ class Category
         return $this->icon;
     }
 
-    public function setIcon($icon)
+    public function setIcon($icon): void
     {
         $this->icon = $icon;
     }
@@ -104,7 +105,7 @@ class Category
         return $this->defaultView;
     }
 
-    public function setDefaultView($defaultView)
+    public function setDefaultView($defaultView): void
     {
         $this->defaultView = $defaultView;
     }
@@ -114,7 +115,7 @@ class Category
         return $this->description;
     }
 
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = $description;
     }

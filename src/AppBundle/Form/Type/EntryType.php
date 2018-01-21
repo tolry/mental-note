@@ -1,22 +1,22 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @author Tobias Olry (tobias.olry@web.de)
  */
 
 namespace AppBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type as CoreType;
-
-use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Category;
 use AppBundle\Form\Transformer\EntryTagTransformer;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type as CoreType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EntryType extends AbstractType
 {
-
     private $entityManager;
     private $user;
     private $router;
@@ -28,49 +28,48 @@ class EntryType extends AbstractType
         $this->router = $router;
     }
 
-    public function configureOptions(OptionsResolver $options)
+    public function configureOptions(OptionsResolver $options): void
     {
         $options->setDefaults([
             'url-readonly' => false,
         ]);
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $repo = $this->entityManager->getRepository('AppBundle\Entity\Tag');
 
         $allowedTags = [];
-        foreach ($repo->search("", $this->user)->getQuery()->getResult() as $tag) {
-            if (trim($tag->getName()) == '') {
+        foreach ($repo->search('', $this->user)->getQuery()->getResult() as $tag) {
+            if (trim($tag->getName()) === '') {
                 continue;
             }
             $allowedTags[] = $tag->getName();
         }
 
-
         $builder
             ->add(
                 'category',
                 CoreType\ChoiceType::class,
-                array(
-                    'expanded'       => true,
-                    'choices'        => Category::getChoiceArray(),
+                [
+                    'expanded' => true,
+                    'choices' => Category::getChoiceArray(),
                     'error_bubbling' => true,
-                )
+                ]
             )
             ->add(
                 'url',
                 CoreType\TextType::class,
-                array(
+                [
                     'label' => 'url',
-                    'attr' => array(
+                    'attr' => [
                         'class' => 'input-large',
                         'readonly' => $options['url-readonly'] ? true : false,
-                        'data-metainfo-url' => $this->router->generate('url_metainfo')
-                    )
-                )
+                        'data-metainfo-url' => $this->router->generate('url_metainfo'),
+                    ],
+                ]
             )
-            ->add('title', CoreType\TextType::class, array('label' => 'title', 'attr' => array('class' => 'input-large')))
+            ->add('title', CoreType\TextType::class, ['label' => 'title', 'attr' => ['class' => 'input-large']])
             ->add(
                 $builder
                     ->create(
@@ -84,7 +83,7 @@ class EntryType extends AbstractType
                                 'data-list' => implode(', ', $allowedTags),
                                 'data-multiple' => 1,
                                 'data-minchars' => 1,
-                            ]
+                            ],
                         ]
                     )
                     ->addModelTransformer(new EntryTagTransformer($repo))

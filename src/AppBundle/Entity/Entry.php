@@ -1,17 +1,14 @@
 <?php
-/*
- * @author Tobias Olry <tobias.olry@gmail.com>
- */
+
+declare(strict_types=1);
+// @author Tobias Olry <tobias.olry@gmail.com>
 
 namespace AppBundle\Entity;
 
+use AppBundle\Url\Info;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-
-use Doctrine\ORM\Mapping as ORM;
-
-use AppBundle\Url\MetaInfo;
-use AppBundle\Url\Info;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EntryRepository")
@@ -40,7 +37,7 @@ class Entry extends AbstractEntity
     private $title;
 
     /**
-     * the category, any of the self::CATEGORY_* constants
+     * the category, any of the self::CATEGORY_* constants.
      *
      * @ORM\Column(type="string")
      */
@@ -54,7 +51,7 @@ class Entry extends AbstractEntity
     /**
      * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"}, inversedBy="entries")
      * @ORM\JoinTable(name="entry_has_tag")
-     **/
+     */
     private $tags;
 
     /**
@@ -64,13 +61,14 @@ class Entry extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     *
      * @var User
      */
-    private $user = null;
+    private $user;
 
     public function __construct(User $user)
     {
-        $this->tags = array();
+        $this->tags = [];
         $this->user = $user;
     }
 
@@ -79,7 +77,7 @@ class Entry extends AbstractEntity
         return $this->url;
     }
 
-    public function setUrl($url)
+    public function setUrl($url): void
     {
         $this->url = $url;
     }
@@ -89,7 +87,7 @@ class Entry extends AbstractEntity
         return $this->title;
     }
 
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         $this->title = $title;
     }
@@ -99,7 +97,7 @@ class Entry extends AbstractEntity
         return $this->category;
     }
 
-    public function setCategory($category)
+    public function setCategory($category): void
     {
         $this->category = $category;
     }
@@ -109,7 +107,7 @@ class Entry extends AbstractEntity
         return $this->pending;
     }
 
-    public function setPending($pending)
+    public function setPending($pending): void
     {
         $this->pending = $pending;
     }
@@ -119,7 +117,7 @@ class Entry extends AbstractEntity
         return $this->tags;
     }
 
-    public function setTags($tags)
+    public function setTags($tags): void
     {
         $this->tags = $tags;
     }
@@ -142,7 +140,7 @@ class Entry extends AbstractEntity
         return new Info($this->url);
     }
 
-    public function addVisit(\DateTime $timestamp = null)
+    public function addVisit(\DateTime $timestamp = null): void
     {
         if (!$timestamp) {
             $timestamp = new \DateTime();
@@ -153,15 +151,15 @@ class Entry extends AbstractEntity
     public function getAge()
     {
         $seconds = time() - $this->getCreated()->format('U');
-        $ranges = array(
-            'today'            => 3600 * 24,
-            'this week'        => 3600 * 24 * 7,
-            '> a week ago'     => 3600 * 24 * 14,
-            '> two weeks ago'  => 3600 * 24 * 30,
-            '> a month ago'    => 3600 * 24 * 60,
+        $ranges = [
+            'today' => 3600 * 24,
+            'this week' => 3600 * 24 * 7,
+            '> a week ago' => 3600 * 24 * 14,
+            '> two weeks ago' => 3600 * 24 * 30,
+            '> a month ago' => 3600 * 24 * 60,
             '> two months ago' => 3600 * 24 * 365,
-            '> a year ago'     => 3600 * 24 * 730,
-        );
+            '> a year ago' => 3600 * 24 * 730,
+        ];
 
         foreach ($ranges as $range => $maxSeconds) {
             if ($seconds < $maxSeconds) {

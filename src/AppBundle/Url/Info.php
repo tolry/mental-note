@@ -1,14 +1,9 @@
 <?php
-/*
- *
- * @author Tobias Olry <tobias.olry@web.de>
- */
 
+declare(strict_types=1);
+// @author Tobias Olry <tobias.olry@web.de>
 
 namespace AppBundle\Url;
-
-use Guzzle\Service\Client as GuzzleClient;
-use Guzzle\Common\Event;
 
 class Info
 {
@@ -36,7 +31,7 @@ class Info
         $urlInfo = parse_url($url);
 
         if (!$urlInfo) {
-            throw new \Exception("could not parse url $url");
+            throw new \Exception("could not parse url ${url}");
         }
 
         $urlInfo = array_merge([

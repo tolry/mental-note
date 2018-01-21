@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Criteria;
 
 final class EntryCriteria
@@ -10,8 +12,8 @@ final class EntryCriteria
     public $tag;
     public $query;
     public $category;
-    public $limit       = 12;
-    public $page        = 1;
+    public $limit = 12;
+    public $page = 1;
     public $pendingOnly = true;
     public $sortOrder = self::SORT_TIMESTAMP_DESC;
 
@@ -24,28 +26,28 @@ final class EntryCriteria
     {
         foreach ($data as $member => $value) {
             if (property_exists($this, $member)) {
-                $this->$member = $value;
+                $this->{$member} = $value;
             }
         }
     }
 
     /**
-     * returns the array required as url query string
+     * returns the array required as url query string.
      *
      * @param array $changes
-     * @return array
      *
+     * @return array
      */
     public function getQuery(array $changes = [])
     {
         $query = [
-            'category'    => $this->category,
-            'tag'         => $this->tag,
-            'page'        => $this->page,
-            'limit'       => $this->limit,
-            'query'       => $this->query,
+            'category' => $this->category,
+            'tag' => $this->tag,
+            'page' => $this->page,
+            'limit' => $this->limit,
+            'query' => $this->query,
             'pendingOnly' => $this->pendingOnly ? 1 : 0,
-            'sortOrder'   => $this->sortOrder,
+            'sortOrder' => $this->sortOrder,
         ];
 
         return array_merge($query, $changes);

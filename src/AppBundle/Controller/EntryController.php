@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Entry;
@@ -14,9 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EntryController extends AbstractBaseController
 {
-
     /**
-     * @param Form $form
+     * @param Form    $form
      * @param Request $request
      */
     private function processForm(Form $form, Entry $entry, Request $request)
@@ -32,7 +33,6 @@ class EntryController extends AbstractBaseController
 
         return false;
     }
-
 
     /**
      * @Route("/entry/{id}/toggle_pending.json",name="entry_toggle_pending")
@@ -51,11 +51,14 @@ class EntryController extends AbstractBaseController
     /**
      * @Route("/thumbnails/{id}_{width}x{height}.png",name="entry_thumbnail")
      * @Method("GET")
+     *
+     * @param mixed $width
+     * @param mixed $height
      */
     public function thumbnailAction(Entry $entry, $width, $height)
     {
         $documentRoot = $this->container->getParameter('kernel.root_dir') . '/../web';
-        $route        = $this->generateUrl('entry_thumbnail', array('id' => $entry->getId(), 'width' => $width, 'height' => $height));
+        $route = $this->generateUrl('entry_thumbnail', ['id' => $entry->getId(), 'width' => $width, 'height' => $height]);
 
         $pathNew = sprintf('%s/thumbnails/%d_%dx%d.png', $documentRoot, $entry->getId(), $width, $height);
 
@@ -75,10 +78,10 @@ class EntryController extends AbstractBaseController
         } catch (\Exception $e) {
             $this->get('logger')->error('Exception: ' . $e->getMessage());
 
-            $target = $documentRoot . "/images/placeholder_no-preview.png";
+            $target = $documentRoot . '/images/placeholder_no-preview.png';
             symlink($target, $pathNew);
 
-            return $this->redirect("/images/placeholder_no-preview.png", 301);
+            return $this->redirect('/images/placeholder_no-preview.png', 301);
         }
     }
 
@@ -129,10 +132,10 @@ class EntryController extends AbstractBaseController
             return $this->redirect($backlink);
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
             'backlink' => $backlink,
-        );
+        ];
     }
 
     /**
@@ -153,11 +156,11 @@ class EntryController extends AbstractBaseController
             return $this->redirect($backlink);
         }
 
-        return array(
-            'form'  => $form->createView(),
+        return [
+            'form' => $form->createView(),
             'entry' => $entry,
             'backlink' => $backlink,
-        );
+        ];
     }
 
     /**
@@ -167,8 +170,8 @@ class EntryController extends AbstractBaseController
      */
     public function deleteAction(Request $request, Entry $entry)
     {
-        $filter  = (array) $request->get('filter', array());
-        $form    = $this->createFormBuilder($entry)->getForm();
+        $filter = (array) $request->get('filter', []);
+        $form = $this->createFormBuilder($entry)->getForm();
 
         $form->handleRequest($request);
 
@@ -176,12 +179,12 @@ class EntryController extends AbstractBaseController
             $this->getEm()->remove($entry);
             $this->getEm()->flush();
 
-            return $this->redirect($this->generateUrl('homepage', array('filter' => $filter)));
+            return $this->redirect($this->generateUrl('homepage', ['filter' => $filter]));
         }
 
         return [
-            'form'   => $form->createView(),
-            'entry'  => $entry,
+            'form' => $form->createView(),
+            'entry' => $entry,
             'filter' => $filter,
         ];
     }

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use \DateTime;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
@@ -13,7 +15,6 @@ use \DateTime;
  */
 abstract class AbstractEntity
 {
-
     /**
      * @ORM\Column(type="datetime")
      */
@@ -27,7 +28,7 @@ abstract class AbstractEntity
     /**
      * @ORM\PrePersist
      */
-    public function prePersist()
+    public function prePersist(): void
     {
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
@@ -36,7 +37,7 @@ abstract class AbstractEntity
     /**
      * @ORM\PreUpdate
      */
-    public function preUpdate()
+    public function preUpdate(): void
     {
         $this->updated = new \DateTime();
     }
@@ -52,7 +53,7 @@ abstract class AbstractEntity
     /**
      * @param DateTime $created
      */
-    public function setCreated(\DateTime $created)
+    public function setCreated(\DateTime $created): void
     {
         $this->created = $created;
     }
@@ -68,9 +69,8 @@ abstract class AbstractEntity
     /**
      * @param DateTime $updated
      */
-    public function setUpdated(\DateTime $updated)
+    public function setUpdated(\DateTime $updated): void
     {
         $this->updated = $updated;
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Controller;
 
 use AppBundle\Criteria\EntryCriteria;
@@ -8,17 +10,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractBaseController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     private function getFilterCriteria(Request $request)
     {
-        $filter = (array) $request->get('filter', array());
+        $filter = (array) $request->get('filter', []);
 
         return new EntryCriteria($filter);
     }
@@ -35,16 +35,16 @@ class DefaultController extends AbstractBaseController
         try {
             $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
         } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $e) {
-            $filter = (array) $request->get('filter', array());
-            $filter['page']--;
+            $filter = (array) $request->get('filter', []);
+            --$filter['page'];
 
             return $this->redirectToRoute('homepage', ['filter' => $filter]);
         }
 
-        return array(
-            'pager'       => $pager,
-            'criteria'    => $criteria,
-        );
+        return [
+            'pager' => $pager,
+            'criteria' => $criteria,
+        ];
     }
 
     /**
@@ -86,10 +86,10 @@ class DefaultController extends AbstractBaseController
     {
         $criteria = $this->getFilterCriteria($request);
 
-        return array(
-            'tags'       => $this->getEntryRepository()->getTagStats($this->getUser(), $criteria),
+        return [
+            'tags' => $this->getEntryRepository()->getTagStats($this->getUser(), $criteria),
             'categories' => $this->getEntryRepository()->getCategoryStats($this->getUser(), $criteria),
-            'criteria'   => $criteria,
-        );
+            'criteria' => $criteria,
+        ];
     }
 }

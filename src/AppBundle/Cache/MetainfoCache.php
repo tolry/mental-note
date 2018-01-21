@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Cache;
 
 use Psr\Cache\CacheItemPoolInterface;
@@ -21,7 +23,7 @@ class MetainfoCache
         $this->cache = new Psr6Cache($cache);
     }
 
-    public function set($url, $property, $value)
+    public function set($url, $property, $value): void
     {
         if (empty($url)) {
             return;
