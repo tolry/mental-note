@@ -57,7 +57,7 @@ class MetaInfo
         'medium',
     ];
 
-    public function __construct($url, MetainfoCache $cache)
+    public function __construct(string $url, MetainfoCache $cache)
     {
         $url = $this->translate($url);
 
@@ -104,12 +104,12 @@ class MetaInfo
         return false;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->getXpath('//head/title');
     }
 
-    public function getDefaultCategory()
+    public function getDefaultCategory(): string
     {
         if (in_array($this->info->sld, self::$videoDomains, true)) {
             return Category::WATCH;
@@ -130,15 +130,12 @@ class MetaInfo
         return Category::READ;
     }
 
-    /**
-     * @return Info
-     */
-    public function getInfo()
+    public function getInfo(): Info
     {
         return $this->info;
     }
 
-    public function isImage()
+    public function isImage(): bool
     {
         if (in_array($this->info->fileExtension, ['jpeg', 'jpg', 'png', 'gif'], true)) {
             return true;
@@ -147,17 +144,12 @@ class MetaInfo
         return stripos($this->getHeader('content_type'), 'image/') === 0;
     }
 
-    public function isHtml()
+    public function isHtml(): bool
     {
         return stripos($this->getHeader('content_type'), 'text/html') === 0;
     }
 
-    /**
-     * @param mixed $xpath
-     *
-     * @return null|string
-     */
-    protected function getXpath($xpath)
+    protected function getXpath(string $xpath): ?string
     {
         if (!$this->isHtml()) {
             return null;
@@ -172,7 +164,7 @@ class MetaInfo
         }
     }
 
-    private function translate($url)
+    private function translate(string $url): string
     {
         $info = new Info($url);
         if ($info->host === 'i.imgur.com') {
@@ -184,7 +176,7 @@ class MetaInfo
         return $url;
     }
 
-    private function fetchHtml($url)
+    private function fetchHtml(string $url): ?string
     {
         $html = $this->cache->get($url, 'html');
 
@@ -217,7 +209,7 @@ class MetaInfo
         return $html;
     }
 
-    private function getHeader($key, $default = null)
+    private function getHeader(string $key, $default = null): ?string
     {
         if (empty($this->headers)) {
             $this->headers = $this->fetchHeaders();
@@ -226,7 +218,7 @@ class MetaInfo
         return isset($this->headers[$key]) ? $this->headers[$key] : $default;
     }
 
-    private function fetchHeaders()
+    private function fetchHeaders(): array
     {
         $headers = $this->cache->get($this->info->url, 'headers');
 
@@ -271,7 +263,7 @@ class MetaInfo
         return [];
     }
 
-    private function getUserAgent($defaultUserAgent)
+    private function getUserAgent(string $defaultUserAgent): string
     {
         if (in_array($this->info->sld, self::$noGoogleUserAgent, true)) {
             return $defaultUserAgent;

@@ -39,37 +39,25 @@ abstract class AbstractEntity
      */
     public function preUpdate(): void
     {
-        $this->updated = new \DateTime();
+        $this->updated = new DateTime();
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreated()
+    public function getCreated(): DateTime
     {
         return $this->created;
     }
 
-    /**
-     * @param DateTime $created
-     */
-    public function setCreated(\DateTime $created): void
+    public function setCreated(DateTime $created): void
     {
         $this->created = $created;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdated()
+    public function getUpdated(): DateTime
     {
         return $this->updated;
     }
 
-    /**
-     * @param DateTime $updated
-     */
-    public function setUpdated(\DateTime $updated): void
+    public function setUpdated(DateTime $updated): void
     {
         $this->updated = $updated;
     }

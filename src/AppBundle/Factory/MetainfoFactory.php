@@ -19,7 +19,7 @@ class MetainfoFactory
         $this->cache = $cache;
     }
 
-    public function create($url)
+    public function create($url): MetaInfo
     {
         return new MetaInfo($url, $this->cache);
     }

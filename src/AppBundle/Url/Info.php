@@ -24,7 +24,7 @@ class Info
     public $sld;
     public $subdomain;
 
-    public function __construct($url)
+    public function __construct(string $url)
     {
         $this->url = $url;
 
@@ -69,7 +69,7 @@ class Info
         }
     }
 
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->sld . '.' . $this->tld;
     }

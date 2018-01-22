@@ -35,31 +35,17 @@ class Tag extends AbstractEntity
         return $this->name;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string name
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set name.
-     *
-     * @param name the value to set
-     * @param mixed $name
-     */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return int id
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

@@ -9,13 +9,13 @@ namespace AppBundle\Entity;
  */
 class Category
 {
-    const READ = 'read';
-    const LOOK_AT = 'look_at';
-    const WATCH = 'watch';
-    const LISTEN = 'listen';
-    const EVALUATE = 'evaluate';
-    const VISIT_REGULARLY = 'visit_regularly';
-    const PURCHASE = 'purchase';
+    public const READ = 'read';
+    public const LOOK_AT = 'look_at';
+    public const WATCH = 'watch';
+    public const LISTEN = 'listen';
+    public const EVALUATE = 'evaluate';
+    public const VISIT_REGULARLY = 'visit_regularly';
+    public const PURCHASE = 'purchase';
 
     private static $data = [
         self::READ => ['label' => 'read', 'icon' => 'fa fa-book', 'default_view' => '', 'description' => '', 'active' => true],
@@ -33,7 +33,7 @@ class Category
     private $defaultView = 'list';
     private $description;
 
-    public function __construct($key)
+    public function __construct(string $key)
     {
         if (!isset(self::$data[$key])) {
             throw new \Exception('no category known by identifier ' . $key);
@@ -56,7 +56,7 @@ class Category
         return $this->key;
     }
 
-    public static function getChoiceArray()
+    public static function getChoiceArray(): array
     {
         $choices = [];
         foreach (self::$data as $key => $category) {
@@ -70,7 +70,7 @@ class Category
         return $choices;
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -80,7 +80,7 @@ class Category
         $this->key = $key;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -90,7 +90,7 @@ class Category
         $this->label = $label;
     }
 
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->icon;
     }
@@ -100,7 +100,7 @@ class Category
         $this->icon = $icon;
     }
 
-    public function getDefaultView()
+    public function getDefaultView(): ?string
     {
         return $this->defaultView;
     }
@@ -110,7 +110,7 @@ class Category
         $this->defaultView = $defaultView;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }

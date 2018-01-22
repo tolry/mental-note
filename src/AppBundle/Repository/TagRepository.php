@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends EntityRepository
 {
-    public function search($query, User $user)
+    public function search(string $query, User $user)
     {
         $qb = $this->createQueryBuilder('t');
 

@@ -19,7 +19,7 @@ use Pagerfanta\Pagerfanta;
  */
 class EntryRepository extends EntityRepository
 {
-    public function getQueryBuilder(User $user, EntryCriteria $criteria, $includeVisits = true)
+    public function getQueryBuilder(User $user, EntryCriteria $criteria, bool $includeVisits = true): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')
@@ -67,7 +67,7 @@ class EntryRepository extends EntityRepository
         return $qb;
     }
 
-    public function filter(User $user, EntryCriteria $criteria)
+    public function filter(User $user, EntryCriteria $criteria): Pagerfanta
     {
         $qb = $this->getQueryBuilder($user, $criteria);
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
@@ -79,7 +79,7 @@ class EntryRepository extends EntityRepository
         return $pager;
     }
 
-    public function getCategoryStats(User $user, EntryCriteria $criteria)
+    public function getCategoryStats(User $user, EntryCriteria $criteria): array
     {
         $criteria = clone $criteria;
         $criteria->category = null;
@@ -105,7 +105,7 @@ class EntryRepository extends EntityRepository
         return $data;
     }
 
-    public function getTagStats(User $user, EntryCriteria $criteria, $limit = 20)
+    public function getTagStats(User $user, EntryCriteria $criteria, int $limit = 20): array
     {
         $criteria = clone $criteria;
         $criteria->tag = null;
@@ -133,7 +133,7 @@ class EntryRepository extends EntityRepository
      *
      * @return null|Entry
      */
-    public function urlAlreadyTaken(User $user, $url, $excludeId)
+    public function urlAlreadyTaken(User $user, ?string $url, ?int $excludeId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')
@@ -158,7 +158,7 @@ class EntryRepository extends EntityRepository
             : null;
     }
 
-    private function addFulltextSearch(QueryBuilder $qb, $query): void
+    private function addFulltextSearch(QueryBuilder $qb, string $query): void
     {
         if (empty($query)) {
             return;

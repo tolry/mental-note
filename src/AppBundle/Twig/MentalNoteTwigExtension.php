@@ -16,12 +16,12 @@ class MentalNoteTwigExtension extends \Twig_Extension
         ];
     }
 
-    public function getCategoryInstance($category)
+    public function getCategoryInstance(string $category): Category
     {
         return new Category($category);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'mental_note';
     }

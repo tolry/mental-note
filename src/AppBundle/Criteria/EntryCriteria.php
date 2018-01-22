@@ -6,8 +6,8 @@ namespace AppBundle\Criteria;
 
 final class EntryCriteria
 {
-    const SORT_TIMESTAMP_DESC = 'sort-timestamp-desc';
-    const SORT_TIMESTAMP_ASC = 'sort-timestamp-asc';
+    public const SORT_TIMESTAMP_DESC = 'sort-timestamp-desc';
+    public const SORT_TIMESTAMP_ASC = 'sort-timestamp-asc';
 
     public $tag;
     public $query;
@@ -16,11 +16,6 @@ final class EntryCriteria
     public $page = 1;
     public $pendingOnly = true;
     public $sortOrder = self::SORT_TIMESTAMP_DESC;
-
-    private $sortOptions = [
-        self::SORT_TIMESTAMP_DESC => 'newest first',
-        self::SORT_TIMESTAMP_ASC => 'oldest first',
-    ];
 
     public function __construct(array $data)
     {
@@ -33,12 +28,8 @@ final class EntryCriteria
 
     /**
      * returns the array required as url query string.
-     *
-     * @param array $changes
-     *
-     * @return array
      */
-    public function getQuery(array $changes = [])
+    public function getQuery(array $changes = []): array
     {
         $query = [
             'category' => $this->category,
@@ -53,8 +44,11 @@ final class EntryCriteria
         return array_merge($query, $changes);
     }
 
-    public function getSortOptions()
+    public function getSortOptions(): array
     {
-        return $this->sortOptions;
+        return [
+            self::SORT_TIMESTAMP_DESC => 'newest first',
+            self::SORT_TIMESTAMP_ASC => 'oldest first',
+        ];
     }
 }

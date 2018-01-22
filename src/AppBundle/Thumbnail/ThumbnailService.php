@@ -16,7 +16,7 @@ class ThumbnailService
     private $fs;
     private $metainfoFactory;
 
-    public function __construct($documentRoot, $cacheDir, $filepattern, MetainfoFactory $metainfoFactory)
+    public function __construct(string $documentRoot, string $cacheDir, string $filepattern, MetainfoFactory $metainfoFactory)
     {
         $this->documentRoot = $documentRoot;
         $this->cacheDir = $cacheDir;
@@ -29,7 +29,7 @@ class ThumbnailService
      * @param string $file
      * @param mixed  $url
      */
-    public function getImageForUrl($url, $file): void
+    public function getImageForUrl(string $url, string $file): void
     {
         $imageUrl = $this->metainfoFactory->create($url)->getImageUrl();
 
@@ -42,7 +42,7 @@ class ThumbnailService
         throw new \Exception('no file found for url ' . $url);
     }
 
-    public function generate($url, $width, $height, $name)
+    public function generate(string $url, int $width, int $height, string $name): Thumbnail
     {
         $hash = md5($url);
 
@@ -91,7 +91,7 @@ class ThumbnailService
         return $thumbnail;
     }
 
-    private function compilePattern($width, $height, $name)
+    private function compilePattern(int $width, int $height, string $name): string
     {
         $search = ['{width}', '{height}', '{name}'];
         $replace = [$width, $height, $name];
