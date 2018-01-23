@@ -54,7 +54,7 @@ class DefaultController extends AbstractBaseController
         $urlDuplicate = ($this->getEntryRepository()->urlAlreadyTaken(
             $this->getUser(),
             $url,
-            $request->get('edit_id')
+            $request->query->getInt('edit_id')
         ) !== null);
 
         $metaInfo = [
