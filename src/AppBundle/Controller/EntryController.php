@@ -33,11 +33,8 @@ class EntryController extends AbstractBaseController
     /**
      * @Route("/thumbnails/{id}_{width}x{height}.png",name="entry_thumbnail")
      * @Method("GET")
-     *
-     * @param mixed $width
-     * @param mixed $height
      */
-    public function thumbnailAction(Entry $entry, $width, $height)
+    public function thumbnailAction(Entry $entry, int $width, int $height)
     {
         $documentRoot = $this->container->getParameter('kernel.root_dir') . '/../web';
         $route = $this->generateUrl('entry_thumbnail', ['id' => $entry->getId(), 'width' => $width, 'height' => $height]);
