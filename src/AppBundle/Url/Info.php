@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 // @author Tobias Olry <tobias.olry@web.de>
 
 namespace AppBundle\Url;
