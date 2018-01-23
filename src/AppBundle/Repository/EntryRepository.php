@@ -90,7 +90,7 @@ class EntryRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('en.category, SUM(en.pending) AS pending, COUNT(en.id) AS total')
             ->from(Entry::class, 'en')
-            ->andWhere('en.id IN (' . $innerQb->getDql() . ')')
+            ->andWhere('en.id IN (' . $innerQb->getDQL() . ')')
             ->add('groupBy', 'en.category')
             ->add('orderBy', 'en.category ASC');
 
@@ -117,7 +117,7 @@ class EntryRepository extends EntityRepository
         $qb->select('tag.name, tag.id, SUM(en.pending) AS pending, COUNT(en.id) AS total')
             ->from(Tag::class, 'tag')
             ->innerJoin('tag.entries', 'en')
-            ->andWhere('en.id IN (' . $innerQb->getDql() . ')')
+            ->andWhere('en.id IN (' . $innerQb->getDQL() . ')')
             ->add('groupBy', 'tag.id')
             ->add('orderBy', 'pending DESC');
 
