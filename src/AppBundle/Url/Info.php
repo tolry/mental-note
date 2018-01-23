@@ -51,12 +51,16 @@ class Info
         $this->user = $urlInfo['user'];
         $this->pass = $urlInfo['pass'];
         $this->path = $urlInfo['path'];
-        parse_str($urlInfo['query'], $this->query);
+        if (!empty($urlInfo['query'])) {
+            parse_str($urlInfo['query'], $this->query);
+        }
         $this->fragment = $urlInfo['fragment'];
 
-        $pathParts = explode('.', $this->path);
-        if (count($pathParts) > 1) {
-            $this->fileExtension = array_pop($pathParts);
+        if (!empty($this->path)) {
+            $pathParts = explode('.', $this->path);
+            if (count($pathParts) > 1) {
+                $this->fileExtension = array_pop($pathParts);
+            }
         }
 
         $hostParts = explode('.', $this->host);
