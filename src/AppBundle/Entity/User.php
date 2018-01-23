@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 // src/Acme/UserBundle/Entity/User.php
 
 namespace AppBundle\Entity;
