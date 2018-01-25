@@ -25,7 +25,9 @@
         "white-october/pagerfanta-bundle": "^1.0.5",
         "doctrine/doctrine-migrations-bundle": "1.0.*"
     },
-    "require-dev": { },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
     "scripts": {
         "post-root-package-install": [
             "SymfonyStandard\\Composer::hookRootPackageInstall"
