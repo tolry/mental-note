@@ -19,7 +19,7 @@ class DefaultControllerTest extends WebTestCase
         $client->request('GET', '/');
         $response = $client->getResponse();
 
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $response->getStatusCode());
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals('http://localhost/login', $response->getTargetUrl());
     }
@@ -36,7 +36,7 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
         $response = $client->getResponse();
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('', $crawler->filter('@todo'));
     }
 }
