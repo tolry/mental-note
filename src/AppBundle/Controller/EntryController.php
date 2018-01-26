@@ -51,7 +51,12 @@ class EntryController extends AbstractBaseController
 
         try {
             $thumbnailService = $this->get('app.thumbnail_service');
-            $thumbnailService->generate($entry->getUrl(), $width, $height, $entry->getId());
+            $thumbnailService->generate(
+                $entry->getUrl(),
+                $width,
+                $height,
+                (string) $entry->getId()
+            );
 
             return $this->redirect($route);
         } catch (\Exception $e) {
