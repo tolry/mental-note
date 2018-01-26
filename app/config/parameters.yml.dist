@@ -3,6 +3,7 @@ parameters:
     database_host:     127.0.0.1
     database_port:     ~
     database_name:     symfony
+    database_name_testing:     symfony
     database_user:     root
     database_password: ~
     database_platform: 5.6
