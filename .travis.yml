@@ -31,13 +31,13 @@ env:
 
 # Update composer
 before-install:
-  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "running before-install"
+  - phpenv config-add travis.ini
   - composer self-update
 
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
-  - php -v
   - php -i
   - php -m
   - composer install -q
