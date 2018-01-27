@@ -31,7 +31,7 @@ env:
 
 # Update composer
 before-install:
-  - phpenv config-add travis.ini
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer self-update
 
 # Install composer dependencies,
@@ -40,7 +40,6 @@ install:
   - php -v
   - php -i
   - php -m
-  - php -m | grep memcache
   - composer install -q
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - php bin/console doctrine:database:create --env=test
