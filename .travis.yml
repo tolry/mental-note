@@ -1,4 +1,5 @@
-# source https://gist.github.com/n0ni0/fc4ce99a1026a2a7559b3d29aaf36bca
+# based on https://gist.github.com/n0ni0/fc4ce99a1026a2a7559b3d29aaf36bca
+#
 # Project language
 language: php
 
@@ -29,17 +30,13 @@ matrix:
 env:
   - DB=mysql
 
-# Update composer
 before_install:
   - echo "running before-install"
   - phpenv config-add travis.ini
-  #- composer self-update
 
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
-  - php -i
-  - php -m
   - composer install -q
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - php bin/console doctrine:database:create --env=test
