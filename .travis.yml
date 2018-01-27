@@ -32,7 +32,7 @@ env:
 # Update composer
 before-install:
   - composer self-update
-  - phpenv config-add .travis.ini
+  - phpenv config-add travis.ini
 
 # Install composer dependencies,
 # Create database, schema and fixtures
