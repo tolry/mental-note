@@ -36,6 +36,7 @@ class EntryController extends AbstractBaseController
      */
     public function thumbnailAction(Entry $entry, int $width, int $height)
     {
+        \Tideways\Profiler::setServiceName('3rd-party');
         $documentRoot = $this->container->getParameter('kernel.root_dir') . '/../web';
         $route = $this->generateUrl('entry_thumbnail', ['id' => $entry->getId(), 'width' => $width, 'height' => $height]);
 
@@ -57,16 +58,14 @@ class EntryController extends AbstractBaseController
                 $height,
                 (string) $entry->getId()
             );
-
-            return $this->redirect($route);
         } catch (\Exception $e) {
             $this->get('logger')->error('Exception: ' . $e->getMessage());
 
             $target = $documentRoot . '/images/placeholder_no-preview.png';
             symlink($target, $pathNew);
-
-            return $this->redirect('/images/placeholder_no-preview.png', 301);
         }
+
+        return $this->redirect($route);
     }
 
     /**
