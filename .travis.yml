@@ -8,6 +8,7 @@ sudo: false
 # Start mysql service
 services:
   - mysql
+  - memcached
 
 # Cache composer packages so "composer install" is faster
 cache:
