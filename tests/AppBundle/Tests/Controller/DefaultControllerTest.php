@@ -26,17 +26,15 @@ class DefaultControllerTest extends WebTestCase
 
     public function testIndexSimple(): void
     {
-        $client = static::createClient();
+        $client = static::createClient(
+            [],
+            ['PHP_AUTH_USER' => 'tests', 'PHP_AUTH_PW' => 'tests-password',]
+        );
 
-        $this->markTestSkipped();
-
-        // @todo
-
-        $this->login();
         $crawler = $client->request('GET', '/');
         $response = $client->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('', $crawler->filter('@todo'));
+        $this->assertEquals(1, $crawler->filter('.user-dropdown')->count());
     }
 }
