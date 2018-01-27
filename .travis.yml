@@ -30,7 +30,7 @@ env:
   - DB=mysql
 
 # Update composer
-before-install:
+before_install:
   - echo "running before-install"
   - phpenv config-add travis.ini
   #- composer self-update
