@@ -37,6 +37,8 @@ before-install:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
+  - php -v
+  - php -i
   - php -m
   - php -m | grep memcache
   - composer install -q
