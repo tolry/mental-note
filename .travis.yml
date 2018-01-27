@@ -8,7 +8,7 @@ sudo: false
 # Start mysql service
 services:
   - mysql
-  - memcached
+  - memcache
 
 # Cache composer packages so "composer install" is faster
 cache:
@@ -36,7 +36,7 @@ before-install:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
-  - composer install
+  - composer install -q
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
