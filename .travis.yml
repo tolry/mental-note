@@ -39,6 +39,7 @@ before-install:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
+  - php -m | grep memcache
   - composer install -q
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - php bin/console doctrine:database:create --env=test
