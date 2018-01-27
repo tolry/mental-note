@@ -34,6 +34,7 @@ before-install:
   - composer self-update
   - INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - echo extension = memcached.so >> $INI
+  - php -m | grep memcache
 
 # Install composer dependencies,
 # Create database, schema and fixtures
