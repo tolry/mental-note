@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
@@ -8,13 +10,12 @@ use AppBundle\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Description of AbstractBaseController
+ * Description of AbstractBaseController.
  *
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 class AbstractBaseController extends Controller
 {
-
     /**
      * @return User
      */

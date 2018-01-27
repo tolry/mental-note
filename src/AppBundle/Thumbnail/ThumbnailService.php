@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Thumbnail;
 
-use AppBundle\Cache\MetainfoCache;
 use AppBundle\Factory\MetainfoFactory;
-use AppBundle\Url\MetaInfo;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
@@ -16,7 +16,7 @@ class ThumbnailService
     private $fs;
     private $metainfoFactory;
 
-    public function __construct($documentRoot, $cacheDir, $filepattern, MetainfoFactory $metainfoFactory)
+    public function __construct(string $documentRoot, string $cacheDir, string $filepattern, MetainfoFactory $metainfoFactory)
     {
         $this->documentRoot = $documentRoot;
         $this->cacheDir = $cacheDir;
@@ -25,18 +25,11 @@ class ThumbnailService
         $this->metainfoFactory = $metainfoFactory;
     }
 
-    private function compilePattern($width, $height, $name)
-    {
-        $search  = array('{width}', '{height}', '{name}');
-        $replace = array($width, $height, $name);
-
-        return str_replace($search, $replace, $this->filepattern);
-    }
-
     /**
      * @param string $file
+     * @param mixed  $url
      */
-    public function getImageForUrl($url, $file)
+    public function getImageForUrl(string $url, string $file): void
     {
         $imageUrl = $this->metainfoFactory->create($url)->getImageUrl();
 
@@ -46,25 +39,25 @@ class ThumbnailService
             return;
         }
 
-        throw new \Exception('no file found for url '.$url);
+        throw new \Exception('no file found for url ' . $url);
     }
 
-    public function generate($url, $width, $height, $name)
+    public function generate(string $url, int $width, int $height, string $name): Thumbnail
     {
         $hash = md5($url);
 
-        $thumbnail               = new Thumbnail();
-        $thumbnail->url          = $url;
-        $thumbnail->width        = $width;
-        $thumbnail->height       = $height;
+        $thumbnail = new Thumbnail();
+        $thumbnail->url = $url;
+        $thumbnail->width = $width;
+        $thumbnail->height = $height;
         $thumbnail->relativePath = $this->compilePattern($width, $height, $name);
-        $thumbnail->absolutePath = $this->documentRoot.'/'.$thumbnail->relativePath;
+        $thumbnail->absolutePath = $this->documentRoot . '/' . $thumbnail->relativePath;
 
         if ($this->fs->exists($thumbnail->absolutePath)) {
             return $thumbnail;
         }
 
-        $tmpFile = $this->cacheDir.'/'.$hash;
+        $tmpFile = $this->cacheDir . '/' . $hash;
 
         if (!$this->fs->exists($this->cacheDir)) {
             $this->fs->mkdir($this->cacheDir);
@@ -96,5 +89,13 @@ class ThumbnailService
         }
 
         return $thumbnail;
+    }
+
+    private function compilePattern(int $width, int $height, string $name): string
+    {
+        $search = ['{width}', '{height}', '{name}'];
+        $replace = [$width, $height, $name];
+
+        return str_replace($search, $replace, $this->filepattern);
     }
 }

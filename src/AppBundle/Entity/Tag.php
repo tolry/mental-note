@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tag extends AbstractEntity
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -26,39 +27,26 @@ class Tag extends AbstractEntity
 
     /**
      * @ORM\ManyToMany(targetEntity="Entry", mappedBy="tags")
-     **/
+     */
     private $entries;
-
-    /**
-     * Get name.
-     *
-     * @return string name.
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param name the value to set.
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return int id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 }

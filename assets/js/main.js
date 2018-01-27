@@ -107,19 +107,6 @@ var application = {
         //});
 
         $domElement.find('.deferred-image').imageloader();
-    },
-    searchTags: function(query) {
-        var tags = null;
-        $.ajax({
-            url: mentalNote.route.tag_search,
-            dataType: 'json',
-            success: function(data) {
-                tags = data;
-            },
-            async: false
-        });
-
-        return tags;
     }
 }
 

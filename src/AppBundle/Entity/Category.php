@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 /**
@@ -7,23 +9,22 @@ namespace AppBundle\Entity;
  */
 class Category
 {
-
-    const READ = 'read';
-    const LOOK_AT = 'look_at';
-    const WATCH = 'watch';
-    const LISTEN = 'listen';
-    const EVALUATE = 'evaluate';
-    const VISIT_REGULARLY = 'visit_regularly';
-    const PURCHASE = 'purchase';
+    public const READ = 'read';
+    public const LOOK_AT = 'look_at';
+    public const WATCH = 'watch';
+    public const LISTEN = 'listen';
+    public const EVALUATE = 'evaluate';
+    public const VISIT_REGULARLY = 'visit_regularly';
+    public const PURCHASE = 'purchase';
 
     private static $data = [
-        self::READ => ['label'=>'read', 'icon'=>'fa fa-book', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::LOOK_AT => ['label'=>'look at', 'icon'=>'fa fa-picture-o', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::WATCH => ['label'=>'watch', 'icon'=>'fa fa-film', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::LISTEN => ['label'=>'listen to', 'icon'=>'fa fa-volume-up', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::EVALUATE => ['label'=>'evaluate', 'icon'=>'fa fa-question-circle', 'default_view'=>'', 'description'=>'', 'active' => true],
-        self::VISIT_REGULARLY => ['label'=>'visit regularly', 'icon'=>'icon-star', 'default_view'=>'', 'description'=>'', 'active' => false],
-        self::PURCHASE => ['label'=>'purchase', 'icon'=>'fa fa-shopping-cart', 'default_view'=>'', 'description'=>'', 'active' => true],
+        self::READ => ['label' => 'read', 'icon' => 'fa fa-book', 'default_view' => '', 'description' => '', 'active' => true],
+        self::LOOK_AT => ['label' => 'look at', 'icon' => 'fa fa-picture-o', 'default_view' => '', 'description' => '', 'active' => true],
+        self::WATCH => ['label' => 'watch', 'icon' => 'fa fa-film', 'default_view' => '', 'description' => '', 'active' => true],
+        self::LISTEN => ['label' => 'listen to', 'icon' => 'fa fa-volume-up', 'default_view' => '', 'description' => '', 'active' => true],
+        self::EVALUATE => ['label' => 'evaluate', 'icon' => 'fa fa-question-circle', 'default_view' => '', 'description' => '', 'active' => true],
+        self::VISIT_REGULARLY => ['label' => 'visit regularly', 'icon' => 'icon-star', 'default_view' => '', 'description' => '', 'active' => false],
+        self::PURCHASE => ['label' => 'purchase', 'icon' => 'fa fa-shopping-cart', 'default_view' => '', 'description' => '', 'active' => true],
     ];
 
     private $key;
@@ -32,7 +33,7 @@ class Category
     private $defaultView = 'list';
     private $description;
 
-    public function __construct($key)
+    public function __construct(string $key)
     {
         if (!isset(self::$data[$key])) {
             throw new \Exception('no category known by identifier ' . $key);
@@ -40,9 +41,9 @@ class Category
 
         $row = self::$data[$key];
 
-        $this->key         = $key;
-        $this->label       = $row['label'];
-        $this->icon        = $row['icon'];
+        $this->key = $key;
+        $this->label = $row['label'];
+        $this->icon = $row['icon'];
         $this->description = $row['description'];
 
         if (!empty($row['default_view'])) {
@@ -55,9 +56,9 @@ class Category
         return $this->key;
     }
 
-    public static function getChoiceArray()
+    public static function getChoiceArray(): array
     {
-        $choices = array();
+        $choices = [];
         foreach (self::$data as $key => $category) {
             if (!$category['active']) {
                 continue;
@@ -69,52 +70,52 @@ class Category
         return $choices;
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    public function setKey($key)
+    public function setKey($key): void
     {
         $this->key = $key;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
 
-    public function setLabel($label)
+    public function setLabel($label): void
     {
         $this->label = $label;
     }
 
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->icon;
     }
 
-    public function setIcon($icon)
+    public function setIcon($icon): void
     {
         $this->icon = $icon;
     }
 
-    public function getDefaultView()
+    public function getDefaultView(): ?string
     {
         return $this->defaultView;
     }
 
-    public function setDefaultView($defaultView)
+    public function setDefaultView($defaultView): void
     {
         $this->defaultView = $defaultView;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = $description;
     }

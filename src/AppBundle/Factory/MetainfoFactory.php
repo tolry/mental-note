@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AppBundle\Factory;
 
 use AppBundle\Cache\MetainfoCache;
@@ -17,7 +19,7 @@ class MetainfoFactory
         $this->cache = $cache;
     }
 
-    public function create($url)
+    public function create($url): MetaInfo
     {
         return new MetaInfo($url, $this->cache);
     }

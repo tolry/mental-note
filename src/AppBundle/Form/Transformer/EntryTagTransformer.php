@@ -1,16 +1,13 @@
 <?php
-/*
- * @author Tobias Olry <tobias.olry@gmail.com>
- */
+
+declare(strict_types = 1);
 
 namespace AppBundle\Form\Transformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use Doctrine\ORM\EntityRepository;
-
-use Doctrine\Common\Collections\ArrayCollection;
-
 use AppBundle\Entity\Tag;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\DataTransformerInterface;
 
 class EntryTagTransformer implements DataTransformerInterface
 {
@@ -27,7 +24,7 @@ class EntryTagTransformer implements DataTransformerInterface
     public function transform($tags)
     {
         if (empty($tags)) {
-            return "";
+            return '';
         }
 
         $tagNames = [];

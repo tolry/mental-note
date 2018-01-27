@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractBaseController
 {
-
     /**
      * @Route("/user/change-password",name="user_change_password")
      * @Template()
@@ -34,9 +35,9 @@ class UserController extends AbstractBaseController
             return new RedirectResponse($url);
         }
 
-        return array(
+        return [
             'user' => $user,
             'form' => $form->createView(),
-        );
+        ];
     }
 }

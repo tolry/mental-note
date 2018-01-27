@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
@@ -11,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Visit
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -21,6 +23,7 @@ class Visit
 
     /**
      * @ORM\ManyToOne(targetEntity="Entry", inversedBy="visits")
+     *
      * @var Entry
      */
     private $entry;
@@ -30,8 +33,7 @@ class Visit
      */
     private $timestamp;
 
-
-    public function __construct(\DateTime $timestamp, Entry $entry)
+    public function __construct(DateTime $timestamp, Entry $entry)
     {
         $this->timestamp = $timestamp;
         $this->entry = $entry;

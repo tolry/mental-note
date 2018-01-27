@@ -16,6 +16,7 @@
 /web/css/*
 /web/js/*
 /web/fonts/*
+.php_cs.cache
 
 !var/SymfonyRequirements.php
 !var/logs/.gitkeep

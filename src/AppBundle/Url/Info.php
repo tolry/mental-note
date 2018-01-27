@@ -1,14 +1,9 @@
 <?php
-/*
- *
- * @author Tobias Olry <tobias.olry@web.de>
- */
 
+declare(strict_types = 1);
+// @author Tobias Olry <tobias.olry@web.de>
 
 namespace AppBundle\Url;
-
-use Guzzle\Service\Client as GuzzleClient;
-use Guzzle\Common\Event;
 
 class Info
 {
@@ -29,14 +24,14 @@ class Info
     public $sld;
     public $subdomain;
 
-    public function __construct($url)
+    public function __construct(string $url)
     {
         $this->url = $url;
 
         $urlInfo = parse_url($url);
 
         if (!$urlInfo) {
-            throw new \Exception("could not parse url $url");
+            throw new \Exception("could not parse url ${url}");
         }
 
         $urlInfo = array_merge([
@@ -56,26 +51,61 @@ class Info
         $this->user = $urlInfo['user'];
         $this->pass = $urlInfo['pass'];
         $this->path = $urlInfo['path'];
-        parse_str($urlInfo['query'], $this->query);
+        $this->query = $this->parseQuery($urlInfo['query']);
         $this->fragment = $urlInfo['fragment'];
+        $this->fileExtension = $this->parseFileExtension($this->path);
 
-        $pathParts = explode('.', $this->path);
-        if (count($pathParts) > 1) {
-            $this->fileExtension = array_pop($pathParts);
-        }
 
-        $hostParts = explode('.', $this->host);
-        $this->tld = array_pop($hostParts);
-        if (!empty($hostParts)) {
-            $this->sld = array_pop($hostParts);
-        }
-        if (!empty($hostParts)) {
-            $this->subdomain = array_pop($hostParts);
-        }
+        list (
+            $this->tld,
+            $this->sld,
+            $this->subdomain
+        ) = $this->parseDomains($this->host);
+
     }
 
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->sld . '.' . $this->tld;
+    }
+
+    private function parseQuery(?string $query): array
+    {
+        if (empty($query)) {
+            return [];
+        }
+
+        parse_str($query, $queryArray);
+
+        return $queryArray;
+    }
+
+    private function parseFileExtension(?string $path): ?string
+    {
+        if (empty($path)) {
+            return null;
+        }
+
+        $pathParts = explode('.', $path);
+        if (count($pathParts) === 0) {
+            return null;
+        }
+        return array_pop($pathParts);
+    }
+
+    private function parseDomains(string $host): array
+    {
+        $sld = $subdomain = null;
+        $parts = explode('.', $host);
+
+        $tld = array_pop($parts);
+        if (!empty($parts)) {
+            $sld = array_pop($parts);
+        }
+        if (!empty($parts)) {
+            $subdomain = array_pop($parts);
+        }
+
+        return [$tld, $sld, $subdomain];
     }
 }

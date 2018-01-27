@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-
-use AppBundle\Entity\User;
+use AppBundle\Criteria\EntryCriteria;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Entry;
 use AppBundle\Entity\Tag;
-use AppBundle\Entity\Category;
-
-use AppBundle\Criteria\EntryCriteria;
-
+use AppBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -20,8 +19,7 @@ use Pagerfanta\Pagerfanta;
  */
 class EntryRepository extends EntityRepository
 {
-
-    public function getQueryBuilder(User $user, EntryCriteria $criteria, $includeVisits = true)
+    public function getQueryBuilder(User $user, EntryCriteria $criteria, bool $includeVisits = true): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')
@@ -35,9 +33,11 @@ class EntryRepository extends EntityRepository
         switch ($criteria->sortOrder) {
             case EntryCriteria::SORT_TIMESTAMP_DESC:
                 $qb->orderBy('e.id', 'DESC');
+
                 break;
             case EntryCriteria::SORT_TIMESTAMP_ASC:
                 $qb->orderBy('e.id', 'ASC');
+
                 break;
         }
 
@@ -67,7 +67,7 @@ class EntryRepository extends EntityRepository
         return $qb;
     }
 
-    public function filter(User $user, EntryCriteria $criteria)
+    public function filter(User $user, EntryCriteria $criteria): Pagerfanta
     {
         $qb = $this->getQueryBuilder($user, $criteria);
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
@@ -79,10 +79,10 @@ class EntryRepository extends EntityRepository
         return $pager;
     }
 
-    public function getCategoryStats(User $user, EntryCriteria $criteria)
+    public function getCategoryStats(User $user, EntryCriteria $criteria): array
     {
         $criteria = clone $criteria;
-        $criteria->category    = null;
+        $criteria->category = null;
         $criteria->pendingOnly = false;
 
         $innerQb = $this->getQueryBuilder($user, $criteria, $includeVisits = false);
@@ -90,24 +90,25 @@ class EntryRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('en.category, SUM(en.pending) AS pending, COUNT(en.id) AS total')
             ->from(Entry::class, 'en')
-            ->andWhere('en.id IN (' . $innerQb->getDql() . ')')
+            ->andWhere('en.id IN (' . $innerQb->getDQL() . ')')
             ->add('groupBy', 'en.category')
             ->add('orderBy', 'en.category ASC');
 
         $qb->setParameters($innerQb->getParameters());
 
-        $data = array();
+        $data = [];
         foreach ($qb->getQuery()->getResult() as $row) {
             $row['category'] = new Category($row['category']);
             $data[] = $row;
         }
+
         return $data;
     }
 
-    public function getTagStats(User $user, EntryCriteria $criteria, $limit = 20)
+    public function getTagStats(User $user, EntryCriteria $criteria, int $limit = 20): array
     {
-        $criteria              = clone $criteria;
-        $criteria->tag         = null;
+        $criteria = clone $criteria;
+        $criteria->tag = null;
         $criteria->pendingOnly = false;
 
         $innerQb = $this->getQueryBuilder($user, $criteria, $includeVisits = false);
@@ -116,7 +117,7 @@ class EntryRepository extends EntityRepository
         $qb->select('tag.name, tag.id, SUM(en.pending) AS pending, COUNT(en.id) AS total')
             ->from(Tag::class, 'tag')
             ->innerJoin('tag.entries', 'en')
-            ->andWhere('en.id IN (' . $innerQb->getDql() . ')')
+            ->andWhere('en.id IN (' . $innerQb->getDQL() . ')')
             ->add('groupBy', 'tag.id')
             ->add('orderBy', 'pending DESC');
 
@@ -127,9 +128,12 @@ class EntryRepository extends EntityRepository
     }
 
     /**
-     * @return Entry|null
+     * @param mixed $url
+     * @param mixed $excludeId
+     *
+     * @return null|Entry
      */
-    public function urlAlreadyTaken(User $user, $url, $excludeId)
+    public function urlAlreadyTaken(User $user, ?string $url, ?int $excludeId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')
@@ -154,7 +158,7 @@ class EntryRepository extends EntityRepository
             : null;
     }
 
-    private function addFulltextSearch(QueryBuilder $qb, $query)
+    private function addFulltextSearch(QueryBuilder $qb, string $query): void
     {
         if (empty($query)) {
             return;
@@ -168,7 +172,7 @@ class EntryRepository extends EntityRepository
 
             $word = '%' . strtolower($word) . '%';
             $parameterName = ':querypart' . $partNumber++;
-            $qb->andWhere("(LOWER(t.name) LIKE $parameterName OR e.title LIKE $parameterName or e.url LIKE $parameterName)")
+            $qb->andWhere("(LOWER(t.name) LIKE ${parameterName} OR e.title LIKE ${parameterName} or e.url LIKE ${parameterName})")
                 ->setParameter($parameterName, $word);
         }
     }

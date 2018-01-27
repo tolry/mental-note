@@ -1,8 +1,7 @@
 <?php
-/*
- *
- * @author Tobias Olry <tobias.olry@web.de>
- */
+
+declare(strict_types = 1);
+// @author Tobias Olry <tobias.olry@web.de>
 
 namespace AppBundle\Url;
 
@@ -19,7 +18,7 @@ class MetaInfo
     private $headers;
     private $html;
     private $cache;
-    private $imageUrl = null;
+    private $imageUrl;
 
     private static $videoDomains = [
         'youtube',
@@ -58,19 +57,7 @@ class MetaInfo
         'medium',
     ];
 
-    private function translate($url)
-    {
-        $info = new Info($url);
-        if ($info->host == 'i.imgur.com') {
-            $newPath = str_replace('.' . $info->fileExtension, '', $info->path);
-
-            return "http://imgur.com" . $newPath;
-        }
-
-        return $url;
-    }
-
-    public function __construct($url, MetainfoCache $cache)
+    public function __construct(string $url, MetainfoCache $cache)
     {
         $url = $this->translate($url);
 
@@ -82,59 +69,8 @@ class MetaInfo
         }
     }
 
-    private function fetchHtml($url)
-    {
-        $html = $this->cache->get($url, 'html');
-
-        if ($html) {
-            return $html;
-        }
-
-        $guzzle = new GuzzleClient($url);
-        $guzzle->setUserAgent(
-            $this->getUserAgent(
-                $guzzle->getDefaultUserAgent()
-            )
-        );
-
-        $guzzle->getEventDispatcher()->addListener(
-            'request.error',
-            function(Event $event) {
-                $event->stopPropagation();
-            }
-        );
-
-        $response = $guzzle->get()->send();
-        if (!$response->isSuccessful()) {
-            return null;
-        }
-
-        $html = $response->getBody(true);
-        $this->cache->set($url, 'html', $html);
-
-        return $html;
-    }
-
     /**
-     * @return string|null
-     */
-    protected function getXpath($xpath)
-    {
-        if (!$this->isHtml()) {
-            return null;
-        }
-
-        try {
-            $crawler = new Crawler($this->html);
-
-            return trim($crawler->filterXPath($xpath)->first()->text());
-        } catch (\Exception $e) {
-            return null;
-        }
-    }
-
-    /**
-     * @return string|bool
+     * @return bool|string
      */
     public function getImageUrl()
     {
@@ -168,55 +104,112 @@ class MetaInfo
         return false;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->getXpath('//head/title');
     }
 
-    public function getDefaultCategory()
+    public function getDefaultCategory(): string
     {
-        if (in_array($this->info->sld, self::$videoDomains)) {
+        if (in_array($this->info->sld, self::$videoDomains, true)) {
             return Category::WATCH;
         }
 
-        if (in_array($this->info->sld, self::$imageDomains)) {
+        if (in_array($this->info->sld, self::$imageDomains, true)) {
             return Category::LOOK_AT;
         }
 
-        if (in_array($this->info->sld, self::$musicDomains)) {
+        if (in_array($this->info->sld, self::$musicDomains, true)) {
             return Category::LISTEN;
         }
 
-        if (in_array($this->info->sld, self::$purchaseDomains)) {
+        if (in_array($this->info->sld, self::$purchaseDomains, true)) {
             return Category::PURCHASE;
         }
 
         return Category::READ;
     }
 
-    /**
-     * @return Info
-     */
-    public function getInfo()
+    public function getInfo(): Info
     {
         return $this->info;
     }
 
-    public function isImage()
+    public function isImage(): bool
     {
-        if (in_array($this->info->fileExtension, ['jpeg', 'jpg', 'png', 'gif'])) {
+        if (in_array($this->info->fileExtension, ['jpeg', 'jpg', 'png', 'gif'], true)) {
             return true;
         }
 
-        return (stripos($this->getHeader('content_type'), 'image/') === 0);
+        return stripos($this->getHeader('content_type'), 'image/') === 0;
     }
 
-    public function isHtml()
+    public function isHtml(): bool
     {
-        return (stripos($this->getHeader('content_type'), 'text/html') === 0);
+        return stripos($this->getHeader('content_type'), 'text/html') === 0;
     }
 
-    private function getHeader($key, $default = null)
+    protected function getXpath(string $xpath): ?string
+    {
+        if (!$this->isHtml()) {
+            return null;
+        }
+
+        try {
+            $crawler = new Crawler($this->html);
+
+            return trim($crawler->filterXPath($xpath)->first()->text());
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    private function translate(string $url): string
+    {
+        $info = new Info($url);
+        if ($info->host === 'i.imgur.com') {
+            $newPath = str_replace('.' . $info->fileExtension, '', $info->path);
+
+            return 'http://imgur.com' . $newPath;
+        }
+
+        return $url;
+    }
+
+    private function fetchHtml(string $url): ?string
+    {
+        $html = $this->cache->get($url, 'html');
+
+        if ($html) {
+            return $html;
+        }
+
+        $guzzle = new GuzzleClient($url);
+        $guzzle->setUserAgent(
+            $this->getUserAgent(
+                $guzzle->getDefaultUserAgent()
+            )
+        );
+
+        $guzzle->getEventDispatcher()->addListener(
+            'request.error',
+            function(Event $event): void {
+                $event->stopPropagation();
+            }
+        );
+
+        $response = $guzzle->get()->send();
+        if (!$response->isSuccessful()) {
+            return null;
+        }
+
+        $html = $response->getBody(true);
+        $this->cache->set($url, 'html', $html);
+
+        return $html;
+    }
+
+    private function getHeader(string $key, $default = null): ?string
     {
         if (empty($this->headers)) {
             $this->headers = $this->fetchHeaders();
@@ -225,7 +218,7 @@ class MetaInfo
         return isset($this->headers[$key]) ? $this->headers[$key] : $default;
     }
 
-    private function fetchHeaders()
+    private function fetchHeaders(): array
     {
         $headers = $this->cache->get($this->info->url, 'headers');
 
@@ -238,7 +231,7 @@ class MetaInfo
         $guzzle->getEventDispatcher()
             ->addListener(
                 'request.error',
-                function(Event $event) {
+                function(Event $event): void {
                     $event->stopPropagation();
                 }
             );
@@ -270,9 +263,9 @@ class MetaInfo
         return [];
     }
 
-    private function getUserAgent($defaultUserAgent)
+    private function getUserAgent(string $defaultUserAgent): string
     {
-        if (in_array($this->info->sld, self::$noGoogleUserAgent)) {
+        if (in_array($this->info->sld, self::$noGoogleUserAgent, true)) {
             return $defaultUserAgent;
         }
 

@@ -1,0 +1,45 @@
+# based on https://gist.github.com/n0ni0/fc4ce99a1026a2a7559b3d29aaf36bca
+#
+# Project language
+language: php
+
+# Allows use container-based infrastructure
+sudo: false
+
+# Start mysql service
+services:
+  - mysql
+  - memcache
+
+# Cache composer packages so "composer install" is faster
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+# Matrix to test in every php version
+matrix:
+  # Fast finish allows to set the build as "finished" even if the "allow_failures" matrix elements are not finished yet.
+  fast_finish: true
+  include:
+    - php: 7.1
+    - php: 7.2
+  allow_failures:
+    - php: 7.2
+
+# Define an environment variable
+env:
+  - DB=mysql
+
+before_install:
+  - echo "running before-install"
+  - phpenv config-add travis.ini
+
+# Install composer dependencies,
+# Create database, schema and fixtures
+install:
+  - composer install -q
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
+
+# Run script
+script:
+  - ./run-tests
