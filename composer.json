@@ -4,7 +4,7 @@
     "type": "project",
     "description": "MentalNote - simple bookmarking and productivity tool",
     "autoload": {
-        "psr-0": { "AppBundle": "src/", "SymfonyStandard": "app/" },
+        "psr-0": { "AppBundle": "src/", "AppBundle\\Tests": "test/", "SymfonyStandard": "app/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
