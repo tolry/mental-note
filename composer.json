@@ -4,8 +4,12 @@
     "type": "project",
     "description": "MentalNote - simple bookmarking and productivity tool",
     "autoload": {
-        "psr-0": { "AppBundle": "src/", "AppBundle\\Tests": "test/", "SymfonyStandard": "app/" },
+        "psr-0": { "AppBundle": "src/", "SymfonyStandard": "app/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+    },
+    "autoload-dev": {
+        "psr-0": { "AppBundle\\Tests": "test/" },
+        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
         "php": "^7.1.3",
