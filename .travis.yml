@@ -28,10 +28,12 @@ matrix:
 # Define an environment variable
 env:
   - DB=mysql
+  - INI=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 # Update composer
 before-install:
   - composer self-update
+  - echo extension = memcached.so >> $INI
 
 # Install composer dependencies,
 # Create database, schema and fixtures
