@@ -30,7 +30,8 @@
         "doctrine/doctrine-migrations-bundle": "1.0.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.5"
+        "phpunit/phpunit": "^6.5",
+        "codedungeon/phpunit-result-printer": "^0.5.4"
     },
     "scripts": {
         "post-root-package-install": [
