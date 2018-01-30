@@ -47,6 +47,10 @@ class EntryController extends AbstractBaseController
 
         $pathNew = sprintf('%s/thumbnails/%d_%dx%d.png', $documentRoot, $entry->getId(), $width, $height);
 
+        if (file_exists($pathNew) && $testEnvironment) {
+            unlink($pathNew);
+        }
+
         // for dev mode
         if (file_exists($pathNew) && !$testEnvironment) {
             $response = new BinaryFileResponse($pathNew);

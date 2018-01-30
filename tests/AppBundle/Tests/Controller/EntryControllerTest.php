@@ -89,7 +89,7 @@ class EntryControllerTest extends WebTestCase
         $client->request('GET', $imageLink);
 
         $response = $client->getResponse();
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(302, $response->getStatusCode(), $response->getContent());
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals($imageLink, $response->getTargetUrl());
     }

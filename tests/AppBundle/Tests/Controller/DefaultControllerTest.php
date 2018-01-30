@@ -52,7 +52,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = $this->getAuthenticatedClient();
 
-        $query = http_build_query(['filter' => ['tag' => 'CSS']]);
+        $query = http_build_query(['filter' => ['tag' => 'CSS', 'query' => 'foo']]);
         $crawler = $client->request('GET', "/?$query");
         $response = $client->getResponse();
 
