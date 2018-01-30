@@ -1,5 +1,5 @@
 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-    <div class="card {{ entry.pending ? '' : 'entry-finished' }}">
+    <div class="entry card {{ entry.pending ? '' : 'entry-finished' }}">
         <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
             <img class="card-img-top" src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
         </a>
