@@ -60,6 +60,25 @@ class EntryControllerTest extends WebTestCase
         $this->assertEquals('/', $response->getTargetUrl());
     }
 
+    public function testEditWithoutChanges(): void
+    {
+        $client = $this->getAuthenticatedClient();
+        $id = $this->createNew($client);
+
+        $crawler = $client->request('GET', "/entry/$id/edit.html");
+
+        $response = $client->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $form = $crawler->filter('form[name="entry"]')->form();
+        $crawler = $client->submit($form);
+
+        $response = $client->getResponse();
+        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals('/', $response->getTargetUrl());
+    }
+
     public function testThumbnail(): void
     {
         $client = $this->getAuthenticatedClient();
