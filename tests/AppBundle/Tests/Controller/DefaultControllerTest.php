@@ -13,13 +13,9 @@ class DefaultControllerTest extends WebTestCase
     public function testLoginFirewall(): void
     {
         $client = static::createClient();
-
         $client->request('GET', '/');
-        $response = $client->getResponse();
 
-        $this->assertEquals(302, $response->getStatusCode());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals('http://localhost/login', $response->getTargetUrl());
+        $this->assertRedirect($client->getResponse(), 'http://localhost/login');
     }
 
     public function testIndexSimple(): void
@@ -39,13 +35,9 @@ class DefaultControllerTest extends WebTestCase
 
         $query = http_build_query(['filter' => ['page' => 999999]]);
         $client->request('GET', "/?$query");
-        $response = $client->getResponse();
 
-        $this->assertEquals(302, $response->getStatusCode());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-
-        $queryPageReduced = http_build_query(['filter' => ['page' => 999998]]);
-        $this->assertEquals("/?$queryPageReduced", $response->getTargetUrl());
+        $urlWithReducedPageCount = '/?' . http_build_query(['filter' => ['page' => 999998]]);
+        $this->assertRedirect($client->getResponse(), $urlWithReducedPageCount);
     }
 
     public function testIndexWithFilter(): void
