@@ -85,19 +85,9 @@ class Category
         return $this->label;
     }
 
-    public function setLabel($label): void
-    {
-        $this->label = $label;
-    }
-
     public function getIcon(): string
     {
         return $this->icon;
-    }
-
-    public function setIcon($icon): void
-    {
-        $this->icon = $icon;
     }
 
     public function getDefaultView(): ?string
@@ -105,18 +95,8 @@ class Category
         return $this->defaultView;
     }
 
-    public function setDefaultView($defaultView): void
-    {
-        $this->defaultView = $defaultView;
-    }
-
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    public function setDescription($description): void
-    {
-        $this->description = $description;
     }
 }

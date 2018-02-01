@@ -141,12 +141,12 @@ class MetaInfo
             return true;
         }
 
-        return stripos($this->getHeader('content_type'), 'image/') === 0;
+        return stripos($this->getHeader('content_type', ''), 'image/') === 0;
     }
 
     public function isHtml(): bool
     {
-        return stripos($this->getHeader('content_type'), 'text/html') === 0;
+        return stripos($this->getHeader('content_type', ''), 'text/html') === 0;
     }
 
     protected function getXpath(string $xpath): ?string

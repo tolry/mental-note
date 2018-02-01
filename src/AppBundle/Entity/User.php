@@ -20,10 +20,4 @@ class User extends BaseUser
      * @ORM\GeneratedValue
      */
     protected $id;
-
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
 }

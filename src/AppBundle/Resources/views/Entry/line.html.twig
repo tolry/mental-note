@@ -1,5 +1,5 @@
 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-    <div class="card {{ entry.pending ? '' : 'entry-finished' }}">
+    <div id="entry-{{ entry.id }}" class="entry card {{ entry.pending ? '' : 'entry-finished' }}">
         <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
             <img class="card-img-top" src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
         </a>
@@ -59,7 +59,7 @@
             </div>
         {% elseif delete_form|default(false) %}
             <div class="card-footer">
-                <form class="form form-inline top" action="{{ path('entry_delete', {id: entry.id, filter: filter}) }}" method="post">
+                <form class="form form-inline top" action="{{ path('entry_delete', {id: entry.id, filter: filter}) }}" name="entry-delete" method="post">
                     <div class="pull-right">
                         <input type="submit" class="btn btn-danger" value="Yes" />
                         <a href="{{ path('homepage', {filter: filter}) }}" class="btn">Cancel</a>

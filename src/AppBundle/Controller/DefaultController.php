@@ -44,6 +44,10 @@ class DefaultController extends AbstractBaseController
      */
     public function urlMetainfoAction(Request $request)
     {
+        if (class_exists('Tideways\Profiler')) {
+            \Tideways\Profiler::setServiceName('3rd-party');
+        }
+
         $metainfoFactory = $this->get('app.factory.metainfo');
         $url = $request->get('url');
         if (empty($url)) {

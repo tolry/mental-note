@@ -37,6 +37,10 @@ class EntryTagTransformer implements DataTransformerInterface
 
     public function reverseTransform($tagsString)
     {
+        if (empty($tagsString)) {
+            return new ArrayCollection();
+        }
+
         $tagNames = explode(',', $tagsString);
         $tags = new ArrayCollection();
 

@@ -34,16 +34,25 @@ class EntryController extends AbstractBaseController
      * @Route("/thumbnails/{id}_{width}x{height}.png",name="entry_thumbnail")
      * @Method("GET")
      */
-    public function thumbnailAction(Entry $entry, int $width, int $height)
+    public function thumbnailAction(Entry $entry, int $width, int $height, Request $request)
     {
-        \Tideways\Profiler::setServiceName('3rd-party');
+        if (class_exists('Tideways\Profiler')) {
+            \Tideways\Profiler::setServiceName('3rd-party');
+        }
+
+        $testEnvironment = ($this->get('kernel')->getEnvironment() === 'test');
+
         $documentRoot = $this->container->getParameter('kernel.root_dir') . '/../web';
-        $route = $this->generateUrl('entry_thumbnail', ['id' => $entry->getId(), 'width' => $width, 'height' => $height]);
+        $route = $request->getRequestUri();
 
         $pathNew = sprintf('%s/thumbnails/%d_%dx%d.png', $documentRoot, $entry->getId(), $width, $height);
 
+        if (file_exists($pathNew) && $testEnvironment) {
+            unlink($pathNew);
+        }
+
         // for dev mode
-        if (file_exists($pathNew)) {
+        if (file_exists($pathNew) && !$testEnvironment) {
             $response = new BinaryFileResponse($pathNew);
             $this->get('logger')->error($entry->getId() . ':: file already exists, controller should not be executed');
 
@@ -76,7 +85,6 @@ class EntryController extends AbstractBaseController
      */
     public function createAction(Request $request)
     {
-        $cache = $this->get('app.cache.metainfo');
         $backlink = $request->query->get('backlink');
         $entry = new Entry($this->getUser());
 
