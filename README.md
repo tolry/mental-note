@@ -1,6 +1,11 @@
 mental-note
 ===========
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tolry/mental-note/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tolry/mental-note/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/tolry/mental-note/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tolry/mental-note/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/tolry/mental-note/badges/build.png?b=master)](https://scrutinizer-ci.com/g/tolry/mental-note/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/tolry/mental-note/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+
 **work in progress**
 
 Little web application to collect your web findings. Minimal interface.
