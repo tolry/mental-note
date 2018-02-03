@@ -6,6 +6,7 @@ declare(strict_types = 1);
 namespace AppBundle\Entity;
 
 use AppBundle\Url\Info;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -140,10 +141,10 @@ class Entry extends AbstractEntity
         return new Info($this->url);
     }
 
-    public function addVisit(\DateTime $timestamp = null): void
+    public function addVisit(DateTimeImmutable $timestamp = null): void
     {
         if (!$timestamp) {
-            $timestamp = new \DateTime();
+            $timestamp = new DateTimeImmutable();
         }
         $this->visits[] = new Visit($timestamp, $this);
     }
