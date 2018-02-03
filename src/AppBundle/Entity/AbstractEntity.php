@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,12 +16,12 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractEntity
 {
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $created;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
     protected $updated;
 
@@ -30,8 +30,8 @@ abstract class AbstractEntity
      */
     public function prePersist(): void
     {
-        $this->created = new \DateTime();
-        $this->updated = new \DateTime();
+        $this->created = new DateTimeImmutable();
+        $this->updated = new DateTimeImmutable();
     }
 
     /**
@@ -39,26 +39,16 @@ abstract class AbstractEntity
      */
     public function preUpdate(): void
     {
-        $this->updated = new DateTime();
+        $this->updated = new DateTimeImmutable();
     }
 
-    public function getCreated(): DateTime
+    public function getCreated(): DateTimeImmutable
     {
         return $this->created;
     }
 
-    public function setCreated(DateTime $created): void
-    {
-        $this->created = $created;
-    }
-
-    public function getUpdated(): DateTime
+    public function getUpdated(): DateTimeImmutable
     {
         return $this->updated;
-    }
-
-    public function setUpdated(DateTime $updated): void
-    {
-        $this->updated = $updated;
     }
 }

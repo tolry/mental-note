@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DateTime;
+use DateTimeImmutable;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
@@ -29,11 +29,11 @@ class Visit
     private $entry;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
     private $timestamp;
 
-    public function __construct(DateTime $timestamp, Entry $entry)
+    public function __construct(DateTimeImmutable $timestamp, Entry $entry)
     {
         $this->timestamp = $timestamp;
         $this->entry = $entry;
