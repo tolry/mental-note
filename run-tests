@@ -2,6 +2,8 @@
 
 export SYMFONY_ENV=test
 
+cd $(dirname $0)
+
 bin/console doctrine:database:drop --force -q
 bin/console doctrine:database:create -q
 bin/console doctrine:schema:create -q
