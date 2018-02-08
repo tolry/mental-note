@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 // @author Tobias Olry <tobias.olry@web.de>
 
 namespace AppBundle\Url;
@@ -55,13 +55,7 @@ class Info
         $this->fragment = $urlInfo['fragment'];
         $this->fileExtension = $this->parseFileExtension($this->path);
 
-
-        list (
-            $this->tld,
-            $this->sld,
-            $this->subdomain
-        ) = $this->parseDomains($this->host);
-
+        [$this->tld, $this->sld, $this->subdomain] = $this->parseDomains($this->host);
     }
 
     public function getDomain(): string
@@ -90,6 +84,7 @@ class Info
         if (count($pathParts) === 0) {
             return null;
         }
+
         return array_pop($pathParts);
     }
 

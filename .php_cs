@@ -18,9 +18,10 @@ $config = PhpCsFixer\Config::create()
         'explicit_indirect_variable' => true,
         'explicit_string_variable' => true,
         'final_internal_class' => true,
+        'function_declaration' => ['closure_function_spacing' => 'none'],
         /*'header_comment' => ['header' => $header],*/
         'heredoc_to_nowdoc' => true,
-        'list_syntax' => ['syntax' => 'long'],
+        'list_syntax' => ['syntax' => 'short'],
         'method_chaining_indentation' => true,
         'method_argument_space' => ['ensure_fully_multiline' => true],
         'multiline_comment_opening_closing' => true,

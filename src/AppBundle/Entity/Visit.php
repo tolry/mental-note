@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
