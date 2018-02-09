@@ -45,6 +45,10 @@ class Info
             'fragment' => null,
         ], $urlInfo);
 
+        if (empty($urlInfo['host'])) {
+            throw new \Exception("url '${url}' without host, could not parse");
+        }
+
         $this->scheme = $urlInfo['scheme'];
         $this->host = $urlInfo['host'];
         $this->port = $urlInfo['port'];
