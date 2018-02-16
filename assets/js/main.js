@@ -18,7 +18,7 @@ var entryForm = {
 }
 
 var application = {
-    loaderHtml: '<div class="loader-inner ball-pulse"> <div></div> <div></div> <div></div> </div>',
+    loaderHtml: '<i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>',
     getMetaInfo: function($urlElement){
         entryForm.fields.notificationSpan().html(application.loaderHtml);
         const url = $urlElement.data('metainfo-url');

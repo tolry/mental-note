@@ -7,7 +7,6 @@ var gulp        = require('gulp'),
 var cssFiles = [
     'node_modules/font-awesome/css/font-awesome.css',
     'node_modules/awesomplete/awesomplete.css',
-    'assets/css/loaders.css/loaders.css',
     'assets/css/*css'
 ];
 
