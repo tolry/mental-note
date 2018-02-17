@@ -34,6 +34,7 @@ class Entry extends AbstractEntity
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank
+     * @Assert\Length(max=255)
      */
     private $title;
 
