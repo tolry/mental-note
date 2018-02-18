@@ -1,26 +1,39 @@
-var gulp        = require('gulp'),
-    concat      = require('gulp-concat'),
+let gulp = require('gulp'),
+    gulpSass = require('gulp-sass'),
+    concat = require('gulp-concat'),
     cssCompress = require('gulp-minify-css'),
-    uglify      = require('gulp-uglify')
+    jsUglify = require('gulp-uglify')
 ;
 
-var cssFiles = [
-    'node_modules/font-awesome/css/font-awesome.css',
-    'node_modules/awesomplete/awesomplete.css',
-    'assets/css/*css'
+let scssFiles = [
+    'assets/scss/*scss'
 ];
 
-var jsFiles = [
+let cssFiles = [
+    'node_modules/font-awesome/css/font-awesome.css',
+    'node_modules/awesomplete/awesomplete.css',
+    'web/css/scss-compiled.css'
+];
+
+let jsFiles = [
     'node_modules/awesomplete/awesomplete.js',
     'assets/js/jquery-imageloader/jquery.imageloader.js',
     'assets/js/main.js'
 ];
 
-var fontFiles = [
+let fontFiles = [
     'node_modules/font-awesome/fonts/**'
 ];
 
-gulp.task('css', function () {
+gulp.task('scss', function () {
+    gulp.src(scssFiles)
+        .pipe(gulpSass({includePaths: 'node_modules/bootstrap/scss'}))
+        .pipe(concat('scss-compiled.css'))
+        .pipe(gulp.dest('web/css/'))
+    ;
+});
+
+gulp.task('css', ['scss'], function () {
     gulp.src(cssFiles)
         .pipe(concat('all.css'))
         .pipe(gulp.dest('web/css/'))
@@ -28,16 +41,13 @@ gulp.task('css', function () {
         .pipe(concat('all.min.css'))
         .pipe(gulp.dest('web/css/'))
     ;
-
-    gulp.src(['node_modules/semantic-ui-css/themes/**'])
-        .pipe(gulp.dest('web/css/themes'));
 });
 
 gulp.task('js', function () {
     gulp.src(jsFiles)
         .pipe(concat('all.js'))
         .pipe(gulp.dest('web/js/'))
-        .pipe(uglify())
+        .pipe(jsUglify())
         .pipe(concat('all.min.js'))
         .pipe(gulp.dest('web/js/'))
     ;
