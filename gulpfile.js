@@ -11,7 +11,6 @@ var cssFiles = [
 ];
 
 var jsFiles = [
-    'node_modules/jscroll/jquery.jscroll.js',
     'node_modules/awesomplete/awesomplete.js',
     'assets/js/jquery-imageloader/jquery.imageloader.js',
     'assets/js/main.js'
