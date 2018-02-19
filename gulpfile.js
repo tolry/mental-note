@@ -16,8 +16,10 @@ let cssFiles = [
 ];
 
 let jsFiles = [
-    'node_modules/awesomplete/awesomplete.js',
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/bootstrap/dist/bootstrap.min.js',
     'assets/js/jquery-imageloader/jquery.imageloader.js',
+    'node_modules/awesomplete/awesomplete.js',
     'assets/js/main.js'
 ];
 
