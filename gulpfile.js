@@ -1,21 +1,21 @@
-let gulp = require('gulp'),
+const gulp = require('gulp'),
     gulpSass = require('gulp-sass'),
     concat = require('gulp-concat'),
     cssCompress = require('gulp-minify-css'),
     jsUglify = require('gulp-uglify')
 ;
 
-let scssFiles = [
+const scssFiles = [
     'assets/scss/*scss'
 ];
 
-let cssFiles = [
+const cssFiles = [
     'node_modules/font-awesome/css/font-awesome.css',
     'node_modules/awesomplete/awesomplete.css',
     'web/css/scss-compiled.css'
 ];
 
-let jsFiles = [
+const jsFiles = [
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/bootstrap.min.js',
     'assets/js/jquery-imageloader/jquery.imageloader.js',
@@ -23,13 +23,15 @@ let jsFiles = [
     'assets/js/main.js'
 ];
 
-let fontFiles = [
+const fontFiles = [
     'node_modules/font-awesome/fonts/**'
 ];
 
 gulp.task('scss', function () {
     gulp.src(scssFiles)
-        .pipe(gulpSass({includePaths: 'node_modules/bootstrap/scss'}))
+        .pipe(gulpSass({
+            includePaths: 'node_modules/bootstrap/scss'
+        }))
         .pipe(concat('scss-compiled.css'))
         .pipe(gulp.dest('web/css/'))
     ;
@@ -61,7 +63,7 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('watch', ['js', 'css'], function () {
-    gulp.watch('assets/css/*.css', ['css']);
+    gulp.watch('assets/scss/*.scss', ['css']);
     gulp.watch('assets/js/*.js', ['js']);
 });
 
