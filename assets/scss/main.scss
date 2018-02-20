@@ -1,3 +1,5 @@
+@import "_bootstrap";
+
 .entry-finished,
 .entry-finished a { color: gray; }
 .entry-finished img {
@@ -30,4 +32,10 @@ div.awesomplete { width: 100%; }
 
 .card:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.form-group {
+    input[name="entry[category]"] {
+        display: none;
+    }
 }
