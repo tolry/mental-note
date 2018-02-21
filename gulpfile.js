@@ -16,8 +16,10 @@ const cssFiles = [
 ];
 
 const jsFiles = [
-    'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/bootstrap/dist/bootstrap.min.js',
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/popper.js/dist/umd/popper.js',
+    'node_modules/popper.js/dist/umd/popper-utils.js',
+    'node_modules/bootstrap/dist/js/bootstrap.js',
     'assets/js/jquery-imageloader/jquery.imageloader.js',
     'node_modules/awesomplete/awesomplete.js',
     'assets/js/main.js'

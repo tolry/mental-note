@@ -92,19 +92,9 @@ var application = {
             });
         }
 
-        $('.visit-link').mousedown(function(e){
+        $domElement.find('.visit-link').mousedown(function(e){
             $.ajax($(this).data('link'), {type: 'POST'});
         });
-
-        //$('div.entry-list').jscroll({
-            //loadingHtml: application.loaderHtml,
-            //padding: 20,
-            //nextSelector: 'ul.pagination li.next a',
-            //contentSelector: 'div.entry-list',
-            //callback: function() {
-                //application.registerEvents($(this));
-            //}
-        //});
 
         $domElement.find('.deferred-image').imageloader();
     }
