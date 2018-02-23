@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace AppBundle\Tests\Controller;
 
+use AppBundle\Criteria\EntryCriteria;
+use AppBundle\Entity\Category;
+use AppBundle\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use AppBundle\Tests\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
@@ -44,7 +46,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = $this->getAuthenticatedClient();
 
-        $query = http_build_query(['filter' => ['tag' => 'CSS', 'query' => 'foo']]);
+        $query = http_build_query(['filter' => ['tag' => 'CSS', 'category' => Category::READ, 'sort' => EntryCriteria::SORT_TIMESTAMP_DESC, 'query' => 'foo']]);
         $crawler = $client->request('GET', "/?$query");
         $response = $client->getResponse();
 

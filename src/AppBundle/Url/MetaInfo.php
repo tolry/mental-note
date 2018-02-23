@@ -16,7 +16,6 @@ class MetaInfo
 {
     private $info;
     private $headers;
-    private $html;
     private $cache;
     private $imageUrl;
 
@@ -63,10 +62,6 @@ class MetaInfo
 
         $this->cache = $cache;
         $this->info = new Info($url);
-
-        if ($this->isHtml()) {
-            $this->html = $this->fetchHtml($url);
-        }
     }
 
     /**
@@ -156,7 +151,7 @@ class MetaInfo
         }
 
         try {
-            $crawler = new Crawler($this->html);
+            $crawler = new Crawler($this->fetchHtml($this->info->url));
 
             return trim($crawler->filterXPath($xpath)->first()->text());
         } catch (\Exception $e) {
@@ -205,6 +200,7 @@ class MetaInfo
 
         $html = $response->getBody(true);
         $this->cache->set($url, 'html', $html);
+        $this->cache->set($url, 'headers', $response->getInfo());
 
         return $html;
     }
