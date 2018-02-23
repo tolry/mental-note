@@ -125,11 +125,6 @@ class MetaInfo
         return Category::READ;
     }
 
-    public function getInfo(): Info
-    {
-        return $this->info;
-    }
-
     public function isImage(): bool
     {
         if (in_array($this->info->fileExtension, ['jpeg', 'jpg', 'png', 'gif'], true)) {
