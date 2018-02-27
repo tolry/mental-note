@@ -5,21 +5,26 @@ var timeouts = {
 var entryForm = {
     form: function(){return $("#entry_form");},
     previewImage: function(){return $("#preview");},
+    isModeCreate: function () {
+        return (entryForm.form().data('mode') === 'create');
+    },
     fields: {
         url: function(){return $('input#entry_url');},
         title: function(){return $('input#entry_title');},
         tags: function(){return $('input#entry_tags');},
         categories: function(){return $('input[name="entry[category]"]');},
-        notificationSpan: function(){return $('span#metainfo-notification');}
+        notificationSpan: function(){return $('#metainfo-notification');}
     }
 }
 
 var application = {
+    loaderHtml: '<i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>',
     getMetaInfo: function($urlElement){
-        entryForm.fields.notificationSpan().html('trying to retrieve URL meta data ...');
+        entryForm.fields.notificationSpan().html(application.loaderHtml);
+        const url = $urlElement.data('metainfo-url');
 
         $.ajax({
-            url: mentalNote.route.url_metainfo,
+            url: url,
             dataType: 'json',
             data: {
                 url: $urlElement.val(),
@@ -35,7 +40,7 @@ var application = {
                 if (data.image_url) {
                     var previewImage = $('<img/>')
                         .attr('src', data.image_url)
-                        .attr('height', 200);
+                        .addClass('card-img-top');
                     entryForm.previewImage().html(previewImage);
                 }
 
@@ -62,25 +67,15 @@ var application = {
         timeouts.keydown = setTimeout(function(){application.getMetaInfo($element)}, 500);
     },
     registerEvents: function($domElement) {
+        if (entryForm.isModeCreate()) {
+            entryForm.fields.url()
+                .on('input', application.getMetaInfoDelayed)
+                .trigger('input');
+        }
 
-        entryForm.fields.url().keydown(application.getMetaInfoDelayed);
         entryForm.form().keydown(function(event) {
             if (event.ctrlKey && event.keyCode == 13) {
                 entryForm.form().submit();
-            }
-        });
-
-        $domElement.find('.modal-ajax-form').modalAjaxForm({
-            onComplete: function($element){
-                application.registerEvents($element);
-                $element.find(':text').first().focus();
-                if (mentalNote.addUrl.length > 0) {
-                    entryForm.fields.url()
-                        .val(mentalNote.addUrl)
-                        .trigger('keydown')
-                    ;
-                    mentalNote.addUrl = undefined;
-                }
             }
         });
 
@@ -90,51 +85,18 @@ var application = {
                 filter: function(text, input) {
                     return Awesomplete.FILTER_CONTAINS(text, input.match(/[^,]*$/)[0]);
                 },
-
                 replace: function(text) {
                     var before = this.input.value.match(/^.+,\s*|/)[0];
                     this.input.value = before + text + ", ";
                 }
-
             });
         }
 
-        $('.visit-link').mousedown(function(e){
-            $.ajax($(this).data('link'),{
-                  type: 'POST'
-            });
-        });
-
-        $('div.entry-list').jscroll({
-            loadingHtml: '<div class="text-center"><div class="loader-inner ball-pulse"><div></div><div></div><div></div></div></div>',
-            padding: 20,
-            nextSelector: 'ul.pagination li.next a',
-            contentSelector: 'div.entry-list',
-            callback: function() {
-                application.registerEvents($(this));
-            }
+        $domElement.find('.visit-link').mousedown(function(e){
+            $.ajax($(this).data('link'), {type: 'POST'});
         });
 
         $domElement.find('.deferred-image').imageloader();
-    },
-    searchTags: function(query) {
-        var tags = null;
-        $.ajax({
-            url: mentalNote.route.tag_search,
-            dataType: 'json',
-            success: function(data) {
-                tags = data;
-            },
-            async: false
-        });
-
-        return tags;
-    },
-    checkForAddURL: function() {
-        var $button = $("#add-url");
-        if (mentalNote.addUrl.length > 0) {
-            $button.trigger('click');
-        }
     }
 }
 
@@ -143,6 +105,3 @@ var application = {
 // and won't be triggered again
 
 application.registerEvents($(document));
-
-application.checkForAddURL();
-

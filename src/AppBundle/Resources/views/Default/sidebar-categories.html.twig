@@ -1,0 +1,22 @@
+{% if criteria.category %}
+<a href="{{ path('homepage', { filter: criteria.getQuery({'category': null})}) }}" class="btn btn-light border border-info text-info">
+    <i class="fa fa-circle-o-notch"></i> Category: {{ mn_category(criteria.category).label }} <i class="fa fa-times-circle"></i>
+</a>
+{% else %}
+<div class="dropdown">
+    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-circle-o-notch"></i> Categories
+    </button>
+    <div class="dropdown-menu">
+        {% for category in categories %}
+        <a class="dropdown-item" href="{{ path('homepage', {'filter': criteria.getQuery({'category': category.category.key})}) }}">
+            <i class="{{ category.category.icon}} "></i>
+            {{ category.category.label }}
+            {% if category.pending > 0 %}
+            <span class="badge {% if category.pending > 10 %}badge-danger{% elseif category.pending > 0 %}badge-warning{% else %}badge-default{% endif %}">{{ category.pending }}/{{ category.total }}</span>
+            {% endif %}
+        </a>
+        {% endfor%}
+    </div>
+</div>
+{% endif %}

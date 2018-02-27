@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{%block title%}Smarter Bookmarks{%endblock%}:: MentalNote</title>
+
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="{{ asset('css/all.min.css') }}" />
+    </head>
+
+    <body class="bg-secondary">
+        {% block body %}
+        <div class="sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ path('homepage') }}"> <i class="text-secondary fa fa-bookmark"></i> MentalNote</a>
+                    <a href="{{ path('entry_create', {backlink: app.request.uri}) }}" id="add-url" class="btn btn-outline-primary btn-sm"><i class="fa fa-plus"></i> add link...</a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <div class="dropdown user-dropdown">
+                            <button class="dropdown-toggle btn btn-outline-secondary btn-sm" data-toggle="dropdown"><i class="fa fa-user"></i> {{ app.user }}</button>
+                            <ul class="dropdown-menu" style="z-index: 1200;">
+                                <a href="{{ path('user_change_password') }}" class="dropdown-item"><i class="fa fa-key"></i> change password</a></li>
+                            <a href="{{ path('logout') }}" class="dropdown-item" title="logout"><i class="fa fa-sign-out"></i> logout</a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            {% block filter %}{% endblock %}
+        </div>
+
+        <div id="content">
+            <div class="{% block container_class %}container{% endblock %} pt-4">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8 col-xl-6">
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }} alert-dismissible fade show">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        {% include 'AppBundle::_footer.html.twig' %}
+
+        {% endblock body %}
+
+        <script type="text/javascript">
+            {% block additional_javascript %}{% endblock %}
+
+            var scriptsToLoad = [];
+            scriptsToLoad.push("{{ asset('js/all.min.js') }}");
+
+            function loadJsDeferred() {
+                scriptsToLoad.forEach(function(jsFile) {
+                    var element = document.createElement("script");
+                    element.src = jsFile;
+                    document.body.appendChild(element);
+                });
+            }
+
+            if (window.addEventListener) {
+                window.addEventListener("load", loadJsDeferred, false);
+            } else if (window.attachEvent) {
+                window.attachEvent("onload", loadJsDeferred);
+            } else {
+                window.onload = loadJsDeferred;
+            }
+        </script>
+    </body>
+</html>

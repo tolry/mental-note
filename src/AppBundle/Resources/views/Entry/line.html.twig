@@ -1,0 +1,72 @@
+<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+    <div id="entry-{{ entry.id }}" class="entry card {{ entry.pending ? '' : 'entry-finished' }}">
+        <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link" title="{{ entry.title }}">
+            <img class="card-img-top" src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
+        </a>
+
+        <div class="card-body">
+            <div class="card-text">
+                {% for tag in entry.tags %}
+                    <a class="badge badge-info" href="{{ path('homepage', {filter: {tag: tag.name}}) }}">{{ tag.name }}</a>
+                {% else %}
+                    &nbsp;
+                {% endfor %}
+            </div>
+
+            <div class="card-title text-truncate">
+                <i class="{{ mn_category(entry.category).icon}} " title="{{ mn_category(entry.category).label}}"></i>
+                <a href="{{ entry.url }}" data-link="{{ path('entry_visit', {id: entry.id}) }}" class="visit-link text-dark" title="{{ entry.title }}">
+                    {{ entry.title }}
+                </a>
+            </div>
+
+            <p class="card-text text-muted">
+            <i class="fa fa-globe" title="domain"></i> {{ entry.domain }} <br>
+
+            <i class="fa fa-clock-o"></i> {{ entry.age }} <br>
+
+            <i class="fa fa-mouse-pointer"></i>
+            {% if entry.visits|length > 0 %}
+                {{ entry.visits|length }} visit(s)
+            {% else %}
+                never visited
+            {% endif %}
+            </p>
+        </div>
+
+        {% if show_actions|default(false) %}
+            <div class="card-footer">
+                <div class="pull-right">
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i></button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="{{ path('entry_delete', {id: entry.id, filter: app.request.query.get('filter')}) }}" class="dropdown-item" title="delete" class="text-danger"><i class="fa fa-trash "></i> delete</a>
+                            <div class="dropdown-header">share with ...</div>
+                            <a href="https://twitter.com/intent/tweet?text={{ entry.url ~ ' ' ~ entry.title | url_encode }}" class="dropdown-item" title="Share with Twitter" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i> Twitter</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.url }}" title="Share with Facebook" class="dropdown-item" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i> Facebook</a>
+                        </div>
+                    </div>
+                </div>
+
+                <form action="{{ path('entry_toggle_pending', {id: entry.id, 'filter': app.request.get('filter') }) }}" method="POST">
+                    <div class="btn-group">
+                        <button title="{{ entry.pending ? 'archive' : 'unarchive' }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fa {{ entry.pending ? 'fa-check-square-o' : 'fa-square-o'}}"></i> {{ entry.pending ? 'archive' : 'unarchive' }}
+                        </button>
+                        <a href="{{ path('entry_edit', {id: entry.id, backlink: path('homepage', {filter: criteria.getQuery()})}) }}" class="btn btn-outline-secondary btn-sm" title="edit entry"><i class="fa fa-pencil "></i></a>
+                    </div>
+                </form>
+            </div>
+        {% elseif delete_form|default(false) %}
+            <div class="card-footer">
+                <form class="form form-inline top" action="{{ path('entry_delete', {id: entry.id, filter: filter}) }}" name="entry-delete" method="post">
+                    <div class="pull-right">
+                        <input type="submit" class="btn btn-danger" value="Yes" />
+                        <a href="{{ path('homepage', {filter: filter}) }}" class="btn">Cancel</a>
+                    </div>
+                    {{ form_widget(delete_form) }}
+                </form>
+            </div>
+        {% endif %}
+    </div>
+</div>

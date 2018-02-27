@@ -1,0 +1,36 @@
+{% form_theme form 'AppBundle::_formtheme.html.twig' %}
+
+    {{ form_start(form,
+        {attr:
+            {role: "form", id: "entry_form", "data-edit-id": entry ? entry.id : null, "data-mode": entry ? 'edit' : 'create' },
+            method: "post",
+            action: action})
+    }}
+    <div class="row justify-content-center pb-4">
+        <div class="col-12 col-lg-8 col-xl-6">
+            <div class="card">
+                {% if entry %}
+                    <img class="card-img-top" src="{{ path('entry_thumbnail', {'id': entry.id, width: 300, height: 150}) }}" alt="" />
+                {% else %}
+                    <div id="preview"></div>
+                {% endif %}
+                <div class="card-body">
+                    <fieldset class="form-group">
+                        <legend>{{ legend }}</legend>
+
+                        {{ form_widget(form) }}
+
+                    </fieldset>
+                </div>
+                <div class="card-footer justify-content-end">
+                    <div class="float-right">
+                        <button type="submit" name="submit" class="btn btn-outline-primary"><i class="fa fa-plus"></i> save</button>
+                    </div>
+                    <div id="metainfo-notification"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- form_end -->
+    {{ form_end(form) }}
+

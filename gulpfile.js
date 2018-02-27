@@ -1,33 +1,45 @@
-var gulp        = require('gulp'),
-    concat      = require('gulp-concat'),
-    cssCompress = require('gulp-minify-css'),
-    uglify      = require('gulp-uglify')
+const gulp = require('gulp'),
+    gulpSass = require('gulp-sass'),
+    concat = require('gulp-concat'),
+    cssCompress = require('gulp-clean-css'),
+    jsUglify = require('gulp-uglify')
 ;
 
-var cssFiles = [
-    'node_modules/bootstrap/dist/css/bootstrap.css',
-    'node_modules/font-awesome/css/font-awesome.css',
-    'node_modules/awesomplete/awesomplete.css',
-    'assets/css/loaders.css/loaders.css',
-    'assets/css/*css'
+const scssFiles = [
+    'assets/scss/*scss'
 ];
 
-var jsFiles = [
-    'node_modules/jquery/dist/jquery.min.js',
+const cssFiles = [
+    'node_modules/font-awesome/css/font-awesome.css',
+    'node_modules/awesomplete/awesomplete.css',
+    'web/css/scss-compiled.css'
+];
+
+const jsFiles = [
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/popper.js/dist/umd/popper.js',
+    'node_modules/popper.js/dist/umd/popper-utils.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
-    'node_modules/jscroll/jquery.jscroll.js',
-    'node_modules/awesomplete/awesomplete.js',
     'assets/js/jquery-imageloader/jquery.imageloader.js',
-    'assets/js/jQuery.modalAjaxForm.js',
+    'node_modules/awesomplete/awesomplete.js',
     'assets/js/main.js'
 ];
 
-var fontFiles = [
-    'node_modules/bootstrap/dist/fonts/**',
+const fontFiles = [
     'node_modules/font-awesome/fonts/**'
 ];
 
-gulp.task('css', function () {
+gulp.task('scss', function () {
+    gulp.src(scssFiles)
+        .pipe(gulpSass({
+            includePaths: 'node_modules/bootstrap/scss'
+        }))
+        .pipe(concat('scss-compiled.css'))
+        .pipe(gulp.dest('web/css/'))
+    ;
+});
+
+gulp.task('css', ['scss'], function () {
     gulp.src(cssFiles)
         .pipe(concat('all.css'))
         .pipe(gulp.dest('web/css/'))
@@ -35,16 +47,13 @@ gulp.task('css', function () {
         .pipe(concat('all.min.css'))
         .pipe(gulp.dest('web/css/'))
     ;
-
-    gulp.src(['node_modules/semantic-ui-css/themes/**'])
-        .pipe(gulp.dest('web/css/themes'));
 });
 
 gulp.task('js', function () {
     gulp.src(jsFiles)
         .pipe(concat('all.js'))
         .pipe(gulp.dest('web/js/'))
-        .pipe(uglify())
+        .pipe(jsUglify())
         .pipe(concat('all.min.js'))
         .pipe(gulp.dest('web/js/'))
     ;
@@ -56,7 +65,7 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('watch', ['js', 'css'], function () {
-    gulp.watch('assets/css/*.css', ['css']);
+    gulp.watch('assets/scss/*.scss', ['css']);
     gulp.watch('assets/js/*.js', ['js']);
 });
 

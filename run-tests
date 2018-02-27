@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export SYMFONY_ENV=test
+
+cd $(dirname $0)
+
+bin/console doctrine:database:drop --force -q
+bin/console doctrine:database:create -q
+bin/console doctrine:schema:create -q
+bin/console fos:user:create tests tests@localhost tests-password -q
+
+bin/phpunit $@
+

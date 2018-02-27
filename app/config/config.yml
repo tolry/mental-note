@@ -5,7 +5,7 @@ imports:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: Olry\MentalNoteBundle\Entity\User
+    user_class: AppBundle\Entity\User
     from_email:
         address: tobias.olry@gmail.com
         sender_name: Tobias Olry
@@ -22,10 +22,16 @@ framework:
     default_locale:  %locale%
     session:
         name: mental_note
-        handler_id: %session_handler_id%
-        save_path: "%kernel.root_dir%/var/sessions"
+        handler_id: session.handler.memcache
     http_method_override: true
     assets: ~
+    cache:
+        default_memcached_provider: "memcached://%session_memcache_host%:%session_memcache_port%"
+        system: cache.adapter.memcached
+        pools:
+            app.cache.pool.metainfo:
+                adapter: cache.adapter.memcached
+                public: false
 
 # Twig Configuration
 twig:
@@ -65,12 +71,12 @@ services:
         tags:
             - { name: twig.extension }
 
-    session.memcached:
+    app.memcached:
         class: Memcached
         calls:
           - [ addServer, [ %session_memcache_host%, %session_memcache_port% ]]
 
     session.handler.memcache:
         class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
-        arguments: [ "@session.memcached", { prefix: %session_memcache_prefix%, expiretime: %session_memcache_expire% } ]
+        arguments: [ "@app.memcached", { prefix: %session_memcache_prefix%, expiretime: %session_memcache_expire% } ]
 

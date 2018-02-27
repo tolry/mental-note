@@ -12,3 +12,12 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        dbname:   %database_name_testing%
+
+security:
+    firewalls:
+        main:
+            http_basic: ~
