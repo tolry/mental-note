@@ -41,6 +41,7 @@ class MetaInfo
         'myspace',
         'itun',
         'itunes',
+        'soundcloud',
     ];
 
     private static $purchaseDomains = [
