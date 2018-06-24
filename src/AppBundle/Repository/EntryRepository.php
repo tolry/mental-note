@@ -127,13 +127,7 @@ class EntryRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @param mixed $url
-     * @param mixed $excludeId
-     *
-     * @return null|Entry
-     */
-    public function urlAlreadyTaken(User $user, ?string $url, ?int $excludeId)
+    public function urlAlreadyTaken(User $user, ?string $url, ?int $excludeId): ?Entry
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')
@@ -144,7 +138,7 @@ class EntryRepository extends EntityRepository
             ->setParameter('url', $url)
             ;
 
-        if ($excludeId) {
+        if (!empty($excludeId)) {
             $qb
                 ->andWhere('e.id <> :excludeId')
                 ->setParameter('excludeId', $excludeId)
