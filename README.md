@@ -30,3 +30,10 @@ if your dev installation is older than 2015-05-15 you will need to add the initi
 php app/console do:mi:version --add 20150515104913
 ```
 
+running development machine
+---------------------------
+* vagrant up
+* vagrant ssh
+* cd /srv/www
+* bin/console fo:us:cr (follow the steps)
+* run https://mental.www/app_dev.php in browser and log in with your credentials
