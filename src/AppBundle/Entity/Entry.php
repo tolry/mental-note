@@ -26,7 +26,7 @@ class Entry extends AbstractEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=500)
+     * @ORM\Column(type="string", length=2048)
      * @Assert\Url
      */
     private $url;
