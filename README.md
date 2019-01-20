@@ -30,7 +30,7 @@ if your dev installation is older than 2015-05-15 you will need to add the initi
 php app/console do:mi:version --add 20150515104913
 ```
 
-running development machine
+development setup (vagrant)
 ---------------------------
 Prerequirements: Vagrant installed, Virtualbox installed, Ansible installed
 
