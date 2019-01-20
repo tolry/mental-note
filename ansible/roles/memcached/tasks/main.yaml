@@ -1,4 +1,4 @@
 ---
-- name: install memcached for crazy nothing
+- name: install memcached
   apt:
     name: memcached
