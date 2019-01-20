@@ -28,7 +28,6 @@ class Entry extends AbstractEntity
     /**
      * @ORM\Column(type="string", length=2048)
      * @Assert\Url
-     * @Assert\Length(max=2048)
      */
     private $url;
 
