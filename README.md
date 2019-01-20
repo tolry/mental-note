@@ -32,8 +32,10 @@ php app/console do:mi:version --add 20150515104913
 
 running development machine
 ---------------------------
-* vagrant up
-* vagrant ssh
-* cd /srv/www
-* bin/console fo:us:cr (follow the steps)
+Prerequirements: Vagrant installed, Virtualbox installed, Ansible installed
+
+* ```vagrant up```
+* ```vagrant ssh```
+* ```cd /srv/www```
+* ```bin/console fo:us:cr``` (follow the steps)
 * run https://mental.www/app_dev.php in browser and log in with your credentials
