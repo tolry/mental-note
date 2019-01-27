@@ -51,6 +51,7 @@ class MetaInfo
         'aliexpress',
         'zalando',
         'tchibo',
+        'etsy',
     ];
 
     private static $noGoogleUserAgent = [
