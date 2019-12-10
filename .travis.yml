@@ -21,7 +21,6 @@ matrix:
   # Fast finish allows to set the build as "finished" even if the "allow_failures" matrix elements are not finished yet.
   fast_finish: true
   include:
-    - php: 7.3
     - php: 7.4
 
 # Define an environment variable
@@ -35,7 +34,7 @@ before_install:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
-  - composer install
+  - composer install -q
   - cp app/config/parameters.yml.dist app/config/parameters.yml
 
 # Run script
