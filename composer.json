@@ -31,7 +31,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",
-        "codedungeon/phpunit-result-printer": "^0.5.4",
+        "codedungeon/phpunit-result-printer": "^0.26.2",
         "roave/security-advisories": "dev-master"
     },
     "scripts": {
