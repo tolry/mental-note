@@ -35,7 +35,7 @@ before_install:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
-  - composer install -q
+  - composer install
   - cp app/config/parameters.yml.dist app/config/parameters.yml
 
 # Run script
