@@ -30,6 +30,7 @@ env:
 before_install:
   - echo "running before-install"
   - phpenv config-add travis.ini
+  - php -m
 
 # Install composer dependencies,
 # Create database, schema and fixtures
