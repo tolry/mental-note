@@ -1,0 +1,14 @@
+---
+- composer:
+    command: install
+    working_dir: /srv/www/
+
+- name: create database
+  command: bin/console do:da:cr --if-not-exists
+  args:
+    chdir: /srv/www/
+
+- name: run migrations
+  command: bin/console --no-interaction do:mi:mi
+  args:
+    chdir: /srv/www/
