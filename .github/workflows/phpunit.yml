@@ -1,0 +1,43 @@
+# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
+
+name: "Unit tests"
+
+on:
+    pull_request:
+    push:
+
+jobs:
+    phpunit:
+        name: "Unit tests"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - "8.0"
+                    - "8.1"
+                include:
+                    - dependencies: "locked"
+                      php-version: "8.0"
+                      operating-system: "ubuntu-latest"
+                    - dependencies: "locked"
+                      php-version: "8.0"
+                      operating-system: "windows-latest"
+
+        steps:
+            - name: "Checkout"
+              uses: actions/checkout@v3
+
+            - name: "Install PHP"
+              uses: "shivammathur/setup-php@v2"
+              with:
+                  coverage: "pcov"
+                  php-version: "${{ matrix.php-version }}"
+                  ini-values: memory_limit=-1
+                  extensions: pdo_sqlite
+
+            - uses: ramsey/composer-install@2.1.0
+
+            - name: "Tests"
+              run: "./run-tests --coverage-clover=clover.xml --coverage-text"
