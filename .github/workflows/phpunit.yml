@@ -15,15 +15,8 @@ jobs:
         strategy:
             matrix:
                 php-version:
+                    - "7.4"
                     - "8.0"
-                    - "8.1"
-                include:
-                    - dependencies: "locked"
-                      php-version: "8.0"
-                      operating-system: "ubuntu-latest"
-                    - dependencies: "locked"
-                      php-version: "8.0"
-                      operating-system: "windows-latest"
 
         steps:
             - name: "Checkout"
