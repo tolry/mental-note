@@ -1,5 +1,16 @@
 framework:
+    secret:          "%env(APP_SECRET)%"
+    default_locale:  "%locale%"
+    session:
+        name: mental_note
+        handler_id: session.handler.memcache
     cache:
+        default_memcached_provider: "memcached://%session_memcache_host%:%session_memcache_port%"
+        system: cache.adapter.memcached
+        pools:
+            app.cache.pool.metainfo:
+                adapter: cache.adapter.memcached
+                public: false
         # Unique name of your app: used to compute stable namespaces for cache keys.
         #prefix_seed: your_vendor_name/app_name
 

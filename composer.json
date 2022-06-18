@@ -16,8 +16,8 @@
     },
     "require": {
         "php": "^7.4|^8.0",
-        "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/doctrine-cache-bundle": "^1.2",
+        "doctrine/doctrine-bundle": "@stable",
+        "doctrine/doctrine-cache-bundle": "@stable",
         "doctrine/doctrine-migrations-bundle": "@stable",
         "doctrine/orm": "^2.6.0",
         "friendsofsymfony/user-bundle": "dev-master",
@@ -25,18 +25,24 @@
         "sensio/framework-extra-bundle": "@stable",
         "symfony/console": "^4.0",
         "symfony/flex": "^1.18",
+        "symfony/form": "^4.0",
         "symfony/framework-bundle": "^4.0",
         "symfony/http-client": "^4.0",
         "symfony/lts": "^4@dev",
         "symfony/monolog-bundle": "@stable",
+        "symfony/security-csrf": "^4.0",
         "symfony/swiftmailer-bundle": "^3.1",
+        "symfony/twig-bundle": "^4.0",
+        "symfony/validator": "^4.0",
         "symfony/yaml": "^4.0",
         "twig/extensions": "~1.0",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0",
         "white-october/pagerfanta-bundle": "^1.0.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",
-        "codedungeon/phpunit-result-printer": "^0.26.2",
+        "codedungeon/phpunit-result-printer": "@stable",
         "symfony/dotenv": "^4.0"
     },
     "scripts": {

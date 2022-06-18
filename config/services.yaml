@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    session_memcache_host: localhost
+    session_memcache_port: 11211
+    session_memcache_prefix: mn_sess
+    session_memcache_expire: 604800 # 1 week
+    locale: en
 
 services:
     # default configuration for services in *this* file
