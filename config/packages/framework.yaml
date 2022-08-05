@@ -1,0 +1,14 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    secret:          "%env(APP_SECRET)%"
+    default_locale:  "%locale%"
+    session:
+        name: mental_note
+        handler_id: session.handler.memcache
+    #csrf_protection: true
+    #http_method_override: true
+
+    #esi: true
+    #fragments: true
+    php_errors:
+        log: true

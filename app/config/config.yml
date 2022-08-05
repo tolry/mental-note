@@ -2,36 +2,6 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-fos_user:
-    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-    firewall_name: main
-    user_class: AppBundle\Entity\User
-    from_email:
-        address: tobias.olry@gmail.com
-        sender_name: Tobias Olry
-
-framework:
-    #esi:             ~
-    translator:      { fallback: %locale% }
-    secret:          %secret%
-    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
-    form:            true
-    csrf_protection: true
-    validation:      { enable_annotations: true }
-    templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-    default_locale:  %locale%
-    session:
-        name: mental_note
-        handler_id: session.handler.memcache
-    http_method_override: true
-    assets: ~
-    cache:
-        default_memcached_provider: "memcached://%session_memcache_host%:%session_memcache_port%"
-        system: cache.adapter.memcached
-        pools:
-            app.cache.pool.metainfo:
-                adapter: cache.adapter.memcached
-                public: false
 
 # Twig Configuration
 twig:
@@ -64,19 +34,4 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
 
-
-services:
-    twig.extension.text:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - { name: twig.extension }
-
-    app.memcached:
-        class: Memcached
-        calls:
-          - [ addServer, [ %session_memcache_host%, %session_memcache_port% ]]
-
-    session.handler.memcache:
-        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
-        arguments: [ "@app.memcached", { prefix: %session_memcache_prefix%, expiretime: %session_memcache_expire% } ]
 

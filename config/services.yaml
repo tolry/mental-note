@@ -1,0 +1,88 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+  session_memcache_host: localhost
+  session_memcache_port: 11211
+  session_memcache_prefix: mn_sess
+  session_memcache_expire: 604800 # 1 week
+  locale: en
+  app.thumbnail_filepattern: thumbnails/{name}_{width}x{height}.png
+  app.thumbnail_service.class:
+
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  AppBundle\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Entity/'
+      - '../src/Kernel.php'
+      - '../src/{Entity,Migrations,Tests,AppBundle}/'
+
+  # controllers are imported separately to make sure services can be injected
+  # as action arguments even if you don't extend any base controller class
+  AppBundle\Controller\:
+    resource: '../src/Controller/'
+    tags: ['controller.service_arguments']
+
+  app.twig_extension:
+    class: "AppBundle\\Twig\\MentalNoteTwigExtension"
+    tags: [twig.extension]
+
+  pagerfanta.view.twitter_bootstrap4:
+    class: "Pagerfanta\\View\\TwitterBootstrap4View"
+    public: false
+    tags:
+      - {name: "pagerfanta.view", alias: "twitter_bootstrap4"}
+
+  app.form.entry_type:
+    class: "AppBundle\\Form\\Type\\EntryType"
+    arguments:
+      - "@doctrine.orm.default_entity_manager"
+      - "@security.token_storage"
+      - "@router"
+    tags: ["form.type"]
+
+  app.thumbnail_service:
+    class: "AppBundle\\Thumbnail\\ThumbnailService"
+    arguments:
+      - "%kernel.root_dir%/../web"
+      - "%kernel.cache_dir%/thumbnails"
+      - "%app.thumbnail_filepattern%"
+      - "@app.factory.metainfo"
+
+  app.cache.metainfo:
+    class: "AppBundle\\Cache\\MetainfoCache"
+    arguments:
+      - "@app.cache.pool.metainfo"
+      -
+  app.factory.metainfo:
+    class: "AppBundle\\Factory\\MetainfoFactory"
+    arguments:
+      - "@app.cache.metainfo"
+      -
+  twig.extension.text:
+    class: Twig_Extensions_Extension_Text
+    tags:
+      - { name: twig.extension }
+
+  app.memcached:
+    class: Memcached
+    calls:
+      - [ addServer, [ "%session_memcache_host%", "%session_memcache_port%" ]]
+
+  session.handler.memcache:
+    class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
+    arguments: [ "@app.memcached", { prefix: "%session_memcache_prefix%", expiretime: "%session_memcache_expire%" } ]
+
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones

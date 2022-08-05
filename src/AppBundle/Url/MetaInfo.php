@@ -11,6 +11,7 @@ use Guzzle\Common\Event;
 use Guzzle\Http\Exception\CurlException;
 use Guzzle\Service\Client as GuzzleClient;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpClient\CurlHttpClient;
 
 class MetaInfo
 {
@@ -176,26 +177,15 @@ class MetaInfo
             return $html;
         }
 
-        $guzzle = new GuzzleClient($url);
-        $guzzle->setUserAgent(
-            $this->getUserAgent(
-                $guzzle->getDefaultUserAgent()
-            )
-        );
+        $httpClient = new CurlHttpClient();
+        $response = $httpClient->request('GET', $url);
 
-        $guzzle->getEventDispatcher()->addListener(
-            'request.error',
-            function(Event $event): void {
-                $event->stopPropagation();
-            }
-        );
-
-        $response = $guzzle->get()->send();
         if (!$response->isSuccessful()) {
             return null;
         }
 
-        $html = $response->getBody(true);
+        $html = $response->getContent();
+
         $this->cache->set($url, 'html', $html);
         $this->cache->set($url, 'headers', $response->getInfo());
 
@@ -219,8 +209,9 @@ class MetaInfo
             return $headers;
         }
 
+        $httpClient = new CurlHttpClient();
+
         $guzzle = new GuzzleClient($this->info->url);
-        $guzzle->setUserAgent($this->getUserAgent($guzzle->getDefaultUserAgent()));
         $guzzle->getEventDispatcher()
             ->addListener(
                 'request.error',
@@ -230,10 +221,10 @@ class MetaInfo
             );
 
         try {
-            $response = $guzzle
-                ->head(null, null, ['timeout' => 3])
+            $response = $httpClient
+                ->get('HEAD', $this->info->url)
                 ->send();
-        } catch (CurlException $e) {
+        } catch (\Throwable $e) {
             $response = false;
         }
 
