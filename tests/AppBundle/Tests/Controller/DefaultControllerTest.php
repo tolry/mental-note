@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace AppBundle\Tests\Controller;
+namespace App\Tests\Controller;
 
-use AppBundle\Criteria\EntryCriteria;
-use AppBundle\Entity\Category;
-use AppBundle\Tests\WebTestCase;
+use App\Criteria\EntryCriteria;
+use App\Entity\Category;
+use App\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

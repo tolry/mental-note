@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Tests\Url;
+namespace App\Tests\Url;
 
-use AppBundle\Cache\MetainfoCache;
-use AppBundle\Entity\Category;
-use AppBundle\Url\MetaInfo;
+use App\Cache\MetainfoCache;
+use App\Entity\Category;
+use App\Url\MetaInfo;
 use PHPUnit\Framework\TestCase;
 
 /**
