@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AppBundle;
+namespace App;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AppBundle extends Bundle
+class App extends Bundle
 {
 }

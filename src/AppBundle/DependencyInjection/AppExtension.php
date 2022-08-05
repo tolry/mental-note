@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppBundle\DependencyInjection;
+namespace App\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class AppBundleExtension extends Extension
+class AppExtension extends Extension
 {
     /**
      * {@inheritdoc}

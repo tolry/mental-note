@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppBundle\DependencyInjection;
+namespace App\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

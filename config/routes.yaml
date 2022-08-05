@@ -1,8 +1,8 @@
 #index:
 #    path: /
-#    controller: AppBundle\Controller\DefaultController::index
+#    controller: App\Controller\DefaultController::index
 
 app:
-  resource: "@AppBundle/Controller/"
+  resource: "@App/Controller/"
   type:     annotation
 

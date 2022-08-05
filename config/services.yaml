@@ -20,22 +20,22 @@ services:
 
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name
-  AppBundle\:
+  App\:
     resource: '../src/'
     exclude:
       - '../src/DependencyInjection/'
       - '../src/Entity/'
       - '../src/Kernel.php'
-      - '../src/{Entity,Migrations,Tests,AppBundle}/'
+      - '../src/{Entity,Migrations,Tests,App}/'
 
   # controllers are imported separately to make sure services can be injected
   # as action arguments even if you don't extend any base controller class
-  AppBundle\Controller\:
+  App\Controller\:
     resource: '../src/Controller/'
     tags: ['controller.service_arguments']
 
   app.twig_extension:
-    class: "AppBundle\\Twig\\MentalNoteTwigExtension"
+    class: "App\\Twig\\MentalNoteTwigExtension"
     tags: [twig.extension]
 
   pagerfanta.view.twitter_bootstrap4:
@@ -45,7 +45,7 @@ services:
       - {name: "pagerfanta.view", alias: "twitter_bootstrap4"}
 
   app.form.entry_type:
-    class: "AppBundle\\Form\\Type\\EntryType"
+    class: "App\\Form\\Type\\EntryType"
     arguments:
       - "@doctrine.orm.default_entity_manager"
       - "@security.token_storage"
@@ -53,7 +53,7 @@ services:
     tags: ["form.type"]
 
   app.thumbnail_service:
-    class: "AppBundle\\Thumbnail\\ThumbnailService"
+    class: "App\\Thumbnail\\ThumbnailService"
     arguments:
       - "%kernel.root_dir%/../web"
       - "%kernel.cache_dir%/thumbnails"
@@ -61,12 +61,12 @@ services:
       - "@app.factory.metainfo"
 
   app.cache.metainfo:
-    class: "AppBundle\\Cache\\MetainfoCache"
+    class: "App\\Cache\\MetainfoCache"
     arguments:
       - "@app.cache.pool.metainfo"
       -
   app.factory.metainfo:
-    class: "AppBundle\\Factory\\MetainfoFactory"
+    class: "App\\Factory\\MetainfoFactory"
     arguments:
       - "@app.cache.metainfo"
       -
