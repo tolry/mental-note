@@ -1,7 +1,7 @@
-{% extends "AppBundle::layout.html.twig" %}
+{% extends "App::layout.html.twig" %}
 
 {% block content %}
-    {% include "AppBundle:Entry:_form.html.twig" with {
+    {% include "App:Entry:_form.html.twig" with {
         form: form,
         entry: null,
         action: path('entry_create', {backlink: backlink}),

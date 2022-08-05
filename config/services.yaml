@@ -34,10 +34,6 @@ services:
     resource: '../src/Controller/'
     tags: ['controller.service_arguments']
 
-  app.twig_extension:
-    class: "App\\Twig\\MentalNoteTwigExtension"
-    tags: [twig.extension]
-
   pagerfanta.view.twitter_bootstrap4:
     class: "Pagerfanta\\View\\TwitterBootstrap4View"
     public: false

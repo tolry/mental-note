@@ -3,6 +3,6 @@
 #    controller: App\Controller\DefaultController::index
 
 app:
-  resource: "@App/Controller/"
+  resource: "../src/Controller/"
   type:     annotation
 

@@ -5,13 +5,13 @@
     "description": "MentalNote - simple bookmarking and productivity tool",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle/",
-            "AppBundle\\": "src/"
-        },
-        "classmap": []
+            "App\\": "src/"
+        }
     },
     "autoload-dev": {
-        "psr-0": { "AppBundle\\Tests": "tests/" },
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        },
         "files": []
     },
     "require": {
