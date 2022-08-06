@@ -4,11 +4,7 @@ framework:
     default_locale:  "%locale%"
     session:
         name: mental_note
-        handler_id: session.handler.memcache
-    #csrf_protection: true
-    #http_method_override: true
+        handler_id: "Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler"
 
-    #esi: true
-    #fragments: true
     php_errors:
         log: true

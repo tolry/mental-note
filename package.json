@@ -1,7 +1,7 @@
 {
   "name": "mental-note-assets",
   "main": "gulpfile.js",
-  "description": "SimpSpector",
+  "description": "mental-note",
   "dependencies": {
     "awesomplete": "^1.0.0",
     "bootstrap": "^4.3.1",

@@ -33,4 +33,8 @@ jobs:
             - uses: ramsey/composer-install@2.1.0
 
             - name: "Tests"
-              run: "./run-tests --coverage-clover=clover.xml --coverage-text"
+              run: "./run-tests --coverage-text=coverage.txt"
+
+            - name: "Coverage Output"
+              if: "{{ always() }}"
+              run: cat coverage.txt >> $GITHUB_STEP_SUMMARY
