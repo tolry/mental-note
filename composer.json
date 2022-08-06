@@ -43,7 +43,7 @@
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "@stable",
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^9.0",
         "symfony/dotenv": "^4.0",
         "symfony/stopwatch": "^4.0",
         "symfony/web-profiler-bundle": "^4.0"
