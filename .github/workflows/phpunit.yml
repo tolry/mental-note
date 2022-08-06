@@ -36,5 +36,5 @@ jobs:
               run: "./run-tests --coverage-text=coverage.txt"
 
             - name: "Coverage Output"
-              if: "{{ always() }}"
+              if: "${{ always() }}"
               run: cat coverage.txt >> $GITHUB_STEP_SUMMARY
