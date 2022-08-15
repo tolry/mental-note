@@ -35,27 +35,27 @@ gulp.task('scss', function () {
             includePaths: 'node_modules/bootstrap/scss'
         }))
         .pipe(concat('scss-compiled.css'))
-        .pipe(gulp.dest('web/css/'))
+        .pipe(gulp.dest('public/css/'))
     ;
 });
 
 gulp.task('css', gulp.series('scss', function () {
     return gulp.src(cssFiles)
         .pipe(concat('all.css'))
-        .pipe(gulp.dest('web/css/'))
+        .pipe(gulp.dest('public/css/'))
         .pipe(cssCompress())
         .pipe(concat('all.min.css'))
-        .pipe(gulp.dest('web/css/'))
+        .pipe(gulp.dest('public/css/'))
     ;
 }));
 
 gulp.task('js', function () {
     return gulp.src(jsFiles)
         .pipe(concat('all.js'))
-        .pipe(gulp.dest('web/js/'))
+        .pipe(gulp.dest('public/js/'))
         .pipe(terser())
         .pipe(concat('all.min.js'))
-        .pipe(gulp.dest('web/js/'))
+        .pipe(gulp.dest('public/js/'))
     ;
 });
 
