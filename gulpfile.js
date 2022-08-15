@@ -1,5 +1,5 @@
 const gulp = require('gulp'),
-    gulpSass = require('gulp-sass'),
+    gulpSass = require('gulp-sass')(require('node-sass')),
     concat = require('gulp-concat'),
     cssCompress = require('gulp-clean-css'),
     terser = require('gulp-terser')
