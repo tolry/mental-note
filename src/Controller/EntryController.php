@@ -166,7 +166,7 @@ class EntryController extends AbstractBaseController
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getEm()->remove($entry);
             $this->getEm()->flush();
 
@@ -200,7 +200,7 @@ class EntryController extends AbstractBaseController
     {
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getEm()->persist($entry);
             $this->getEm()->flush();
 

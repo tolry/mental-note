@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Criteria\EntryCriteria;
+use App\Factory\MetainfoFactory;
+use App\Url\MetaInfo;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -13,6 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends AbstractBaseController
 {
+    private MetainfoFactory $metaInfoFactory;
+
+    public function __construct(
+        MetainfoFactory $metaInfoFactory
+    ) {
+       $this->metaInfoFactory = $metaInfoFactory;
+    }
+
     /**
      * @Route("/",name="homepage")
      * @Template()
@@ -48,13 +58,12 @@ class DefaultController extends AbstractBaseController
             \Tideways\Profiler::setServiceName('3rd-party');
         }
 
-        $metainfoFactory = $this->get('app.factory.metainfo');
         $url = $request->get('url');
         if (empty($url)) {
             throw $this->createNotFoundException('no url given');
         }
 
-        $info = $metainfoFactory->create($url);
+        $info = $this->metaInfoFactory->create($url);
         $urlDuplicate = ($this->getEntryRepository()->urlAlreadyTaken(
             $this->getUser(),
             $url,
@@ -72,7 +81,7 @@ class DefaultController extends AbstractBaseController
     }
 
     /**
-     * @Route("/sidebar",name="sidebar")
+     * @Route("/sidebar",name="default_sidebar")
      * @Method("GET")
      * @Template()
      */

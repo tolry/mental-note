@@ -60,8 +60,7 @@ services:
     arguments:
       - "@app.cache.pool.metainfo"
       -
-  app.factory.metainfo:
-    class: "App\\Factory\\MetainfoFactory"
+  App\Factory\MetainfoFactory:
     arguments:
       - "@app.cache.metainfo"
 

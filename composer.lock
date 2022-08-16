@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7c0df6dfc2c2904273999b9decfa9e8",
+    "content-hash": "84ccdbf3e9ce38c4a8cea469af29e07d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2103,6 +2103,57 @@
             "time": "2021-05-03T11:20:27+00:00"
         },
         {
+            "name": "psr/simple-cache",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/simple-cache/tree/master"
+            },
+            "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
             "name": "sensio/framework-extra-bundle",
             "version": "v6.2.6",
             "source": {
@@ -2257,6 +2308,75 @@
             "time": "2021-10-18T15:26:12+00:00"
         },
         {
+            "name": "symfony/asset",
+            "version": "v4.4.40",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/asset.git",
+                "reference": "4dee0d02664f2d06005c56b8e43612b7a372e47d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/asset/zipball/4dee0d02664f2d06005c56b8e43612b7a372e47d",
+                "reference": "4dee0d02664f2d06005c56b8e43612b7a372e47d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.3",
+                "symfony/polyfill-php80": "^1.16"
+            },
+            "require-dev": {
+                "symfony/http-foundation": "^3.4|^4.0|^5.0",
+                "symfony/http-kernel": "^3.4|^4.0|^5.0"
+            },
+            "suggest": {
+                "symfony/http-foundation": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Asset\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Manages URL generation and versioning of web assets such as CSS stylesheets, JavaScript files and image files",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/asset/tree/v4.4.40"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-03-07T18:38:28+00:00"
+        },
+        {
             "name": "symfony/browser-kit",
             "version": "v4.4.37",
             "source": {
@@ -2330,16 +2450,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v4.4.42",
+            "version": "v4.4.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "7cdabf9a6a03e291676019184815a14ae310a014"
+                "reference": "db611fb1b86e2223d406c5bf3d813536c95de7ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/7cdabf9a6a03e291676019184815a14ae310a014",
-                "reference": "7cdabf9a6a03e291676019184815a14ae310a014",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/db611fb1b86e2223d406c5bf3d813536c95de7ce",
+                "reference": "db611fb1b86e2223d406c5bf3d813536c95de7ce",
                 "shasum": ""
             },
             "require": {
@@ -2405,7 +2525,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v4.4.42"
+                "source": "https://github.com/symfony/cache/tree/v4.4.44"
             },
             "funding": [
                 {
@@ -2421,7 +2541,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-21T09:26:52+00:00"
+            "time": "2022-07-20T09:59:04+00:00"
         },
         {
             "name": "symfony/cache-contracts",
