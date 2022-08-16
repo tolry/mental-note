@@ -1,5 +1,5 @@
 const gulp = require('gulp'),
-    gulpSass = require('gulp-sass'),
+    gulpSass = require('gulp-sass')(require('node-sass')),
     concat = require('gulp-concat'),
     cssCompress = require('gulp-clean-css'),
     terser = require('gulp-terser')
@@ -12,7 +12,7 @@ const scssFiles = [
 const cssFiles = [
     'node_modules/font-awesome/css/font-awesome.css',
     'node_modules/awesomplete/awesomplete.css',
-    'web/css/scss-compiled.css'
+    'public/css/scss-compiled.css'
 ];
 
 const jsFiles = [
@@ -35,33 +35,33 @@ gulp.task('scss', function () {
             includePaths: 'node_modules/bootstrap/scss'
         }))
         .pipe(concat('scss-compiled.css'))
-        .pipe(gulp.dest('web/css/'))
+        .pipe(gulp.dest('public/css/'))
     ;
 });
 
 gulp.task('css', gulp.series('scss', function () {
     return gulp.src(cssFiles)
         .pipe(concat('all.css'))
-        .pipe(gulp.dest('web/css/'))
+        .pipe(gulp.dest('public/css/'))
         .pipe(cssCompress())
         .pipe(concat('all.min.css'))
-        .pipe(gulp.dest('web/css/'))
+        .pipe(gulp.dest('public/css/'))
     ;
 }));
 
 gulp.task('js', function () {
     return gulp.src(jsFiles)
         .pipe(concat('all.js'))
-        .pipe(gulp.dest('web/js/'))
+        .pipe(gulp.dest('public/js/'))
         .pipe(terser())
         .pipe(concat('all.min.js'))
-        .pipe(gulp.dest('web/js/'))
+        .pipe(gulp.dest('public/js/'))
     ;
 });
 
 gulp.task('fonts', function () {
     return gulp.src(fontFiles)
-        .pipe(gulp.dest('web/fonts/'));
+        .pipe(gulp.dest('public/fonts/'));
 });
 
 gulp.task('watch', gulp.series('js', 'css', function () {

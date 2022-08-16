@@ -11,11 +11,11 @@
 /var/sessions/*
 /bin/*
 
-/web/thumbnails/*
-/web/bundles/*
-/web/css/*
-/web/js/*
-/web/fonts/*
+/public/thumbnails/*
+/public/bundles/*
+/public/css/*
+/public/js/*
+/public/fonts/*
 .php_cs.cache
 
 !var/SymfonyRequirements.php
@@ -23,10 +23,10 @@
 !/var/sessions
 !var/cache/.gitkeep
 !var/sessions/.gitkeep
-!/web/thumbnails/.gitkeep
-!/web/bundles/.gitkeep
-!/web/css/.gitkeep
-!/web/js/.gitkeep
+!/public/thumbnails/.gitkeep
+!/public/bundles/.gitkeep
+!/public/css/.gitkeep
+!/public/js/.gitkeep
 !/bin/console
 
 ###> phpunit/phpunit ###

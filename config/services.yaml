@@ -10,7 +10,6 @@ parameters:
   session_memcache_expire: 604800 # 1 week
   locale: en
   app.thumbnail_filepattern: thumbnails/{name}_{width}x{height}.png
-  app.thumbnail_service.class:
 
 services:
   # default configuration for services in *this* file
@@ -61,11 +60,10 @@ services:
     arguments:
       - "@app.cache.pool.metainfo"
       -
-  app.factory.metainfo:
-    class: "App\\Factory\\MetainfoFactory"
+  App\Factory\MetainfoFactory:
     arguments:
       - "@app.cache.metainfo"
-      -
+
   twig.extension.text:
     class: Twig_Extensions_Extension_Text
     tags:
@@ -76,8 +74,7 @@ services:
     calls:
       - [ addServer, [ "%session_memcache_host%", "%session_memcache_port%" ]]
 
-  session.handler.memcache:
-    class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
+  Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler:
     arguments: [ "@app.memcached", { prefix: "%session_memcache_prefix%", expiretime: "%session_memcache_expire%" } ]
 
   # add more service definitions when explicit configuration is needed

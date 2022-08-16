@@ -7,9 +7,6 @@ namespace App\Url;
 
 use App\Cache\MetainfoCache;
 use App\Entity\Category;
-use Guzzle\Common\Event;
-use Guzzle\Http\Exception\CurlException;
-use Guzzle\Service\Client as GuzzleClient;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\CurlHttpClient;
 
@@ -211,32 +208,22 @@ class MetaInfo
 
         $httpClient = new CurlHttpClient();
 
-        $guzzle = new GuzzleClient($this->info->url);
-        $guzzle->getEventDispatcher()
-            ->addListener(
-                'request.error',
-                function(Event $event): void {
-                    $event->stopPropagation();
-                }
-            );
-
         try {
             $response = $httpClient
-                ->get('HEAD', $this->info->url)
-                ->send();
+                ->request('HEAD', $this->info->url);
         } catch (\Throwable $e) {
             $response = false;
         }
 
-        if (!$response || !$response->isSuccessful()) {
-            $response = $guzzle->get()->send();
+        if (!$response || $response->getStatusCode() >= 400) {
+            $response = $httpClient->request('GET', $this->info->url);
         }
 
-        if ($response->isSuccessful()) {
-            $headers = $response->getInfo();
+        if ($response->getStatusCode() < 400) {
+            $headers = $response->getHeaders();
             $this->cache->set($this->info->url, 'headers', $headers);
 
-            $html = $response->getBody(true);
+            $html = $response->getContent(false);
             if (!empty($html)) {
                 $this->cache->set($this->info->url, 'html', $html);
             }

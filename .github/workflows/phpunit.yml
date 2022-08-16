@@ -12,10 +12,23 @@ jobs:
         runs-on: "ubuntu-latest"
 
         strategy:
+            fail-fast: false
             matrix:
                 php-version:
                     - "7.4"
                     - "8.0"
+
+        services:
+          mysql:
+            image: mysql:5.7
+            env:
+              MYSQL_ALLOW_EMPTY_PASSWORD: yes
+              MYSQL_DATABASE: mental_note_tests
+              MYSQL_USER: mental_note
+              MYSQL_PASSWORD: SOME_SECRET
+            ports:
+              - 3306:3306
+            options: --health-cmd "mysqladmin ping --silent"
 
         steps:
             - name: "Checkout"
@@ -32,4 +45,8 @@ jobs:
             - uses: ramsey/composer-install@2.1.0
 
             - name: "Tests"
-              run: "./run-tests --coverage-clover=clover.xml --coverage-text"
+              run: "./run-tests --coverage-text=coverage.txt"
+
+            - name: "Coverage Output"
+              if: "${{ always() }}"
+              run: cat coverage.txt >> $GITHUB_STEP_SUMMARY

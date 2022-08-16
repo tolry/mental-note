@@ -1,7 +1,7 @@
 {
   "name": "mental-note-assets",
   "main": "gulpfile.js",
-  "description": "SimpSpector",
+  "description": "mental-note",
   "dependencies": {
     "awesomplete": "^1.0.0",
     "bootstrap": "^4.3.1",
@@ -9,10 +9,11 @@
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
     "gulp-concat": "^2.6.1",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^5.1.0",
     "gulp-terser": "^1.2.0",
     "jquery": "^3.5.0",
-    "popper.js": "^1.12.9"
+    "node-sass": "^7.0.1",
+    "popper.js": "^1.16.1"
   },
   "scripts": {
     "postinstall": "node_modules/.bin/gulp",

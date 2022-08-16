@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export SYMFONY_ENV=test
+export APP_ENV=test
 
 cd $(dirname $0)
 
