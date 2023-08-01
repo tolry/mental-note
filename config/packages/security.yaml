@@ -19,7 +19,7 @@ security:
                 provider: fos_userbundle
                 #csrf_provider: security.csrf.token_manager
             logout:       true
-            anonymous:    true
+              #anonymous:    true
 
     access_control:
         - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }
