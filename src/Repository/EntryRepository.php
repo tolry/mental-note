@@ -11,15 +11,22 @@ use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
  */
 class EntryRepository extends EntityRepository
 {
-    public function getQueryBuilder(User $user, EntryCriteria $criteria, bool $includeVisits = true): QueryBuilder
+    public function __construct(ManagerRegistry $managerRegistry)
+    {
+        parent::__construct($managerRegistry, Entry::class);
+    }
+
+    public function getQueryBuilder(UserInterface $user, EntryCriteria $criteria, bool $includeVisits = true): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')
@@ -67,7 +74,7 @@ class EntryRepository extends EntityRepository
         return $qb;
     }
 
-    public function filter(User $user, EntryCriteria $criteria): Pagerfanta
+    public function filter(UserInterface $user, EntryCriteria $criteria): Pagerfanta
     {
         $qb = $this->getQueryBuilder($user, $criteria);
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
@@ -79,7 +86,7 @@ class EntryRepository extends EntityRepository
         return $pager;
     }
 
-    public function getCategoryStats(User $user, EntryCriteria $criteria): array
+    public function getCategoryStats(UserInterface $user, EntryCriteria $criteria): array
     {
         $criteria = clone $criteria;
         $criteria->category = null;
@@ -105,7 +112,7 @@ class EntryRepository extends EntityRepository
         return $data;
     }
 
-    public function getTagStats(User $user, EntryCriteria $criteria, int $limit = 20): array
+    public function getTagStats(UserInterface $user, EntryCriteria $criteria, int $limit = 20): array
     {
         $criteria = clone $criteria;
         $criteria->tag = null;
@@ -127,7 +134,7 @@ class EntryRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function urlAlreadyTaken(User $user, ?string $url, ?int $excludeId): ?Entry
+    public function urlAlreadyTaken(UserInterface $user, ?string $url, ?int $excludeId): ?Entry
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')

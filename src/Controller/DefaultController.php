@@ -6,21 +6,23 @@ namespace App\Controller;
 
 use App\Criteria\EntryCriteria;
 use App\Factory\MetainfoFactory;
+use App\Repository\EntryRepository;
 use App\Url\MetaInfo;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DefaultController extends AbstractBaseController
+class DefaultController extends AbstractController
 {
-    private MetainfoFactory $metaInfoFactory;
-
     public function __construct(
-        MetainfoFactory $metaInfoFactory
+        private readonly MetainfoFactory $metaInfoFactory,
+        private readonly EntryRepository $entryRepository,
     ) {
-       $this->metaInfoFactory = $metaInfoFactory;
     }
 
     /**
@@ -33,7 +35,7 @@ class DefaultController extends AbstractBaseController
         $criteria = $this->getFilterCriteria($request);
 
         try {
-            $pager = $this->getEntryRepository()->filter($this->getUser(), $criteria);
+            $pager = $this->entryRepository->filter($this->getUser(), $criteria);
         } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $e) {
             $filter = (array) $request->get('filter', []);
             --$filter['page'];

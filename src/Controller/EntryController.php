@@ -6,16 +6,32 @@ namespace App\Controller;
 
 use App\Entity\Entry;
 use App\Form\Type\EntryType;
+use App\Kernel;
+use App\Repository\EntryRepository;
+use App\Thumbnail\ThumbnailService;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class EntryController extends AbstractBaseController
+class EntryController extends AbstractController
 {
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly EntryRepository $entryRepository,
+        private readonly ThumbnailService $thumbnailService,
+        private readonly LoggerInterface $logger,
+        #[Autowire('%kernel.environment%')] private readonly string $environment,
+        #[Autowire('%kernel.project_dir%/../web')] private readonly string $documentRoot,
+    ) {}
+
     /**
      * @Route("/entry/{id}/toggle_pending.json",name="entry_toggle_pending")
      * @Method("POST")
@@ -23,7 +39,7 @@ class EntryController extends AbstractBaseController
     public function togglePendingAction(Entry $entry, Request $request)
     {
         $entry->setPending(!$entry->getPending());
-        $this->getEm()->flush();
+        $this->em->flush();
 
         $filter = (array) $request->get('filter', []);
 
@@ -40,12 +56,11 @@ class EntryController extends AbstractBaseController
             \Tideways\Profiler::setServiceName('3rd-party');
         }
 
-        $testEnvironment = ($this->get('kernel')->getEnvironment() === 'test');
+        $testEnvironment = $this->environment === 'test';
 
-        $documentRoot = $this->container->getParameter('kernel.root_dir') . '/../web';
         $route = $request->getRequestUri();
 
-        $pathNew = sprintf('%s/thumbnails/%d_%dx%d.png', $documentRoot, $entry->getId(), $width, $height);
+        $pathNew = sprintf('%s/thumbnails/%d_%dx%d.png', $this->documentRoot, $entry->getId(), $width, $height);
 
         if (file_exists($pathNew) && $testEnvironment) {
             unlink($pathNew);
@@ -54,23 +69,22 @@ class EntryController extends AbstractBaseController
         // for dev mode
         if (file_exists($pathNew) && !$testEnvironment) {
             $response = new BinaryFileResponse($pathNew);
-            $this->get('logger')->error($entry->getId() . ':: file already exists, controller should not be executed');
+            $this->logger->error($entry->getId() . ':: file already exists, controller should not be executed');
 
             return $response;
         }
 
         try {
-            $thumbnailService = $this->get('app.thumbnail_service');
-            $thumbnailService->generate(
+            $this->thumbnailService->generate(
                 $entry->getUrl(),
                 $width,
                 $height,
                 (string) $entry->getId()
             );
         } catch (\Exception $e) {
-            $this->get('logger')->error('Exception: ' . $e->getMessage());
+            $this->logger->error('Exception: ' . $e->getMessage());
 
-            $target = $documentRoot . '/images/placeholder_no-preview.png';
+            $target = $this->documentRoot . '/images/placeholder_no-preview.png';
             symlink($target, $pathNew);
         }
 
@@ -95,7 +109,7 @@ class EntryController extends AbstractBaseController
         }
 
         if ($entry->getUrl()) {
-            $urlDuplicate = $this->getEntryRepository()->urlAlreadyTaken(
+            $urlDuplicate = $this->entryRepository->urlAlreadyTaken(
                 $this->getUser(),
                 $entry->getUrl(),
                 null

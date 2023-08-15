@@ -5,24 +5,22 @@ declare(strict_types=1);
 namespace App\Thumbnail;
 
 use App\Factory\MetainfoFactory;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 class ThumbnailService
 {
-    private $documentRoot;
-    private $filepattern;
-    private $cacheDir;
-    private $fs;
-    private $metainfoFactory;
+    private Filesystem $fs;
+    private string $filepattern;
 
-    public function __construct(string $documentRoot, string $cacheDir, string $filepattern, MetainfoFactory $metainfoFactory)
+    public function __construct(
+        #[Autowire('%kernel.project_dir%/../web')] private readonly string $documentRoot,
+        #[Autowire('%kernel.cache_dir%')] private readonly string $cacheDir,
+        private readonly MetainfoFactory $metainfoFactory)
     {
-        $this->documentRoot = $documentRoot;
-        $this->cacheDir = $cacheDir;
-        $this->filepattern = $filepattern;
         $this->fs = new Filesystem();
-        $this->metainfoFactory = $metainfoFactory;
+        $this->filepattern = 'thumbnails/{name}_{width}x{height}.png';
     }
 
     /**

@@ -17,10 +17,10 @@
     "require": {
         "php": "^8.2",
         "ext-memcached": "*",
+        "babdev/pagerfanta-bundle": "^4.0",
         "doctrine/doctrine-bundle": "@stable",
         "doctrine/doctrine-migrations-bundle": "@stable",
         "doctrine/orm": "^2.6.0",
-        "friendsofsymfony/user-bundle": "dev-master",
         "pagerfanta/pagerfanta": "^4.0",
         "psr/simple-cache": "^1.0",
         "sensio/framework-extra-bundle": "@stable",
@@ -33,14 +33,14 @@
         "symfony/framework-bundle": "^6.0",
         "symfony/http-client": "^6.0",
         "symfony/monolog-bundle": "@stable",
+        "symfony/security-bundle": "^6.0",
         "symfony/security-csrf": "^6.0",
         "symfony/twig-bundle": "^6.0",
         "symfony/validator": "^6.0",
         "symfony/yaml": "^6.0",
         "twig/extensions": "~1.0",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0",
-        "babdev/pagerfanta-bundle": "^4.0"
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "@stable",

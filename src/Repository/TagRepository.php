@@ -7,12 +7,18 @@ namespace App\Repository;
 use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
  */
 class TagRepository extends EntityRepository
 {
+    public function __construct(ManagerRegistry $managerRegistry)
+    {
+        parent::__construct($managerRegistry, Tag::class);
+    }
+
     public function search(string $query, User $user)
     {
         $qb = $this->createQueryBuilder('t');
