@@ -33,6 +33,7 @@
         "symfony/framework-bundle": "^6.0",
         "symfony/http-client": "^6.0",
         "symfony/monolog-bundle": "@stable",
+        "symfony/runtime": "^6.0",
         "symfony/security-bundle": "^6.0",
         "symfony/security-csrf": "^6.0",
         "symfony/twig-bundle": "^6.0",
@@ -80,7 +81,8 @@
         "bin-dir": "bin",
         "allow-plugins": {
             "symfony/flex": true,
-            "ergebnis/composer-normalize": true
+            "ergebnis/composer-normalize": true,
+            "symfony/runtime": true
         }
     }
 }
