@@ -377,12 +377,12 @@
         ]
     },
     "symfony/security-bundle": {
-        "version": "4.4",
+        "version": "6.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "4.4",
-            "ref": "7b4408dc203049666fe23fabed23cbadc6d8440f"
+            "version": "6.0",
+            "ref": "8a5b112826f7d3d5b07027f93786ae11a1c7de48"
         },
         "files": [
             "config/packages/security.yaml"
