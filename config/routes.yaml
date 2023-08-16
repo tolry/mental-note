@@ -1,8 +1,9 @@
-app:
-  resource: "../src/Controller/"
-  type:     annotation
+<<<<<<< ours
+controllers:
+  resource:
+    path: "../src/Controller/"
+    namespace: App\Controller
+  type: annotation
 
 logout:
   path: /logout
-
-
