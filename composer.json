@@ -48,6 +48,7 @@
         "ergebnis/composer-normalize": "^2.34",
         "phpunit/phpunit": "^9.0",
         "symfony/dotenv": "^6.0",
+        "symfony/maker-bundle": "^1.50",
         "symfony/stopwatch": "^6.0",
         "symfony/web-profiler-bundle": "^6.0"
     },
