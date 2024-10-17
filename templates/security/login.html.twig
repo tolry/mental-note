@@ -1,41 +1,31 @@
-{% extends "layout.html.twig"%}
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-                <div class="card m-4">
-                    <div class="card-body">
-                        <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                            <fieldset>
-                                <legend><i class="fa fa-bookmark large icon-fancy"></i> MentalNote: Login</legend>
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
 
-                                {% if error %}
-                                    <div class="form-group text-danger">
-                                        {{ error.messageKey|trans(error.messageData, 'security')  }}
-                                    </div>
-                                {% endif %}
-
-                                <div class="form-group">
-                                    <label class="control-label" for="username">username</label>
-                                    <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="password" class="control-label">password</label>
-                                    <input type="password" class="form-control" id="password" name="_password" />
-                                </div>
-
-                                <div class="pull-right">
-                                    <input type="submit" class="btn btn-primary" id="_submit" name="_submit" value="sign in" />
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
-    </div>
-{% endblock body %}
+    {% endif %}
 
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputUsername">Username</label>
+    <input type="text" value="{{ last_username }}" name="_username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+    <label for="inputPassword">Password</label>
+    <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Sign in
+    </button>
+</form>
+{% endblock %}

@@ -5,22 +5,15 @@ declare(strict_types=1);
 namespace App\Cache;
 
 use Psr\Cache\CacheItemPoolInterface;
-use Psr\SimpleCache\CacheInterface as Psr16Interface;
-use Symfony\Component\Cache\Simple\Psr6Cache;
+use Symfony\Component\Cache\CacheItem;
 
 /**
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 class MetainfoCache
 {
-    /**
-     * @var Psr16Interface
-     */
-    private $cache;
-
-    public function __construct(CacheItemPoolInterface $cache)
+    public function __construct(private readonly CacheItemPoolInterface $cache)
     {
-        $this->cache = new Psr6Cache($cache);
     }
 
     public function set(string $url, string $property, $value): void
@@ -29,16 +22,21 @@ class MetainfoCache
             return;
         }
 
-        $this->cache->set($this->createKey($property, $url), $value);
+        $item = $this->cache->getItem($this->createKey($property, $url));
+        $item->set($value);
+
+        $this->cache->save($item);
     }
 
     public function get(string $url, string $property)
     {
         if (empty($url)) {
-            return;
+            return null;
         }
 
-        return $this->cache->get($this->createKey($property, $url));
+        $item = $this->cache->getItem($this->createKey($property, $url));
+
+        return $item->isHit() ? $item->get() : null;
     }
 
     private function createKey(string $property, string $url)

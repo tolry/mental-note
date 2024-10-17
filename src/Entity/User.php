@@ -8,13 +8,14 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="fos_user")
  */
-class User implements BaseUserInterface, EquatableInterface, \Serializable
+class User implements UserInterface, EquatableInterface, \Serializable, PasswordAuthenticatedUserInterface
 {
     public const ROLE_DEFAULT = 'ROLE_USER';
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
@@ -26,72 +27,24 @@ class User implements BaseUserInterface, EquatableInterface, \Serializable
      */
     protected $id;
 
-    /**
-     * @var string
-     */
+    /** @ORM\Column(type="string") */
     protected $username;
 
-    /**
-     * @var string
-     */
-    protected $usernameCanonical;
-
-    /**
-     * @var string
-     */
+    /** @ORM\Column(type="string") */
     protected $email;
 
-    /**
-     * @var string
-     */
-    protected $emailCanonical;
-
-    /**
-     * @var bool
-     */
+    /** @ORM\Column(type="boolean") */
     protected $enabled;
 
-    /**
-     * The salt to use for hashing.
-     *
-     * @var string
-     */
-    protected $salt;
-
-    /**
-     * Encrypted password. Must be persisted.
-     *
-     * @var string
-     */
+    /** @ORM\Column(type="string") */
     protected $password;
 
-    /**
-     * Plain password. Used for model validation. Must not be persisted.
-     *
-     * @var string|null
-     */
     protected $plainPassword;
 
-    /**
-     * @var \DateTime|null
-     */
+    /** @ORM\Column(type="datetime") */
     protected $lastLogin;
 
-    /**
-     * Random string sent to the user email address in order to verify it.
-     *
-     * @var string|null
-     */
-    protected $confirmationToken;
-
-    /**
-     * @var \DateTime|null
-     */
-    protected $passwordRequestedAt;
-
-    /**
-     * @var array
-     */
+    /** @ORM\Column(type="array") */
     protected $roles;
 
     /**
@@ -115,37 +68,21 @@ class User implements BaseUserInterface, EquatableInterface, \Serializable
     {
         return [
             $this->password,
-            $this->salt,
-            $this->usernameCanonical,
             $this->username,
             $this->enabled,
             $this->id,
             $this->email,
-            $this->emailCanonical,
         ];
     }
 
     public function __unserialize(array $data): void
     {
-        if (13 === count($data)) {
-            // Unserializing a User object from 1.3.x
-            unset($data[4], $data[5], $data[6], $data[9], $data[10]);
-            $data = array_values($data);
-        } elseif (11 === count($data)) {
-            // Unserializing a User from a dev version somewhere between 2.0-alpha3 and 2.0-beta1
-            unset($data[4], $data[7], $data[8]);
-            $data = array_values($data);
-        }
-
         [
             $this->password,
-            $this->salt,
-            $this->usernameCanonical,
             $this->username,
             $this->enabled,
             $this->id,
             $this->email,
-            $this->emailCanonical
         ] = $data;
     }
 
@@ -208,11 +145,6 @@ class User implements BaseUserInterface, EquatableInterface, \Serializable
     public function getUsernameCanonical()
     {
         return $this->usernameCanonical;
-    }
-
-    public function getSalt(): ?string
-    {
-        return $this->salt;
     }
 
     public function getEmail()
@@ -292,30 +224,9 @@ class User implements BaseUserInterface, EquatableInterface, \Serializable
         return $this;
     }
 
-    public function setUsernameCanonical($usernameCanonical)
-    {
-        $this->usernameCanonical = $usernameCanonical;
-
-        return $this;
-    }
-
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
     public function setEmail($email)
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function setEmailCanonical($emailCanonical)
-    {
-        $this->emailCanonical = $emailCanonical;
 
         return $this;
     }
@@ -400,17 +311,13 @@ class User implements BaseUserInterface, EquatableInterface, \Serializable
         return $this;
     }
 
-    public function isEqualTo(BaseUserInterface $user): bool
+    public function isEqualTo(UserInterface $user): bool
     {
         if (!$user instanceof self) {
             return false;
         }
 
         if ($this->password !== $user->getPassword()) {
-            return false;
-        }
-
-        if ($this->salt !== $user->getSalt()) {
             return false;
         }
 

@@ -131,12 +131,12 @@ class MetaInfo
             return true;
         }
 
-        return stripos($this->getHeader('content_type', ''), 'image/') === 0;
+        return stripos($this->getHeader('content-type', ''), 'image/') === 0;
     }
 
     public function isHtml(): bool
     {
-        return stripos($this->getHeader('content_type', ''), 'text/html') === 0;
+        return str_contains($this->getHeader('content-type', ''), 'text/html');
     }
 
     protected function getXpath(string $xpath): ?string
@@ -177,7 +177,7 @@ class MetaInfo
         $httpClient = new CurlHttpClient();
         $response = $httpClient->request('GET', $url);
 
-        if (!$response->isSuccessful()) {
+        if ($response->getStatusCode() >= 500) {
             return null;
         }
 
@@ -195,7 +195,7 @@ class MetaInfo
             $this->headers = $this->fetchHeaders();
         }
 
-        return isset($this->headers[$key]) ? $this->headers[$key] : $default;
+        return isset($this->headers[$key]) ? $this->headers[$key][0] : $default;
     }
 
     private function fetchHeaders(): array

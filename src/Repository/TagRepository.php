@@ -6,13 +6,10 @@ namespace App\Repository;
 
 use App\Entity\Tag;
 use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @author Tobias Olry (tobias.olry@web.de)
- */
-class TagRepository extends EntityRepository
+class TagRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $managerRegistry)
     {
@@ -31,7 +28,7 @@ class TagRepository extends EntityRepository
         if (strlen($query) > 0) {
             $qb
                 ->andWhere('t.name LIKE :query')
-                ->setParameter('query', "%${query}%")
+                ->setParameter('query', "%{$query}%")
             ;
         }
 

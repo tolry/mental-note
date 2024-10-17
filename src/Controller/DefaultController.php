@@ -7,12 +7,9 @@ namespace App\Controller;
 use App\Criteria\EntryCriteria;
 use App\Factory\MetainfoFactory;
 use App\Repository\EntryRepository;
-use App\Url\MetaInfo;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,11 +22,8 @@ class DefaultController extends AbstractController
     ) {
     }
 
-    /**
-     * @Route("/",name="homepage")
-     * @Template()
-     * @Method("GET")
-     */
+    #[Route(path: '/', name: 'homepage', methods: ['GET'])]
+    #[Template()]
     public function indexAction(Request $request)
     {
         $criteria = $this->getFilterCriteria($request);
@@ -49,11 +43,8 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/url/metainfo",name="url_metainfo")
-     * @Template()
-     * @Method("GET")
-     */
+    #[Route(path: '/url/metainfo', name: 'url_metainfo', methods: ['GET'])]
+    #[Template()]
     public function urlMetainfoAction(Request $request)
     {
         if (class_exists('Tideways\Profiler')) {
@@ -66,7 +57,7 @@ class DefaultController extends AbstractController
         }
 
         $info = $this->metaInfoFactory->create($url);
-        $urlDuplicate = ($this->getEntryRepository()->urlAlreadyTaken(
+        $urlDuplicate = ($this->entryRepository->urlAlreadyTaken(
             $this->getUser(),
             $url,
             $request->query->getInt('edit_id')
@@ -82,18 +73,15 @@ class DefaultController extends AbstractController
         return new JsonResponse($metaInfo);
     }
 
-    /**
-     * @Route("/sidebar",name="default_sidebar")
-     * @Method("GET")
-     * @Template()
-     */
+    #[Route(path: '/sidebar', name: 'default_sidebar', methods: ['GET'])]
+    #[Template()]
     public function sidebarAction(Request $request)
     {
         $criteria = $this->getFilterCriteria($request);
 
         return [
-            'tags' => $this->getEntryRepository()->getTagStats($this->getUser(), $criteria),
-            'categories' => $this->getEntryRepository()->getCategoryStats($this->getUser(), $criteria),
+            'tags' => $this->entryRepository->getTagStats($this->getUser(), $criteria),
+            'categories' => $this->entryRepository->getCategoryStats($this->getUser(), $criteria),
             'criteria' => $criteria,
         ];
     }

@@ -1,7 +1,7 @@
 {% extends "layout.html.twig" %}
 
 {% block filter %}
-    {{ render(controller('App\\Controller\\DefaultController:sidebarAction', { "filter": app.request.get('filter') })) }}
+    {{ render(controller('App\\Controller\\DefaultController::sidebarAction', { "filter": app.request.get('filter') })) }}
 {% endblock %}
 
 {% block container_class %}container-fluid{% endblock %}

@@ -6,13 +6,10 @@ namespace App\Controller;
 
 use App\Entity\Entry;
 use App\Form\Type\EntryType;
-use App\Kernel;
 use App\Repository\EntryRepository;
 use App\Thumbnail\ThumbnailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\Form;
@@ -20,6 +17,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class EntryController extends AbstractController
 {
@@ -32,10 +30,7 @@ class EntryController extends AbstractController
         #[Autowire('%kernel.project_dir%/../web')] private readonly string $documentRoot,
     ) {}
 
-    /**
-     * @Route("/entry/{id}/toggle_pending.json",name="entry_toggle_pending")
-     * @Method("POST")
-     */
+    #[Route(path: '/entry/{id}/toggle_pending.json', name: 'entry_toggle_pending', methods: ['POST'])]
     public function togglePendingAction(Entry $entry, Request $request)
     {
         $entry->setPending(!$entry->getPending());
@@ -46,10 +41,7 @@ class EntryController extends AbstractController
         return $this->redirect($this->generateUrl('homepage', ['filter' => $filter]));
     }
 
-    /**
-     * @Route("/thumbnails/{id}_{width}x{height}.png",name="entry_thumbnail")
-     * @Method("GET")
-     */
+    #[Route(path: '/thumbnails/{id}_{width}x{height}.png', name: 'entry_thumbnail', methods: ['GET'])]
     public function thumbnailAction(Entry $entry, int $width, int $height, Request $request)
     {
         if (class_exists('Tideways\Profiler')) {
@@ -91,12 +83,9 @@ class EntryController extends AbstractController
         return $this->redirect($route);
     }
 
-    /**
-     * @Route("/entry/create.html",name="entry_create")
-     * @Route("/quick-add")
-     * @Template()
-     * @Method({"GET", "POST"})
-     */
+    #[Route(path: '/entry/create.html', name: 'entry_create', methods: ['GET', 'POST'])]
+    #[Route(path: '/quick-add', name: 'entry_create_quick', methods: ['GET', 'POST'])]
+    #[Template()]
     public function createAction(Request $request)
     {
         $backlink = $request->query->get('backlink');
@@ -143,11 +132,8 @@ class EntryController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/entry/{id}/edit.html",name="entry_edit")
-     * @Template()
-     * @Method({"GET", "POST"})
-     */
+    #[Route(path: '/entry/{id}/edit.html', name: 'entry_edit', methods: ['GET', 'POST'])]
+    #[Template()]
     public function editAction(Entry $entry, Request $request)
     {
         $backlink = $request->query->get('backlink');
@@ -168,11 +154,8 @@ class EntryController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/entry/{id}/delete.html",name="entry_delete")
-     * @Template()
-     * @Method({"GET", "POST"})
-     */
+    #[Route(path: '/entry/{id}/delete.html', name: 'entry_edit', methods: ['GET', 'POST'])]
+    #[Template()]
     public function deleteAction(Request $request, Entry $entry)
     {
         $filter = (array) $request->get('filter', []);
@@ -194,10 +177,7 @@ class EntryController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/entry/{id}/visit",name="entry_visit")
-     * @Method("POST")
-     */
+    #[Route(path: '/entry/{id}/visit', name: 'entry_edit', methods: ['POST'])]
     public function visitAction(Entry $entry)
     {
         $entry->addVisit();
@@ -206,11 +186,7 @@ class EntryController extends AbstractController
         return new Response('', 200);
     }
 
-    /**
-     * @param Form    $form
-     * @param Request $request
-     */
-    private function processForm(Form $form, Entry $entry, Request $request)
+    private function processForm(Form $form, Entry $entry, Request $request): bool
     {
         $form->handleRequest($request);
 

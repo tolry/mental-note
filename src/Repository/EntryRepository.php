@@ -8,18 +8,17 @@ use App\Criteria\EntryCriteria;
 use App\Entity\Category;
 use App\Entity\Entry;
 use App\Entity\Tag;
-use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
  */
-class EntryRepository extends EntityRepository
+class EntryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $managerRegistry)
     {
@@ -77,7 +76,7 @@ class EntryRepository extends EntityRepository
     public function filter(UserInterface $user, EntryCriteria $criteria): Pagerfanta
     {
         $qb = $this->getQueryBuilder($user, $criteria);
-        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
+        $pager = new Pagerfanta(new QueryAdapter($qb));
 
         $pager
             ->setMaxPerPage($criteria->limit)
@@ -173,7 +172,7 @@ class EntryRepository extends EntityRepository
 
             $word = '%' . strtolower($word) . '%';
             $parameterName = ':querypart' . $partNumber++;
-            $qb->andWhere("(LOWER(t.name) LIKE ${parameterName} OR e.title LIKE ${parameterName} or e.url LIKE ${parameterName})")
+            $qb->andWhere("(LOWER(t.name) LIKE {$parameterName} OR e.title LIKE {$parameterName} or e.url LIKE {$parameterName})")
                 ->setParameter($parameterName, $word);
         }
     }
