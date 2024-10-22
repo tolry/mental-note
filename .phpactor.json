@@ -7,5 +7,6 @@
         "/var/cache/**/*",
         "/vendor/composer/**/*"
     ],
-    "php_code_sniffer.enabled": true
+    "php_code_sniffer.enabled": true,
+    "language_server_phpstan.enabled": true
 }
