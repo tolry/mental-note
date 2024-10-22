@@ -47,6 +47,7 @@
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "@stable",
+        "doctrine/coding-standard": "*",
         "ergebnis/composer-normalize": "^2.34",
         "phpunit/phpunit": "^9.0",
         "symfony/dotenv": "^6.0",
@@ -85,7 +86,8 @@
         "allow-plugins": {
             "symfony/flex": true,
             "ergebnis/composer-normalize": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

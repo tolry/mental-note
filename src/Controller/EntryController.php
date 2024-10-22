@@ -28,7 +28,8 @@ class EntryController extends AbstractController
         private readonly LoggerInterface $logger,
         #[Autowire('%kernel.environment%')] private readonly string $environment,
         #[Autowire('%kernel.project_dir%/../web')] private readonly string $documentRoot,
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/entry/{id}/toggle_pending.json', name: 'entry_toggle_pending', methods: ['POST'])]
     public function togglePendingAction(Entry $entry, Request $request)

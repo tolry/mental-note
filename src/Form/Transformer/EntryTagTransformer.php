@@ -51,7 +51,7 @@ class EntryTagTransformer implements DataTransformerInterface
         $tagNames = array_map('trim', $tagNames);
         $tagNames = array_filter(
             $tagNames,
-            function($tag) {
+            function ($tag) {
                 return !empty($tag);
             }
         );

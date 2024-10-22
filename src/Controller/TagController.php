@@ -12,12 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class TagController extends AbstractController
 {
     public function __construct(
         private readonly TagRepository $tagRepository,
-    ){}
+    ) {
+    }
     /**
      * @Route("/tags",name="tag_search")
      * @Template()

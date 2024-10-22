@@ -17,8 +17,8 @@ class ThumbnailService
     public function __construct(
         #[Autowire('%kernel.project_dir%/../web')] private readonly string $documentRoot,
         #[Autowire('%kernel.cache_dir%')] private readonly string $cacheDir,
-        private readonly MetainfoFactory $metainfoFactory)
-    {
+        private readonly MetainfoFactory $metainfoFactory
+    ) {
         $this->fs = new Filesystem();
         $this->filepattern = 'thumbnails/{name}_{width}x{height}.png';
     }
