@@ -1,0 +1,956 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method App\\\\Cache\\\\MetainfoCache\\:\\:createKey\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Cache/MetainfoCache.php
+
+		-
+			message: "#^Method App\\\\Cache\\\\MetainfoCache\\:\\:get\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Cache/MetainfoCache.php
+
+		-
+			message: "#^Method App\\\\Cache\\\\MetainfoCache\\:\\:set\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/Cache/MetainfoCache.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Repository\\\\UserRepository\\:\\:findOneByUsername\\(\\)\\.$#"
+			count: 1
+			path: src/Command/ChangePasswordCommand.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\DefaultController\\:\\:getFilterCriteria\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/DefaultController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\DefaultController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/DefaultController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\DefaultController\\:\\:sidebarAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/DefaultController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\DefaultController\\:\\:urlMetainfoAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/DefaultController.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Controller\\\\EntryController\\:\\:getEm\\(\\)\\.$#"
+			count: 5
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\EntryController\\:\\:createAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\EntryController\\:\\:deleteAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\EntryController\\:\\:editAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\EntryController\\:\\:thumbnailAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\EntryController\\:\\:togglePendingAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\EntryController\\:\\:visitAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Parameter \\#1 \\$form of method App\\\\Controller\\\\EntryController\\:\\:processForm\\(\\) expects Symfony\\\\Component\\\\Form\\\\Form, Symfony\\\\Component\\\\Form\\\\FormInterface given\\.$#"
+			count: 2
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Parameter \\#1 \\$user of class App\\\\Entity\\\\Entry constructor expects App\\\\Entity\\\\User, Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\|null given\\.$#"
+			count: 1
+			path: src/Controller/EntryController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\TagController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/TagController.php
+
+		-
+			message: "#^Parameter \\#2 \\$user of method App\\\\Repository\\\\TagRepository\\:\\:search\\(\\) expects App\\\\Entity\\\\User, Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\|null given\\.$#"
+			count: 1
+			path: src/Controller/TagController.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Controller\\\\UserController\\:\\:get\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/UserController.php
+
+		-
+			message: "#^Method App\\\\Controller\\\\UserController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Controller/UserController.php
+
+		-
+			message: "#^Method App\\\\Criteria\\\\EntryCriteria\\:\\:__construct\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Method App\\\\Criteria\\\\EntryCriteria\\:\\:getQuery\\(\\) has parameter \\$changes with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Method App\\\\Criteria\\\\EntryCriteria\\:\\:getQuery\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Method App\\\\Criteria\\\\EntryCriteria\\:\\:getSortOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Property App\\\\Criteria\\\\EntryCriteria\\:\\:\\$category has no type specified\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Property App\\\\Criteria\\\\EntryCriteria\\:\\:\\$limit has no type specified\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Property App\\\\Criteria\\\\EntryCriteria\\:\\:\\$page has no type specified\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Property App\\\\Criteria\\\\EntryCriteria\\:\\:\\$pendingOnly has no type specified\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Property App\\\\Criteria\\\\EntryCriteria\\:\\:\\$query has no type specified\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Property App\\\\Criteria\\\\EntryCriteria\\:\\:\\$sortOrder has no type specified\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Property App\\\\Criteria\\\\EntryCriteria\\:\\:\\$tag has no type specified\\.$#"
+			count: 1
+			path: src/Criteria/EntryCriteria.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\AbstractEntity\\:\\:\\$created has no type specified\\.$#"
+			count: 1
+			path: src/Entity/AbstractEntity.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\AbstractEntity\\:\\:\\$updated has no type specified\\.$#"
+			count: 1
+			path: src/Entity/AbstractEntity.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Category\\:\\:getChoiceArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Entity/Category.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Category\\:\\:setKey\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: src/Entity/Category.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Category\\:\\:\\$data has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Category.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Category\\:\\:\\$defaultView has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Category.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Category\\:\\:\\$description has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Category.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Category\\:\\:\\$icon has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Category.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Category\\:\\:\\$key has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Category.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Category\\:\\:\\$label has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Category.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getAge\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getCategory\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getDomain\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getId\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getPending\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getTags\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getTitle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getUrl\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getUrlInfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:getVisits\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:setCategory\\(\\) has parameter \\$category with no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:setPending\\(\\) has parameter \\$pending with no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:setTags\\(\\) has parameter \\$tags with no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:setTitle\\(\\) has parameter \\$title with no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\Entry\\:\\:setUrl\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Entry\\:\\:\\$category has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Entry\\:\\:\\$id has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Entry\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Entry\\:\\:\\$pending has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Entry\\:\\:\\$tags has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Entry\\:\\:\\$title has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Entry\\:\\:\\$url has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Entry\\:\\:\\$visits has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Entry.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Tag\\:\\:\\$entries has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Tag.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Tag\\:\\:\\$entries is unused\\.$#"
+			count: 1
+			path: src/Entity/Tag.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Tag\\:\\:\\$id has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Tag.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Tag\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Entity/Tag.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Tag\\:\\:\\$name has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Tag.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Entity\\\\User\\:\\:\\$confirmationToken\\.$#"
+			count: 2
+			path: src/Entity/User.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Entity\\\\User\\:\\:\\$emailCanonical\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Entity\\\\User\\:\\:\\$passwordRequestedAt\\.$#"
+			count: 2
+			path: src/Entity/User.php
+
+		-
+			message: "#^Access to an undefined property App\\\\Entity\\\\User\\:\\:\\$usernameCanonical\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:__unserialize\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:addRole\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:addRole\\(\\) has parameter \\$role with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:getConfirmationToken\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:getEmail\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:getEmailCanonical\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:getId\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:getPlainPassword\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:getUsernameCanonical\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:hasRole\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:hasRole\\(\\) has parameter \\$role with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:isEnabled\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:isPasswordRequestNonExpired\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:isPasswordRequestNonExpired\\(\\) has parameter \\$ttl with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:isSuperAdmin\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:removeRole\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:removeRole\\(\\) has parameter \\$role with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setConfirmationToken\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setConfirmationToken\\(\\) has parameter \\$confirmationToken with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setEmail\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setEmail\\(\\) has parameter \\$email with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setEnabled\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setEnabled\\(\\) has parameter \\$boolean with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setLastLogin\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setPassword\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setPassword\\(\\) has parameter \\$password with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setPasswordRequestedAt\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setPlainPassword\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setPlainPassword\\(\\) has parameter \\$password with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setRoles\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setRoles\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setSuperAdmin\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setSuperAdmin\\(\\) has parameter \\$boolean with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setUsername\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Method App\\\\Entity\\\\User\\:\\:setUsername\\(\\) has parameter \\$username with no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$email has no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$enabled has no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$id has no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$lastLogin has no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$password has no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$plainPassword has no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$roles has no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\User\\:\\:\\$username has no type specified\\.$#"
+			count: 1
+			path: src/Entity/User.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Visit\\:\\:\\$entry is never read, only written\\.$#"
+			count: 1
+			path: src/Entity/Visit.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Visit\\:\\:\\$id has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Visit.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Visit\\:\\:\\$id is unused\\.$#"
+			count: 1
+			path: src/Entity/Visit.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Visit\\:\\:\\$timestamp has no type specified\\.$#"
+			count: 1
+			path: src/Entity/Visit.php
+
+		-
+			message: "#^Property App\\\\Entity\\\\Visit\\:\\:\\$timestamp is never read, only written\\.$#"
+			count: 1
+			path: src/Entity/Visit.php
+
+		-
+			message: "#^Method App\\\\Factory\\\\MetainfoFactory\\:\\:create\\(\\) has parameter \\$url with no type specified\\.$#"
+			count: 1
+			path: src/Factory/MetainfoFactory.php
+
+		-
+			message: "#^Property App\\\\Factory\\\\MetainfoFactory\\:\\:\\$cache has no type specified\\.$#"
+			count: 1
+			path: src/Factory/MetainfoFactory.php
+
+		-
+			message: "#^Class App\\\\Form\\\\Transformer\\\\EntryTagTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: TValue, TTransformedValue$#"
+			count: 1
+			path: src/Form/Transformer/EntryTagTransformer.php
+
+		-
+			message: "#^Method App\\\\Form\\\\Transformer\\\\EntryTagTransformer\\:\\:__construct\\(\\) has parameter \\$tagRepository with generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: T$#"
+			count: 1
+			path: src/Form/Transformer/EntryTagTransformer.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(EntityManager\\)\\: Unexpected token \"\\\\n     \", expected variable at offset 31$#"
+			count: 1
+			path: src/Form/Transformer/EntryTagTransformer.php
+
+		-
+			message: "#^Property App\\\\Form\\\\Transformer\\\\EntryTagTransformer\\:\\:\\$tagRepository has no type specified\\.$#"
+			count: 1
+			path: src/Form/Transformer/EntryTagTransformer.php
+
+		-
+			message: "#^Result of \\|\\| is always false\\.$#"
+			count: 1
+			path: src/Form/Transformer/EntryTagTransformer.php
+
+		-
+			message: "#^Variable \\$tagNames in empty\\(\\) always exists and is not falsy\\.$#"
+			count: 1
+			path: src/Form/Transformer/EntryTagTransformer.php
+
+		-
+			message: "#^Method App\\\\Form\\\\Type\\\\EntryType\\:\\:__construct\\(\\) has parameter \\$router with no type specified\\.$#"
+			count: 1
+			path: src/Form/Type/EntryType.php
+
+		-
+			message: "#^Method App\\\\Form\\\\Type\\\\EntryType\\:\\:__construct\\(\\) has parameter \\$token with no type specified\\.$#"
+			count: 1
+			path: src/Form/Type/EntryType.php
+
+		-
+			message: "#^Property App\\\\Form\\\\Type\\\\EntryType\\:\\:\\$entityManager has no type specified\\.$#"
+			count: 1
+			path: src/Form/Type/EntryType.php
+
+		-
+			message: "#^Property App\\\\Form\\\\Type\\\\EntryType\\:\\:\\$router has no type specified\\.$#"
+			count: 1
+			path: src/Form/Type/EntryType.php
+
+		-
+			message: "#^Property App\\\\Form\\\\Type\\\\EntryType\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: src/Form/Type/EntryType.php
+
+		-
+			message: "#^Call to an undefined method Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\UserInterface\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: src/Repository/EntryRepository.php
+
+		-
+			message: "#^Class App\\\\Repository\\\\EntryRepository extends generic class Doctrine\\\\Bundle\\\\DoctrineBundle\\\\Repository\\\\ServiceEntityRepository but does not specify its types\\: T$#"
+			count: 1
+			path: src/Repository/EntryRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\EntryRepository\\:\\:filter\\(\\) return type with generic class Pagerfanta\\\\Pagerfanta does not specify its types\\: T$#"
+			count: 1
+			path: src/Repository/EntryRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\EntryRepository\\:\\:getCategoryStats\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Repository/EntryRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\EntryRepository\\:\\:getTagStats\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Repository/EntryRepository.php
+
+		-
+			message: "#^Class App\\\\Repository\\\\TagRepository extends generic class Doctrine\\\\Bundle\\\\DoctrineBundle\\\\Repository\\\\ServiceEntityRepository but does not specify its types\\: T$#"
+			count: 1
+			path: src/Repository/TagRepository.php
+
+		-
+			message: "#^Method App\\\\Repository\\\\TagRepository\\:\\:search\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Repository/TagRepository.php
+
+		-
+			message: "#^Class App\\\\Repository\\\\UserRepository extends generic class Doctrine\\\\Bundle\\\\DoctrineBundle\\\\Repository\\\\ServiceEntityRepository but does not specify its types\\: T$#"
+			count: 1
+			path: src/Repository/UserRepository.php
+
+		-
+			message: "#^Property App\\\\Thumbnail\\\\Thumbnail\\:\\:\\$absolutePath has no type specified\\.$#"
+			count: 1
+			path: src/Thumbnail/Thumbnail.php
+
+		-
+			message: "#^Property App\\\\Thumbnail\\\\Thumbnail\\:\\:\\$height has no type specified\\.$#"
+			count: 1
+			path: src/Thumbnail/Thumbnail.php
+
+		-
+			message: "#^Property App\\\\Thumbnail\\\\Thumbnail\\:\\:\\$relativePath has no type specified\\.$#"
+			count: 1
+			path: src/Thumbnail/Thumbnail.php
+
+		-
+			message: "#^Property App\\\\Thumbnail\\\\Thumbnail\\:\\:\\$url has no type specified\\.$#"
+			count: 1
+			path: src/Thumbnail/Thumbnail.php
+
+		-
+			message: "#^Property App\\\\Thumbnail\\\\Thumbnail\\:\\:\\$width has no type specified\\.$#"
+			count: 1
+			path: src/Thumbnail/Thumbnail.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$url with type mixed is not subtype of native type string\\.$#"
+			count: 1
+			path: src/Thumbnail/ThumbnailService.php
+
+		-
+			message: "#^Parameter \\#1 \\$command of class Symfony\\\\Component\\\\Process\\\\Process constructor expects array, string given\\.$#"
+			count: 1
+			path: src/Thumbnail/ThumbnailService.php
+
+		-
+			message: "#^Method App\\\\Url\\\\Info\\:\\:parseDomains\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Method App\\\\Url\\\\Info\\:\\:parseQuery\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$fileExtension has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$fragment has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$host has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$pass has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$path has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$port has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$query has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$scheme has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$sld has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$subdomain has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$tld has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$url has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Property App\\\\Url\\\\Info\\:\\:\\$user has no type specified\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between int\\<1, max\\> and 0 will always evaluate to false\\.$#"
+			count: 1
+			path: src/Url/Info.php
+
+		-
+			message: "#^Method App\\\\Url\\\\MetaInfo\\:\\:fetchHeaders\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Method App\\\\Url\\\\MetaInfo\\:\\:getHeader\\(\\) has parameter \\$default with no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Method App\\\\Url\\\\MetaInfo\\:\\:getUserAgent\\(\\) is unused\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$cache has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$headers has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$imageDomains has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$imageUrl has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$info has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$musicDomains has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$noGoogleUserAgent has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$purchaseDomains has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Property App\\\\Url\\\\MetaInfo\\:\\:\\$videoDomains has no type specified\\.$#"
+			count: 1
+			path: src/Url/MetaInfo.php
+
+		-
+			message: "#^Call to method getResponse\\(\\) on an unknown class Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 5
+			path: tests/Controller/DefaultControllerTest.php
+
+		-
+			message: "#^Call to method request\\(\\) on an unknown class Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 5
+			path: tests/Controller/DefaultControllerTest.php
+
+		-
+			message: "#^Call to method getResponse\\(\\) on an unknown class Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 15
+			path: tests/Controller/EntryControllerTest.php
+
+		-
+			message: "#^Call to method request\\(\\) on an unknown class Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 13
+			path: tests/Controller/EntryControllerTest.php
+
+		-
+			message: "#^Call to method submit\\(\\) on an unknown class Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 6
+			path: tests/Controller/EntryControllerTest.php
+
+		-
+			message: "#^Parameter \\$client of method App\\\\Tests\\\\Controller\\\\EntryControllerTest\\:\\:createNew\\(\\) has invalid type Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 1
+			path: tests/Controller/EntryControllerTest.php
+
+		-
+			message: "#^Call to method getResponse\\(\\) on an unknown class Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 4
+			path: tests/Controller/UserControllerTest.php
+
+		-
+			message: "#^Call to method request\\(\\) on an unknown class Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 2
+			path: tests/Controller/UserControllerTest.php
+
+		-
+			message: "#^Call to method submit\\(\\) on an unknown class Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 2
+			path: tests/Controller/UserControllerTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Url\\\\MetaInfoTest\\:\\:testDefaultCategory\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/Url/MetaInfoTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\WebTestCase\\:\\:assertRedirect\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/WebTestCase.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\WebTestCase\\:\\:getAuthenticatedClient\\(\\) has invalid return type Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client\\.$#"
+			count: 1
+			path: tests/WebTestCase.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\WebTestCase\\:\\:getAuthenticatedClient\\(\\) should return Symfony\\\\Bundle\\\\FrameworkBundle\\\\Client but returns Symfony\\\\Bundle\\\\FrameworkBundle\\\\KernelBrowser\\.$#"
+			count: 1
+			path: tests/WebTestCase.php

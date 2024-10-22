@@ -49,6 +49,7 @@
         "codedungeon/phpunit-result-printer": "@stable",
         "doctrine/coding-standard": "*",
         "ergebnis/composer-normalize": "^2.34",
+        "phpstan/phpstan": "*",
         "phpunit/phpunit": "^9.0",
         "symfony/dotenv": "^6.0",
         "symfony/maker-bundle": "^1.50",
