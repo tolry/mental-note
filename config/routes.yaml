@@ -2,7 +2,7 @@ controllers:
   resource:
     path: "../src/Controller/"
     namespace: App\Controller
-  type: annotation
+  type: attribute
 
 logout:
   path: /logout
