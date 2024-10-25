@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-  session_memcache_host: localhost
+  session_memcache_host: "%env(MEMCACHED_HOST)%"
   session_memcache_port: 11211
   session_memcache_prefix: mn_sess
   session_memcache_expire: 604800 # 1 week
@@ -14,29 +14,29 @@ parameters:
 services:
   # default configuration for services in *this* file
   _defaults:
-    autowire: true      # Automatically injects dependencies in your services.
+    autowire: true # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name
   App\:
-    resource: '../src/'
+    resource: "../src/"
     exclude:
-      - '../src/DependencyInjection/'
-      - '../src/Kernel.php'
-      - '../src/{Entity,Migrations,Tests,App}/'
+      - "../src/DependencyInjection/"
+      - "../src/Kernel.php"
+      - "../src/{Entity,Migrations,Tests,App}/"
 
   # controllers are imported separately to make sure services can be injected
   # as action arguments even if you don't extend any base controller class
   App\Controller\:
-    resource: '../src/Controller/'
-    tags: ['controller.service_arguments']
+    resource: "../src/Controller/"
+    tags: ["controller.service_arguments"]
 
   pagerfanta.view.twitter_bootstrap4:
     class: "Pagerfanta\\View\\TwitterBootstrap4View"
     public: false
     tags:
-      - {name: "pagerfanta.view", alias: "twitter_bootstrap4"}
+      - { name: "pagerfanta.view", alias: "twitter_bootstrap4" }
 
   app.form.entry_type:
     class: "App\\Form\\Type\\EntryType"
@@ -63,10 +63,17 @@ services:
   app.memcached:
     class: Memcached
     calls:
-      - [ addServer, [ "%session_memcache_host%", "%session_memcache_port%" ]]
+      - [addServer, ["%session_memcache_host%", "%session_memcache_port%"]]
 
   Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler:
-    arguments: [ "@app.memcached", { prefix: "%session_memcache_prefix%", expiretime: "%session_memcache_expire%" } ]
+    arguments:
+      [
+        "@app.memcached",
+        {
+          prefix: "%session_memcache_prefix%",
+          expiretime: "%session_memcache_expire%",
+        },
+      ]
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
