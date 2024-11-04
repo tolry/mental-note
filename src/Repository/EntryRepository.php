@@ -15,9 +15,6 @@ use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @author Tobias Olry (tobias.olry@web.de)
- */
 class EntryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $managerRegistry)
@@ -175,5 +172,11 @@ class EntryRepository extends ServiceEntityRepository
             $qb->andWhere("(LOWER(t.name) LIKE {$parameterName} OR e.title LIKE {$parameterName} or e.url LIKE {$parameterName})")
                 ->setParameter($parameterName, $word);
         }
+    }
+
+    public function save(Entry $entry)
+    {
+        $this->getEntityManager()->persist($entry);
+        $this->getEntityManager()->flush();
     }
 }

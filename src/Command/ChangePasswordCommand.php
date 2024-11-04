@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -35,11 +36,13 @@ class ChangePasswordCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $user = $this->userRepository->findOneByUsername($input->getArgument('user'));
+        $username = $input->getArgument('user');
+        $user = $this->userRepository->findOneByUsername($username);
 
         if (!$user) {
-            $io->error('User not found');
-            return Command::FAILURE;
+            $user = new User($username, $username);
+
+            $io->success('Added user!');
         }
 
         $password = $io->askHidden('new password');

@@ -9,21 +9,17 @@ final class EntryCriteria
     public const SORT_TIMESTAMP_DESC = 'sort-timestamp-desc';
     public const SORT_TIMESTAMP_ASC = 'sort-timestamp-asc';
 
-    public $tag;
-    public $query;
-    public $category;
-    public $limit = 12;
-    public $page = 1;
-    public $pendingOnly = true;
-    public $sortOrder = self::SORT_TIMESTAMP_DESC;
 
-    public function __construct(array $data)
+    public function __construct(
+        public ?string $tag = null,
+        public ?string $query = null,
+        public ?string $category = null,
+        public int $limit = 12,
+        public int $page = 1,
+        public bool $pendingOnly = true,
+        public string $sortOrder = self::SORT_TIMESTAMP_DESC,
+    )
     {
-        foreach ($data as $member => $value) {
-            if (property_exists($this, $member)) {
-                $this->{$member} = $value;
-            }
-        }
     }
 
     /**

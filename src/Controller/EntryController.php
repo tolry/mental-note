@@ -155,7 +155,7 @@ class EntryController extends AbstractController
         ];
     }
 
-    #[Route(path: '/entry/{id}/delete.html', name: 'entry_edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/entry/{id}/delete.html', name: 'entry_delete', methods: ['GET', 'POST'])]
     #[Template()]
     public function deleteAction(Request $request, Entry $entry)
     {
@@ -178,7 +178,7 @@ class EntryController extends AbstractController
         ];
     }
 
-    #[Route(path: '/entry/{id}/visit', name: 'entry_edit', methods: ['POST'])]
+    #[Route(path: '/entry/{id}/visit', name: 'entry_visit', methods: ['POST'])]
     public function visitAction(Entry $entry)
     {
         $entry->addVisit();
@@ -192,8 +192,7 @@ class EntryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getEm()->persist($entry);
-            $this->getEm()->flush();
+            $this->entryRepository->save($entry);
 
             return true;
         }

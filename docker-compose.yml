@@ -21,3 +21,10 @@ services:
     image: memcached:latest
     links:
       - php
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+    links:
+      - php

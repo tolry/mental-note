@@ -9,29 +9,20 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
- * @ORM\Entity
- * @ORM\Table(name="visit")
  */
+#[ORM\Entity()]
+#[ORM\Table(name: "visit")]
 class Visit
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    private $id;
+    #[ORM\Id] #[ORM\Column(type: "integer")] #[ORM\GeneratedValue] private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entry", inversedBy="visits")
      *
      * @var Entry
      */
-    private $entry;
+    #[ORM\ManyToOne(targetEntity: "Entry", inversedBy: "visits")] private $entry;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $timestamp;
+    #[ORM\Column(type: "datetime_immutable")] private $timestamp;
 
     public function __construct(DateTimeImmutable $timestamp, Entry $entry)
     {

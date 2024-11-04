@@ -11,48 +11,49 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="fos_user")
- */
+#[ORM\Table(name: "fos_user")]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, EquatableInterface, \Serializable, PasswordAuthenticatedUserInterface
 {
     public const ROLE_DEFAULT = 'ROLE_USER';
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    #[ORM\Id]
     protected $id;
 
-    /** @ORM\Column(type="string") */
+    #[ORM\Column(type: "string")]
     protected $username;
 
-    /** @ORM\Column(type="string") */
+    #[ORM\Column(type: "string")]
     protected $email;
 
-    /** @ORM\Column(type="boolean") */
+    #[ORM\Column(type: "boolean")]
     protected $enabled;
 
-    /** @ORM\Column(type="string") */
+    #[ORM\Column(type: "string")]
     protected $password;
 
     protected $plainPassword;
 
-    /** @ORM\Column(type="datetime") */
-    protected $lastLogin;
+    #[ORM\Column(type: "datetime_immutable")]
+    protected \DateTimeImmutable $lastLogin;
 
-    /** @ORM\Column(type="array") */
+    #[ORM\Column(type: "array")]
     protected $roles;
 
     /**
      * User constructor.
      */
-    public function __construct()
+    public function __construct(string $username, string $email)
     {
+        $this->username = $username;
+        $this->email = $email;
+        $this->lastLogin = new \DateTimeImmutable();
+
         $this->enabled = false;
         $this->roles = [];
     }
@@ -120,7 +121,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, Password
     /**
      * @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
     }
@@ -143,19 +144,9 @@ class User implements UserInterface, EquatableInterface, \Serializable, Password
         return $this->username;
     }
 
-    public function getUsernameCanonical()
-    {
-        return $this->usernameCanonical;
-    }
-
     public function getEmail()
     {
         return $this->email;
-    }
-
-    public function getEmailCanonical()
-    {
-        return $this->emailCanonical;
     }
 
     public function getPassword(): ?string

@@ -5,30 +5,20 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TagRepository;
 
 /**
  * @author Tobias Olry (tobias.olry@web.de)
- * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
- * @ORM\Table(name="tag")
  */
+#[ORM\Entity(repositoryClass: TagRepository::class)]
+#[ORM\Table(name: "tag")]
 class Tag extends AbstractEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    private $id;
+    #[ORM\Id] #[ORM\Column(type: "integer")] #[ORM\GeneratedValue] private $id;
 
-    /**
-     * @ORM\Column(type="string", unique=true, options={"collation"="utf8_bin"})
-     */
-    private $name;
+    #[ORM\Column(type: "string", unique: true, options: ["collation" => "utf8_bin"])] private $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Entry", mappedBy="tags")
-     */
-    private $entries;
+    #[ORM\ManyToMany(targetEntity: "Entry", mappedBy: "tags")] private $entries;
 
     public function __toString()
     {

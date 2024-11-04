@@ -11,63 +11,43 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\EntryRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EntryRepository")
- * @ORM\Table(name="entry")
- * @UniqueEntity(fields={"url", "user"}, message="url already in database")
- */
+#[UniqueEntity(fields: ["url", "user"], message: "url already in database")]
+#[ORM\Table(name: "entry")]
+#[ORM\Entity(repositoryClass: EntryRepository::class)]
 class Entry extends AbstractEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    private $id;
+    #[ORM\Id] #[ORM\Column(type: "integer")] #[ORM\GeneratedValue] private $id;
 
     /**
-     * @ORM\Column(type="string", length=500)
      * @Assert\Url
      */
-    private $url;
+    #[ORM\Column(type: "string", length: 500)] private $url;
 
     /**
-     * @ORM\Column(type="string")
      * @Assert\NotBlank
      * @Assert\Length(max=255)
      */
-    private $title;
+    #[ORM\Column(type: "string")] private $title;
 
     /**
      * the category, any of the self::CATEGORY_* constants.
      *
-     * @ORM\Column(type="string")
      */
-    private $category = Category::READ;
+    #[ORM\Column(type: "string")] private $category = Category::READ;
+
+    #[ORM\Column(type: "boolean")] private $pending = true;
+
+    #[ORM\ManyToMany(targetEntity: "Tag", cascade: ["persist"], inversedBy: "entries")] #[ORM\JoinTable(name: "entry_has_tag")] private $tags;
+
+    #[ORM\OneToMany(targetEntity: "Visit", mappedBy: "entry", cascade: ["all"])] private $visits;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $pending = true;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"}, inversedBy="entries")
-     * @ORM\JoinTable(name="entry_has_tag")
-     */
-    private $tags;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Visit", mappedBy="entry", cascade={"all"})
-     */
-    private $visits;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
      *
      * @var User
      */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: "User")] private $user;
 
     public function __construct(User $user)
     {

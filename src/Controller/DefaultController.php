@@ -91,8 +91,14 @@ class DefaultController extends AbstractController
      */
     private function getFilterCriteria(Request $request)
     {
-        $filter = (array) $request->get('filter', []);
-
-        return new EntryCriteria($filter);
+        return new EntryCriteria(
+            tag: $request->query->get('filter[tag]'),
+            query: $request->query->get('filter[query]'),
+            category: $request->query->get('filter[category]'),
+            limit: $request->query->getInt('filter[limit]'),
+            page: $request->query->getInt('filter[page]'),
+            pendingOnly: $request->query->getBoolean('filter[pendingOnly]'),
+            sortOrder: $request->query->get('filter[sortOrder]', EntryCriteria::SORT_TIMESTAMP_DESC),
+        );
     }
 }
