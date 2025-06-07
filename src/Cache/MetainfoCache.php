@@ -22,6 +22,13 @@ class MetainfoCache
             return;
         }
 
+        if (is_array($value)) {
+            $value = array_filter(
+                $value,
+                static fn (mixed $item): bool => !is_callable($item),
+            );
+        }
+
         $item = $this->cache->getItem($this->createKey($property, $url));
         $item->set($value);
 

@@ -15,7 +15,7 @@ class ThumbnailService
     private string $filepattern;
 
     public function __construct(
-        #[Autowire('%kernel.project_dir%/../web')] private readonly string $documentRoot,
+        #[Autowire('%kernel.project_dir%/public')] private readonly string $documentRoot,
         #[Autowire('%kernel.cache_dir%')] private readonly string $cacheDir,
         private readonly MetainfoFactory $metainfoFactory
     ) {
@@ -69,9 +69,9 @@ class ThumbnailService
             $this->fs->mkdir(dirname($thumbnail->absolutePath));
         }
 
-        $cmd = "convert %s[0] -resize '%dx%d^' -gravity center -crop %dx%d+0+0 +repage %s";
+        $cmd = "convert %s[0] -resize '%dx%d' -gravity center -crop %dx%d+0+0 +repage %s";
 
-        $process = new Process(sprintf(
+        $process = Process::fromShellCommandline(sprintf(
             $cmd,
             $tmpFile,
             $width,

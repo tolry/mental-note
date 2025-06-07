@@ -57,11 +57,8 @@ class DefaultController extends AbstractController
         }
 
         $info = $this->metaInfoFactory->create($url);
-        $urlDuplicate = ($this->entryRepository->urlAlreadyTaken(
-            $this->getUser(),
-            $url,
-            $request->query->getInt('edit_id')
-        ) !== null);
+        $excludeId = (int) $request->query->get('edit_id');
+        $urlDuplicate = ($this->entryRepository->urlAlreadyTaken($this->getUser(), $url, $excludeId > 0 ? $excludeId : null) !== null);
 
         $metaInfo = [
             'title' => $info->getTitle(),
@@ -86,17 +83,14 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     private function getFilterCriteria(Request $request)
     {
         return new EntryCriteria(
             tag: $request->query->get('filter[tag]'),
             query: $request->query->get('filter[query]'),
             category: $request->query->get('filter[category]'),
-            limit: $request->query->getInt('filter[limit]'),
-            page: $request->query->getInt('filter[page]'),
+            limit: $request->query->getInt('filter[limit]', 20),
+            page: $request->query->getInt('filter[page]', 1),
             pendingOnly: $request->query->getBoolean('filter[pendingOnly]'),
             sortOrder: $request->query->get('filter[sortOrder]', EntryCriteria::SORT_TIMESTAMP_DESC),
         );

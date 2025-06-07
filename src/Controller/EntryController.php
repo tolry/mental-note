@@ -27,7 +27,7 @@ class EntryController extends AbstractController
         private readonly ThumbnailService $thumbnailService,
         private readonly LoggerInterface $logger,
         #[Autowire('%kernel.environment%')] private readonly string $environment,
-        #[Autowire('%kernel.project_dir%/../web')] private readonly string $documentRoot,
+        #[Autowire('%kernel.project_dir%/public')] private readonly string $documentRoot,
     ) {
     }
 
@@ -78,7 +78,7 @@ class EntryController extends AbstractController
             $this->logger->error('Exception: ' . $e->getMessage());
 
             $target = $this->documentRoot . '/images/placeholder_no-preview.png';
-            symlink($target, $pathNew);
+            \symlink($target, $pathNew);
         }
 
         return $this->redirect($route);

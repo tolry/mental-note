@@ -23,7 +23,7 @@ class TagController extends AbstractController
      * @Template()
      * @Method("GET")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $tags = $this
             ->tagRepository

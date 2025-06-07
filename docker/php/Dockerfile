@@ -1,18 +1,31 @@
-FROM php:8.3.13-fpm-alpine
+FROM php:8.3.13-fpm
 
-RUN docker-php-ext-install -j"$(nproc)" pdo pdo_mysql   
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
+RUN install-php-extensions \
+    pdo \
+    pdo_mysql \
+    memcached \
+    igbinary \
+    zip
 
-RUN apk add --update --no-cache libmemcached-dev autoconf g++ make zlib-dev
+RUN apt-get update && \
+    apt-get install -y \
+      imagemagick \
+      git
 
-RUN pecl install igbinary && docker-php-ext-enable igbinary
-RUN pecl install memcached && docker-php-ext-enable memcached
-
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Copy the php config file
 COPY ./docker/php/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
+WORKDIR /app
+
 # Copy the application code
-COPY . /app
+COPY . .
+
+RUN chown -R www-data:www-data /app/var /app/public/thumbnails /app/public/bundles
 
 VOLUME ["/app"]
+
+CMD ["./docker/php/startup.sh"]
