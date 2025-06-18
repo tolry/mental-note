@@ -28,7 +28,7 @@
         "symfony/flex": "^1.18",
         "symfony/form": "^4.0",
         "symfony/framework-bundle": "^4.0",
-        "symfony/http-client": "^4.0",
+        "symfony/http-client": "^5.4",
         "symfony/lts": "^4@dev",
         "symfony/monolog-bundle": "@stable",
         "symfony/security-csrf": "^4.0",
